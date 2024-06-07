@@ -1,0 +1,54 @@
+.background{
+    background: rgb(1,33,113);
+    background: -moz-linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#012171",endColorstr="#023fd7",GradientType=1);
+    height: 50vh;
+    display: flex;
+    h2{
+        font-size: 40px;
+        text-align: center;
+    }
+    span{
+        text-align: center;
+        width: 100%;
+    }
+}
+.background2{
+    background: #D9D9D9;
+    height: 50vh;
+}
+.box-titulo{
+    width: 60vw;
+}
+.titulo{
+    align-self: center;
+}
+.box-login{
+    background-color: white;
+    position: absolute;
+    height: 50vh;
+    align-self: center;
+    justify-self: center;
+    top:28%;
+    width: 70vw;
+}
+.conjunto-login{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .form-check{
+        display: flex;
+    }
+    .checkmark{
+        width: 30px;
+        height: 30px;
+        color:#012171;
+    }
+    .form-check-input:checked {
+        background-color: #012171;
+        border-color: #012171;
+    }
+}
