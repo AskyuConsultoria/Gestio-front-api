@@ -2,7 +2,7 @@ var express = require("express");
 var cors = require("cors");
 var path = require("path");
 var router = express.Router();
-var PORTA = 8080;
+var PORTA = 3333;
 
 var app = express();
 
