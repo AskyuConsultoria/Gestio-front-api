@@ -28,7 +28,7 @@
 .box-login{
     background-color: white;
     position: absolute;
-    height: 50vh;
+    height: fit-content;
     align-self: center;
     justify-self: center;
     top:28%;
@@ -38,7 +38,7 @@
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     .form-check{
         display: flex;
     }
