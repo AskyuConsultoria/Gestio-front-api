@@ -10,4 +10,10 @@ async function login(){
     const userData = await data.json()
 
     console.log("Resposta: ", userData)
+
+    sessionStorage.setItem("id", userData.id)
+    sessionStorage.setItem("usuario", userData.usuario)
+
+    // Adicionar Redirecionamento para dashboard quando logar... só descomentar o negocio abaixo se o nome do html for dashboard.html e estivere aqui no public
+    //window.location = "dashboard.html"
   };
