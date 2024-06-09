@@ -57,6 +57,13 @@ header {
     color: var(--azul)
 }
 
+.medidas {
+    margin-left: 20%;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
 .peca-card {
     max-width: 90%;
     max-height: 9rem;
@@ -161,6 +168,9 @@ header {
     cursor: pointer;
 }
 
+.tooltip.tooltip-inner {
+    --bs-tooltip-color: var(--bs-white);
+  }
 
 .seta-container img {
     display: block;
