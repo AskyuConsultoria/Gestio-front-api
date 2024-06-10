@@ -15,5 +15,5 @@ async function login(){
     sessionStorage.setItem("usuario", userData.usuario)
 
     // Adicionar Redirecionamento para dashboard quando logar... só descomentar o negocio abaixo se o nome do html for dashboard.html e estivere aqui no public
-    //window.location = "dashboard.html"
+    window.location = "Lista-peca.html"
   };

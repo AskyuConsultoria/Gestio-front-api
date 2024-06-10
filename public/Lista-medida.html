@@ -12,7 +12,7 @@
     <script defer src="js/peca_editar.js"></script>
 </head>
 
-<body onload="listarUmaPeca()">
+<body onload="listarMedidas()">
     <header class="header py-4 bg-light w-100 px-0">
         <div class="container d-flex justify-content-between">
             <a href="./Lista-peca.html"> <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3"></a>
@@ -23,37 +23,20 @@
         <div class="breadcrumb mx-2">
             <div>MEUS <span>PRODUTOS</span> <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2">
                 <span>PEÇAS</span>
-                <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2"> <span id="peca_bread_road">CALÇA</span>
+                <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2"> <span id="peca_bread_road"></span>
             </div>
         </div>
         <div class="mt-2 py-2">
             <div class="d-flex justify-content-between align-items-center mx-3">
-                <span class="nome-peça bold-title">CALÇA</span>
-                <!-- <a href=""> <img src="./assets/Adicionar Botão.svg" alt="adicionar-peça" class="btn"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Para adicionar uma peça clique aqui"></a> -->
+                <span class="nome-peça bold-title" id="titulo"></span>
+                <a href="./Cadastro-medida.html"> <img src="./assets/Adicionar Botão.svg" alt="adicionar-medida" class="btn"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Para adicionar uma medida clique aqui"></a>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" id="container">
         <!-- USAR O PECA-CARD PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
-        <div class="card mb-2 mx-auto position-relative">
-            <div class="row g-0">
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <div class="d-flex flex-row align-items-center justify-content-between">
-                            <div class="d-flex">
-                                <!-- USAR MEDIDAS PARA RETORNAR QUAL A MEDIDA ASSOCIADA A PEÇA (MANTER CLASSES BOOTSTRAP) -->
-                                <span class="medidas card-title mt-1">Quadril</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-right">
-                <img src="./assets/lixeira.svg" alt="lixeira exclusão" class="lixeira btn btn-danger"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarMedida(1087)">
-            </div>
-        </div>
+        
     </div>
 
     <script>

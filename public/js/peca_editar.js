@@ -5,7 +5,8 @@ async function listarPecas(){
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
-
+    
+    console.log(data)
     const FormatedData = await data.json()
 
     console.log("Resposta: ", FormatedData)
@@ -62,26 +63,36 @@ async function listarPecasEditar(){
         document.getElementById("peca").innerHTML += `<option value="${peca.id}">${peca.nome}</option>`
     });
 
-    sessionStorage.setItem("data", FormatedData)
+    descEditar()
     
 }
 
-async function listarUmaPeca(){
+async function listarMedidas(){
     const usuario = sessionStorage.getItem("id")
     const idPeca = sessionStorage.getItem("idPeca")
 
-const data = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`);
-    if (!data.ok) {
-    throw new Error('Erro ' + data.statusText);
-    }
+    const data1 = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`);
+        if (!data1.ok) {
+        throw new Error('Erro ' + data1.statusText);
+        }
+
+    const FormatedData1 = await data1.json()
+
+    console.log(FormatedData1)
+
+    document.getElementById("peca_bread_road").innerHTML = (FormatedData1.nome).toUpperCase()
+    document.getElementById("titulo").innerHTML = (FormatedData1.nome).toUpperCase()
+
+    const data = await fetch(`http://localhost:8080/nomes-medidas/${usuario}/${idPeca}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+        }
 
 const FormatedData = await data.json()
 
 console.log("Resposta: ", FormatedData)
 
-document.getElementById("peca_bread_road").innerHTML = (FormatedData.nome).toUpperCase()
-
-FormatedData.medida.forEach(medida => {
+FormatedData.forEach(medida => {
     document.getElementById("container").innerHTML += `
         <div class="card mb-2 mx-auto position-relative" style="max-width: 92%;">
             <div class="row g-0">
@@ -104,11 +115,22 @@ FormatedData.medida.forEach(medida => {
 
 }
 
-function descEditar(){
+async function descEditar(){
     var id = document.getElementById("peca").value
-    var data = sessionStorage.getItem("data")
 
-    document.getElementById("desc-default").value = data[id].descricao
+    const usuario = sessionStorage.getItem("id")
+    const idPeca = sessionStorage.getItem("idPeca")
+
+    const data = await fetch(`http://localhost:8080/pecas/${usuario}/${id}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+    }
+
+    const formatedData = await data.json()
+
+    console.log("Resposta: ", formatedData)
+
+    document.getElementById("desc-default").value = formatedData.descricao
 }
 
 
@@ -120,7 +142,8 @@ async function editarPeca(){
 
     const dados = {
         "nome": nome,
-        "descricao": descricao 
+        "descricao": descricao,
+        "usuario": usuario 
     }
 
     const respostaCadastro = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`, {
@@ -166,12 +189,13 @@ async function deletarMedida(idMedida){
     const usuario = sessionStorage.getItem("id")
 
 
-    const respostaMedida = await fetch(`http://localhost:8080/valores-medidas/${usuario}/${idPeca}/${idMedida}`, {
-    method: "DELETE"
+    const respostaMedida = await fetch(`http://localhost:8080/nomes-medidas/${usuario}/${idPeca}/${idMedida}`, {
+    method: "DELETE",
+    headers: {"Content-type": "application/json; charset=UTF-8"}
 })
-
+    console.log(respostaMedida)
     if(respostaMedida.status == 200){
-       window.location.href="./Lista-peca.html"
+       window.location.href="./Lista-medida.html"
     } else{
         alert("Ocorreu um erro ao deletar a peça")
     }
