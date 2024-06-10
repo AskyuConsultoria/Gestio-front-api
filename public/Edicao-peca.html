@@ -22,18 +22,18 @@
     <form class="form-cadastro d-flex flex-column" onsubmit="cadastrarPeca(); return false;">
          <!-- IMPORTANTE!! PARA CADASTRAR É NECESSÁRIO UTILIZAR ESSE ONSUBMIT POIS COMO 
         ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
-        <div class="d-flex flex-column mb-2">
+        <div class="before-select d-flex flex-column mb-2">
             <label for="nome" class="mb-4">Peça cadastrada</label>
             <select class="form-select" name="pecas" id="peca">
                 <option value="nomePeça">Calça</option>
                 <option value="nomePeça">Paletó</option>
             </select>
         </div>
-        <div class="mt-4 mb-4">
+        <div class="after-select mt-4 mb-4">
             <label for="descricao" class="mb-4">Descrição</label>
             <!-- UTILIZAR DESCRIÇÃO DESC-DEFAULT PARA SUBSCREVER O VALUE A PARTIR DE CONSULTA
              AO SELECIONAR A PEÇA, FAZ UM SELECT DA DESCRIÇÃO E ATRIBUI ESSE VALUE, AI FICA POSSIVEL ADICIONAR E APAGAR O QUE JÁ EXISTE-->
-            <input type="text" id="desc-default" value="descricao-default">
+            <input type="text" id="desc-default" class="input-default" value="descricao-default">
         </div>
         <div class="div-botao d-flex justify-content-center mt-5">
             <button class="save-btn mb-5">Salvar</button>

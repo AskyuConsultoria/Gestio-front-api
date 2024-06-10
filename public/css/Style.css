@@ -4,7 +4,7 @@
     font-family: "Inter", sans-serif;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
@@ -70,6 +70,12 @@ header {
     box-shadow: 4px 4px 8px var(--sombra);
 }
 
+.card {
+    max-width: 95%;
+    max-height: 9rem;
+    box-shadow: 4px 4px 8px var(--sombra);
+}
+
 .peca-card:active {
     background-color: var(--azul);
     color: white;
@@ -131,38 +137,38 @@ header {
 .tooltip {
     position: absolute;
     z-index: 1;
-  }
-  
-  .tooltip .popover {
+}
+
+.tooltip .popover {
     background-color: white;
     border-color: orange;
     border-radius: 5px;
     padding: 10px;
     color: black;
-  }
-  
-  .tooltip .popover-header {
-    background-color: orange;
-  }
+}
 
-.popover{
-    background-color: white; 
-    border-color: orange; 
-    border-radius: 5px; 
+.tooltip .popover-header {
+    background-color: orange;
+}
+
+.popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
     padding: 10px;
     color: black;
-  }
+}
 
-  .popover-header{
+.popover-header {
     background-color: orange;
-  }
+}
 
-  .btn-danger{
+.btn-danger {
     background-color: white;
-    border:none;
-  }
+    border: none;
+}
 
-  .seta-container {
+.seta-container {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -170,7 +176,7 @@ header {
 
 .tooltip.tooltip-inner {
     --bs-tooltip-color: var(--bs-white);
-  }
+}
 
 .seta-container img {
     display: block;
@@ -187,3 +193,64 @@ header {
 .peca-card:active .seta-container .seta2 {
     display: block;
 }
+
+/* RESPONSIVIDADE TABLET */
+@media (min-width: 768px) and (max-width: 991px) {
+    header {
+        img {
+            height: 4vh;
+        }
+    }
+
+    .container-md {
+        max-width: 95%;
+        font-size: 19px;
+        height: auto;
+    }
+
+    .card {
+        max-width: 97%;
+
+        .peca-nome {
+            font-size: 32px;
+        }
+
+        img {
+            height: 5vh
+        }
+
+        ;
+
+        .medidas {
+            font-size: 25px;
+        }
+
+    }
+
+    .imagem-container{
+        img{
+            height: 4vh;
+        }
+    }
+
+    .bold-title {
+        font-size: 40px;
+    }
+
+    small{
+        font-size: 18px;
+    }
+
+   img{
+    height: 5vh;
+   }
+}
+
+.link {
+    transition: all 0.3s ease-in-out; /* Define a transição para todas as propriedades */
+    transition-delay: 0.5s; /* Adiciona um delay de 0.5s na transição */
+  }
+  
+  .link:active {
+    transform: scale(0.95); /* Define a escala do link ao ser clicado */
+  }
