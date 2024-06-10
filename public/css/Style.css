@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+:root {
+    --azul: #012171;
+    --sombra: rgba(0, 0, 14, 0.163);
+}
+
+header {
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    div {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    span {
+        color: var(--azul);
+    }
+
+}
+
+.breadcrumb div span:first-of-type {
+    margin-left: 2%;
+}
+
+.bold-title {
+    color: var(--azul);
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+.titulo-card {
+    max-width: 100%;
+}
+
+.peca-nome {
+    margin-left: 20%;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--azul)
+}
+
+.medidas {
+    margin-left: 20%;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.peca-card {
+    max-width: 90%;
+    max-height: 9rem;
+    box-shadow: 4px 4px 8px var(--sombra);
+}
+
+.card {
+    max-width: 95%;
+    max-height: 9rem;
+    box-shadow: 4px 4px 8px var(--sombra);
+}
+
+.peca-card:active {
+    background-color: var(--azul);
+    color: white;
+
+    small {
+        color: white;
+    }
+
+    .peca-nome {
+        color: white;
+    }
+
+}
+
+.total-peca {
+    text-align: center;
+}
+
+.total-peca .valor {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.container-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+}
+
+.valor {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.imagem-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.imagem-container img {
+    display: block;
+}
+
+.imagem-container .imagem2 {
+    display: none;
+}
+
+.peca-card:active .imagem-container .imagem1 {
+    display: none;
+}
+
+.peca-card:active .imagem-container .imagem2 {
+    display: block;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+}
+
+.tooltip .popover-header {
+    background-color: orange;
+}
+
+.popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+}
+
+.popover-header {
+    background-color: orange;
+}
+
+.btn-danger {
+    background-color: white;
+    border: none;
+}
+
+.seta-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip.tooltip-inner {
+    --bs-tooltip-color: var(--bs-white);
+}
+
+.seta-container img {
+    display: block;
+}
+
+.seta-container .seta2 {
+    display: none;
+}
+
+.peca-card:active .seta-container .seta1 {
+    display: none;
+}
+
+.peca-card:active .seta-container .seta2 {
+    display: block;
+}
+
+/* RESPONSIVIDADE TABLET */
+@media (min-width: 768px) and (max-width: 991px) {
+    header {
+        img {
+            height: 4vh;
+        }
+    }
+
+    .container-md {
+        max-width: 95%;
+        font-size: 19px;
+        height: auto;
+    }
+
+    .card {
+        max-width: 97%;
+
+        .peca-nome {
+            font-size: 32px;
+        }
+
+        img {
+            height: 5vh
+        }
+
+        ;
+
+        .medidas {
+            font-size: 25px;
+        }
+
+    }
+
+    .imagem-container{
+        img{
+            height: 4vh;
+        }
+    }
+
+    .bold-title {
+        font-size: 40px;
+    }
+
+    small{
+        font-size: 18px;
+    }
+
+   img{
+    height: 5vh;
+   }
+}
+
+.link {
+    transition: all 0.3s ease-in-out; /* Define a transição para todas as propriedades */
+    transition-delay: 0.5s; /* Adiciona um delay de 0.5s na transição */
+  }
+  
+  .link:active {
+    transform: scale(0.95); /* Define a escala do link ao ser clicado */
+  }

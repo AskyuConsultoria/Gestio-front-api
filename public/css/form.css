@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --azul: #012171;
+    --sombra: rgba(0, 0, 14, 0.163);
+}
+
+body {
+    background-color: #012171 !important;
+}
+
+.container {
+    margin-top: 10%;
+}
+
+.bold-title {
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 30%;
+}
+
+label {
+    color: white;
+    font-weight: bold;
+}
+
+form {
+    input {
+        background-color: transparent;
+        font-size: 18px;
+        padding: 8px 8px 8px 4px;
+        display: block;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid white;
+        color: white;
+        height: 1rem;
+    }
+
+    input:focus {
+        outline: none;
+        box-shadow: none;
+        color: white;
+    }
+
+    select:focus {
+        height: 4vh;
+    }
+}
+
+.form-cadastro {
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+
+.save-btn {
+    border-radius: 20px;
+    width: 40vw;
+    border: none;
+    font-weight: 600;
+    height: 4vh;
+}
+
+.message {
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 60%;
+    height: 20%;
+    border-radius: 15px;
+}
+
+.texto-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.texto-msg span {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.texto-msg img {
+    width: 50px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.input-default {
+    height: 3vh;
+    padding-top: 8px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .form-cadastro {
+        margin-top: 10%;
+        margin-bottom: 10%;
+    }
+
+    .bold-title {
+        margin-top: 15%;
+        font-size: 25px;
+    }
+
+    .save-btn {
+        margin-top: 10%;
+        font-size: 22px;
+    }
+
+    form {
+        input {
+            height: 3rem;
+        }
+
+        label{
+            font-size: 20px;
+        }
+
+        select:focus {
+            height: 6vh;
+            margin-bottom: 6%;
+        }
+    }
+
+    .input-default {
+        height: 5vh;
+        padding-top: 8px;
+        margin-bottom: 4%;
+    }
+
+    .form-select{
+        font-size: 32px;
+        height: 15vh;
+    }
+
+    .before-select{
+        height:6vh
+    }
+
+    .description{
+        margin-top: 30%;
+    }
+
+    .mb-4 {
+        margin-bottom: 0.5rem !important;
+    }
+
+    .mb-4 label{
+        margin-top: 15%;
+    }
+}
