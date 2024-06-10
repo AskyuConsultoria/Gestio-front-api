@@ -9,9 +9,10 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/Style.css">
+    <script defer src="js/peca_editar.js"></script>
 </head>
 
-<body onload="listarUmaPecas()">
+<body onload="listarUmaPeca()">
     <header class="header py-4 bg-light w-100 px-0">
         <div class="container d-flex justify-content-between">
             <a href="./Lista-peca.html"> <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3"></a>
@@ -22,7 +23,7 @@
         <div class="breadcrumb mx-2">
             <div>MEUS <span>PRODUTOS</span> <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2">
                 <span>PEÇAS</span>
-                <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2"> <span>CALÇA</span>
+                <img src="./assets/seta.svg" alt="seta-indicacao" class="mx-2"> <span id="peca_bread_road">CALÇA</span>
             </div>
         </div>
         <div class="mt-2 py-2">
@@ -50,7 +51,7 @@
             </div>
             <div class="container-right">
                 <img src="./assets/lixeira.svg" alt="lixeira exclusão" class="lixeira btn btn-danger"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarMedida(1087)">
             </div>
         </div>
     </div>

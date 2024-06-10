@@ -12,7 +12,7 @@
     crossorigin="anonymous"></script>
     <script defer src="js/peca_editar.js"></script>
 </head>
-    <body onload="listarPecasEditar()">
+    <body>
        
 <div class="container d-flex align-items-center justify-content-between flex-column">
     <!-- AQUI A BARRA NAVEGAÇÃO POR PUSH VOLTA A PÁGINA DAS PEÇAS PARA MOSTRAR A ATUALIZAÇÃO NA PAGE -->
@@ -25,11 +25,11 @@
         ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
         <div class="mb-2">
             <label for="nome" class="mb-2">Nome</label>
-            <input type="text"class="input-default" id="">
+            <input type="text"class="input-default" id="nome_nova_peca">
         </div>
         <div class="mb-2">
             <label for="descricao" class="mt-4 mb-2">Descrição</label>
-            <input type="text" class="input-default">
+            <input type="text" class="input-default" id="descricao_nova_peca">
         </div>
         <div class="div-botao d-flex justify-content-center mt-5">
             <button class="save-btn mb-5">Salvar</button>

@@ -66,7 +66,7 @@ async function listarPecasEditar(){
     
 }
 
-async function listarUmaPecas(){
+async function listarUmaPeca(){
     const usuario = sessionStorage.getItem("id")
     const idPeca = sessionStorage.getItem("idPeca")
 
@@ -78,6 +78,8 @@ const data = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`);
 const FormatedData = await data.json()
 
 console.log("Resposta: ", FormatedData)
+
+document.getElementById("peca_bread_road").innerHTML = FormatedData.nome
 
 FormatedData.medida.forEach(medida => {
     document.getElementById("container").innerHTML += `
@@ -95,7 +97,7 @@ FormatedData.medida.forEach(medida => {
             </div>
             <div class="container-right">
                 <img src="./assets/lixeira.svg" alt="lixeira exclusão" class="lixeira btn btn-danger"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarPeca()">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarMedida(${medida.id})">
             </div>
         </div>`
 });
@@ -151,6 +153,24 @@ async function deletarPeca(){
 })
 
     if(respostaCadastro.status == 200){
+       window.location.href="./Lista-peca.html"
+    } else{
+        alert("Ocorreu um erro ao deletar a peça")
+    }
+    
+}
+
+async function deletarMedida(idMedida){
+
+    const idPeca = sessionStorage.getItem("idPeca")
+    const usuario = sessionStorage.getItem("id")
+
+
+    const respostaMedida = await fetch(`http://localhost:8080/valores-medidas/${usuario}/${idPeca}/${idMedida}`, {
+    method: "DELETE"
+})
+
+    if(respostaMedida.status == 200){
        window.location.href="./Lista-peca.html"
     } else{
         alert("Ocorreu um erro ao deletar a peça")
