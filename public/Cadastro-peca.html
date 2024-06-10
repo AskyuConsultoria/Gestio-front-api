@@ -10,8 +10,9 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script defer src="js/peca_editar.js"></script>
 </head>
-    <body>
+    <body onload="listarPecasEditar()">
        
 <div class="container d-flex align-items-center justify-content-between flex-column">
     <!-- AQUI A BARRA NAVEGAÇÃO POR PUSH VOLTA A PÁGINA DAS PEÇAS PARA MOSTRAR A ATUALIZAÇÃO NA PAGE -->
@@ -24,7 +25,7 @@
         ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
         <div class="mb-2">
             <label for="nome" class="mb-2">Nome</label>
-            <input type="text"class="input-default">
+            <input type="text"class="input-default" id="">
         </div>
         <div class="mb-2">
             <label for="descricao" class="mt-4 mb-2">Descrição</label>

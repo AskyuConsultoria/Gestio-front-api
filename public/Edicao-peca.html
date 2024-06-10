@@ -10,8 +10,9 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    <script defer scr="js/peca_editar.js"></script>
 </head>
-    <body>
+    <body onload="listarPecasEditar()">
 
 <div class="container d-flex align-items-center justify-content-between flex-column">
         <!-- AQUI A BARRA NAVEGAÇÃO POR PUSH VOLTA A PÁGINA DAS PEÇAS PARA MOSTRAR A ATUALIZAÇÃO NA PAGE -->
@@ -19,33 +20,26 @@
         <img src="./assets/linha drag.svg" alt="barra push navegação" class="mb-5">
     </a>
     <div class="bold-title">EDITAR UMA PEÇA</div>
-    <form class="form-cadastro d-flex flex-column" onsubmit="cadastrarPeca(); return false;">
+    <form class="form-cadastro d-flex flex-column" onsubmit="editarPeca(); return false;">
          <!-- IMPORTANTE!! PARA CADASTRAR É NECESSÁRIO UTILIZAR ESSE ONSUBMIT POIS COMO 
         ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
-        <div class="before-select d-flex flex-column mb-2">
+        <div class="d-flex flex-column mb-2">
             <label for="nome" class="mb-4">Peça cadastrada</label>
-            <select class="form-select" name="pecas" id="peca">
+            <select class="form-select" name="pecas" id="peca" onchange="descEditar()">
                 <option value="nomePeça">Calça</option>
                 <option value="nomePeça">Paletó</option>
             </select>
         </div>
-        <div class="after-select mt-4 mb-4">
+        <div class="mt-4 mb-4">
             <label for="descricao" class="mb-4">Descrição</label>
             <!-- UTILIZAR DESCRIÇÃO DESC-DEFAULT PARA SUBSCREVER O VALUE A PARTIR DE CONSULTA
              AO SELECIONAR A PEÇA, FAZ UM SELECT DA DESCRIÇÃO E ATRIBUI ESSE VALUE, AI FICA POSSIVEL ADICIONAR E APAGAR O QUE JÁ EXISTE-->
-            <input type="text" id="desc-default" class="input-default" value="descricao-default">
+            <input type="text" id="desc-default" value="descricao-default">
         </div>
         <div class="div-botao d-flex justify-content-center mt-5">
             <button class="save-btn mb-5">Salvar</button>
         </div>
     </form>
 </div>
-
-    <script>
-        // UTILIZAR ESSA FUNÇÃO PARA CADASTRAR, APENAS MANTER A MUDANÇA DE PÁGINA
-        function cadastrarPeca(){
-            window.location.href="./Lista-peca.html"
-        }
-    </script>
 </body>
 </html>
