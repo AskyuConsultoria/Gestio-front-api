@@ -79,7 +79,7 @@ const FormatedData = await data.json()
 
 console.log("Resposta: ", FormatedData)
 
-document.getElementById("peca_bread_road").innerHTML = FormatedData.nome
+document.getElementById("peca_bread_road").innerHTML = (FormatedData.nome).toUpperCase()
 
 FormatedData.medida.forEach(medida => {
     document.getElementById("container").innerHTML += `
