@@ -1,54 +1,100 @@
-.background{
-    background: rgb(1,33,113);
-    background: -moz-linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
-    background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#012171",endColorstr="#023fd7",GradientType=1);
+.background {
+    background: rgb(1, 33, 113);
+    background: -moz-linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    background: linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#012171", endColorstr="#023fd7", GradientType=1);
     height: 50vh;
     display: flex;
-    h2{
+
+    h2 {
         font-size: 40px;
         text-align: center;
     }
-    span{
+
+    span {
         text-align: center;
         width: 100%;
     }
 }
-.background2{
+
+.background2 {
     background: #D9D9D9;
     height: 50vh;
 }
-.box-titulo{
+
+.box-titulo {
     width: 60vw;
 }
-.titulo{
+
+.titulo {
     align-self: center;
 }
-.box-login{
+
+.box-login {
     background-color: white;
     position: absolute;
     height: fit-content;
     align-self: center;
     justify-self: center;
-    top:28%;
+    top: 28%;
     width: 70vw;
 }
-.conjunto-login{
+
+.conjunto-login {
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    .form-check{
+
+    .form-check {
         display: flex;
     }
-    .checkmark{
+
+    .checkmark {
         width: 30px;
         height: 30px;
-        color:#012171;
+        color: #012171;
     }
+
     .form-check-input:checked {
         background-color: #012171;
         border-color: #012171;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .box-login {
+        width: 60vw;
+    }
+
+
+    .form-group {
+        input {
+            font-size: 18px;
+        }
+    }
+
+    .form-check {
+        label {
+            font-size: 16px;
+        }
+
+        a {
+            font-size: 16px;
+        }
+    }
+
+    .text-center {
+        font-size: 18px;
+    }
+
+    .background2 {
+        h2 {
+            font-size: 48px;
+        }
+        .sub-title{
+            font-size: 22px;
+        }
     }
 }
