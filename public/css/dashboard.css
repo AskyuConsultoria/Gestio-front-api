@@ -8,6 +8,17 @@ body {
     font-family: Inter;
 }
 
+header {
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+
 
 .linha{
     width: 353px;
