@@ -53,7 +53,7 @@
     <header class="header py-4 bg-light w-100 px-0">
         <div class="container d-flex justify-content-between align-items-center">
             <a href=""> <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3"></a>
-            <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="" class="mx-3">
+            <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="redirecionar()" class="mx-3">
         </div>
     </header>
     <div class="container-custom mt-4">
@@ -215,6 +215,9 @@
 <script src="./js/kpi.js"></script>
 <script>
     
+    function redirecionar(){
+        window.location = "Lista-peca.html"
+    }
 
     window.onload = async function () {        
     buscarRelatorioPedido(1)
