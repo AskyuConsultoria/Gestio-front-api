@@ -44,6 +44,17 @@
     font-size: 16px;
     padding: 15px 0;
     }
+
+  .com-pedido:after{
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: #012171;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    right: 20px 
+  }
   
   .calendar_content div {
     border: 1px solid transparent;
