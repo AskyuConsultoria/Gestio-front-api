@@ -1,3 +1,5 @@
+var listaPedido = []
+
 let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
@@ -21,9 +23,32 @@ const months = [
     "Novembro",
     "Dezembro"
 ];
+
+
+async function buscarPedidosEmIntervaloDeTempo(idUsuario, dataInicio, dataFim){
+    
+    try{
+        const resposta = await fetch(`http://localhost:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${dataInicio}&dataFim=${dataFim}`)
+        if(resposta.status == 204){
+            return []
+        }
+        return await resposta.json()
+    }
+    catch(error) {
+        throw new Error(`Erro de servidor: ${error}`)
+    }
+}
+
+async function acessarDados(idUsuario){
+    var dataInicio = montarDataParaISO(new Date(year, month, 1))
+    var dataFim = montarDataParaISO(new Date(year, month + 1, 0))
+
+    listaPedido = await buscarPedidosEmIntervaloDeTempo(1, dataInicio, dataFim)
+    console.log(listaPedido)
+}
  
 // Function to generate the calendar
-const manipulate = () => {
+async function manipulate(){
  
     // Get the first day of the month
     let dayone = new Date(year, month, 1).getDay();
@@ -46,16 +71,25 @@ const manipulate = () => {
             `<div class="inactive">${monthlastdate - i + 1}</div>`;
     }
  
+    // Renova a lista de pedidos
+    await acessarDados(1)
+    
     // Loop to add the dates of the current month
     for (let i = 1; i <= lastdate; i++) {
  
-        // Check if the current date is today
-        let isToday = i === date.getDate()
-            && month === new Date().getMonth()
-            && year === new Date().getFullYear()
-            ? "active"
-            : "";
-        lit += `<div>${i}</div>`;
+        if(i < listaPedido.length && listaPedido.length != 0){
+            var dataIteracao = new Date(listaPedido[i].dataInicio).getDate()
+
+            if(i == dataIteracao){
+                lit +=`<div class="com-pedido">${i}</div>`
+            } else{
+                lit += `<div>${i}</div>`
+            }
+            
+        } else{
+            lit += `<div>${i}</div>`
+        }
+
     }
  
     // Loop to add the first dates of the next month
@@ -109,3 +143,14 @@ iconesSetasMeses.forEach(icon => {
         manipulate();
     });
 });
+
+// Check if the current date is today
+// let isToday = i === date.getDate()
+// && month === new Date().getMonth()
+// && year === new Date().getFullYear()
+// ? "active"
+// : "";
+
+function montarDataParaISO(data){
+  return new Date(data).toISOString()
+}
