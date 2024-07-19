@@ -1,3 +1,5 @@
+
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 * {
@@ -12,6 +14,7 @@ a {
 :root {
     --azul: #012171;
     --sombra: rgba(0, 0, 14, 0.163);
+    --cinza: #696969;
 }
 
 header {
@@ -70,6 +73,13 @@ header {
     box-shadow: 4px 4px 8px var(--sombra);
 }
 
+.etapa-card {
+    max-width: 90%;
+    max-height: 9rem;
+    box-shadow: 4px 4px 8px var(--sombra);
+}
+
+
 .card {
     max-width: 95%;
     max-height: 9rem;
@@ -85,6 +95,20 @@ header {
     }
 
     .peca-nome {
+        color: white;
+    }
+
+}
+
+.etapa-card:active {
+    background-color: var(--azul);
+    color: white;
+
+    small {
+        color: white;
+    }
+
+    .etapa-nome {
         color: white;
     }
 
@@ -132,6 +156,18 @@ header {
 
 .peca-card:active .imagem-container .imagem2 {
     display: block;
+}
+
+.etapa-card:active .imagem-container .imagem1 {
+    display: none;
+}
+
+.etapa-card:active .imagem-container .imagem2 {
+    display: block;
+}
+
+.etapa-card{
+    margin-top: 1%;
 }
 
 .tooltip {
@@ -194,11 +230,38 @@ header {
     display: block;
 }
 
+.etapa-card:active .seta-container .seta1 {
+    display: none;
+}
+
+.etapa-card:active .seta-container .seta2 {
+    display: block;
+}
+
+.sub-title{
+    color: var(--cinza);
+    font-size: 16px;
+}
+
+.card-body{
+    .etapa{
+        width: 10%;
+        font-size: 12.7px;
+        font-weight: 500;
+    }    
+
+    .etapa-nome{
+        color: var(--azul);
+        font-weight: bold;
+    }
+}
+
+
 /* RESPONSIVIDADE TABLET */
 @media (min-width: 768px) and (max-width: 991px) {
     header {
         img {
-            height: 4vh;
+            height: 5vh;
         }
     }
 
@@ -224,8 +287,21 @@ header {
         .medidas {
             font-size: 25px;
         }
-
     }
+
+    .card-body{
+        .etapa{
+            font-size: 18px;
+        }   
+    }
+
+    .etapa-nome{
+        font-size: 28px;
+    }
+
+    .sub-title{
+        font-size: 20px;
+       }
 
     .imagem-container{
         img{
@@ -244,7 +320,10 @@ header {
    img{
     height: 5vh;
    }
+
 }
+
+
 
 .link {
     transition: all 0.3s ease-in-out; /* Define a transição para todas as propriedades */
@@ -254,3 +333,6 @@ header {
   .link:active {
     transform: scale(0.95); /* Define a escala do link ao ser clicado */
   }
+ 
+
+
