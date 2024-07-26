@@ -1,32 +1,32 @@
-async function buscarUltimos7Pedidos(idUsuario){
+async function buscarUltimos7Pedidos(idUsuario) {
 
-    try{
-        const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/ultimos`, {
-            method: "GET"
-        });
+  try {
+    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/ultimos`, {
+      method: "GET"
+    });
 
-        if (!response.ok) {
-            throw new Error(`Erro de servidor, status: ${response.status}`);
-        }
-
-        const dados = await response.json()
-        console.log(dados)
-        criarPedidos(dados)
-
-    } catch (error){
-
-        console.log(`Houve um erro: ${error}`)
+    if (!response.ok) {
+      throw new Error(`Erro de servidor, status: ${response.status}`);
     }
-    
+
+    const dados = await response.json()
+    console.log(dados)
+    criarPedidos(dados)
+
+  } catch (error) {
+
+    console.log(`Houve um erro: ${error}`)
+  }
+
 }
 
-function criarPedidos(listaPedido){
-    const elementoContainer = document.querySelector("#pedidos-conteudo")
-    elementoContainer.innerHTML = ""
+function criarPedidos(listaPedido) {
+  const elementoContainer = document.querySelector("#pedidos-conteudo")
+  elementoContainer.innerHTML = ""
 
 
-    for(var i = 0; i < listaPedido.length; i++){
-      elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+  for (var i = 0; i < listaPedido.length; i++) {
+    elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
       <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
         <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
   
@@ -45,11 +45,11 @@ function criarPedidos(listaPedido){
       </div>
      </div>`
 
-    }
+  }
 
 }
 
-function formatarData(data){
+function formatarData(data) {
   dia = data.substring(8, 10)
   mes = new Date(data).getMonth()
   ano = new Date(data).getFullYear()
@@ -57,11 +57,11 @@ function formatarData(data){
   return `${dia}/${mes}/${ano}`
 }
 
-function formatarHorario(data){
+function formatarHorario(data) {
   horas = new Date(data).getHours()
 
   var horarioFormatado = ""
-  if(horas <= 9){
+  if (horas <= 9) {
     horarioFormatado = `0${horas}h`
   }
 
@@ -69,7 +69,7 @@ function formatarHorario(data){
   return horarioFormatado
 }
 
-function adicionarNomeDeUsuario(){
+function adicionarNomeDeUsuario() {
   var containerNomeUsuario = document.querySelector("#nome-usuario")
   const nomeUsuario = sessionStorage.getItem("usuario")
   containerNomeUsuario.textContent = nomeUsuario
