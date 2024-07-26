@@ -1,3 +1,4 @@
+
 var listaPedido = []
 
 let date = new Date();
@@ -23,6 +24,16 @@ const months = [
     "Novembro",
     "Dezembro"
 ];
+
+const diasSemana = [
+"Dom",
+"Seg",
+"Ter",
+"Qua",
+"Qui",
+"Sex",
+"Sab",
+]
 
 
 async function buscarPedidosEmIntervaloDeTempo(idUsuario, dataInicio, dataFim){
@@ -68,7 +79,7 @@ async function manipulate(){
     // Loop to add the last dates of the previous month
     for (let i = dayone; i > 0; i--) {
         lit +=
-            `<div class="inactive">${monthlastdate - i + 1}</div>`;
+            `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, monthlastdate, i)}">${monthlastdate - i + 1}</div>`;
     }
  
     // Renova a lista de pedidos
@@ -81,20 +92,20 @@ async function manipulate(){
             var dataIteracao = new Date(listaPedido[i].dataInicio).getDate()
 
             if(i == dataIteracao){
-                lit +=`<div class="com-pedido">${i}</div>`
+                lit +=`<div class="com-pedido dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
             } else{
-                lit += `<div>${i}</div>`
+                lit += `<div class="dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
             }
             
         } else{
-            lit += `<div>${i}</div>`
+            lit += `<div class="dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
         }
 
     }
  
     // Loop to add the first dates of the next month
     for (let i = dayend; i < 6; i++) {
-        lit += `<div class="inactive">${i - dayend + 1}</div>`
+        lit += `<div class="inactive dia">${i - dayend + 1}</div>`
     }
  
     // Update the text of the current date element 
@@ -104,9 +115,12 @@ async function manipulate(){
     // update the HTML of the dates element 
     // with the generated calendar
     elementoCorpoDoCalendario.innerHTML = lit;
+
+    adicionarListeners()
 }
  
-manipulate();
+await manipulate();
+
  
 // Attach a click event listener to each icon
 iconesSetasMeses.forEach(icon => {
@@ -154,3 +168,44 @@ iconesSetasMeses.forEach(icon => {
 function montarDataParaISO(data){
   return new Date(data).toISOString()
 }
+
+// Funções do calendário semanal
+var modal = new bootstrap.Modal(document.getElementById('modal'))
+
+function adicionarListeners(){
+    // inicializa a construção do calendário semanal
+    var dias = document.querySelectorAll('.dia')
+    for(var i = 0; i < dias.length; i++){
+        dias[i].addEventListener('click', function () {
+            modal.show()
+        })
+    }
+  }
+ 
+function construirDiasDaSemana(dataDiaSelecionado){
+    var diaDaSemana = new Date(dataDiaSelecionado).getDay()
+    var dia = new Date(dataDiaSelecionado).getDate()
+    var mes = new Date(dataDiaSelecionado).getMonth()
+    var ano = new Date(dataDiaSelecionado).getFullYear()
+
+    var diasDaSemanaElemento = document.querySelectorAll('#dayofweek')
+    // Modificando os valores do dia atual
+    diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
+    diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
+
+    const iterador = [1, 2, 3, 3, 1, 2, 3]
+    const mediador = 2
+    for(i = 0; i <= mediador ; i++){
+        diasDaSemanaElemento[mediador - i].childNodes[1].innerText = new Date(ano, mes, dia - iterador[i]).getDate() 
+        diasDaSemanaElemento[mediador - i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia - iterador[i]).getDay()]
+    }
+
+    for(i = 4; i <= 6; i++){
+        diasDaSemanaElemento[i].childNodes[1].innerText = new Date(ano, mes, dia + iterador[i]).getDate() 
+        diasDaSemanaElemento[i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia + iterador[i]).getDay()]
+    }
+
+}
+
+
+
