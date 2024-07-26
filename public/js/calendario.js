@@ -5,7 +5,7 @@ let date = new Date();
 let year = date.getFullYear();
 let month = date.getMonth();
  
-var elementoCalendarioHeader = document.querySelector("#mes-ano-calendario")
+var elementoCalendarioHeader = document.querySelector(".mes-ano-calendario")
 var iconesSetasMeses = document.querySelectorAll(".switch-month")
 var elementoCorpoDoCalendario = document.querySelector(".calendar_content")
 
@@ -79,7 +79,7 @@ async function manipulate(){
     // Loop to add the last dates of the previous month
     for (let i = dayone; i > 0; i--) {
         lit +=
-            `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, monthlastdate, i)}">${monthlastdate - i + 1}</div>`;
+            `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month - 1, monthlastdate - i + 1)}">${monthlastdate - i + 1}</div>`;
     }
  
     // Renova a lista de pedidos
@@ -105,13 +105,13 @@ async function manipulate(){
  
     // Loop to add the first dates of the next month
     for (let i = dayend; i < 6; i++) {
-        lit += `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i - dayend + 1)}">${i - dayend + 1}</div>`
+        lit += `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month + 1, i - dayend + 1)}">${i - dayend + 1}</div>`
     }
  
     // Update the text of the current date element 
     // with the formatted current month and year
+    elementoCalendarioHeader.id = new Date(year, month, 1)
     elementoCalendarioHeader.innerText = `${months[month]} ${year}`;
- 
     // update the HTML of the dates element 
     // with the generated calendar
     elementoCorpoDoCalendario.innerHTML = lit;
@@ -192,6 +192,8 @@ function construirDiasDaSemana(dataDiaSelecionado){
     // Modificando os valores do dia atual
     diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
     diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
+    diasDaSemanaElemento[3].classList.add("pb-3")
+    diasDaSemanaElemento[3].style.backgroundColor = "#012171"
 
     const iterador = [1, 2, 3, 3, 1, 2, 3]
     const mediador = 2
