@@ -29,7 +29,7 @@
           </button>
         </div>
         <div class="modal-body px-0">
-          <div class="d-flex container px-3 py-1 justify-content-center">
+          <div class="d-flex container px-3 py-1 justify-content-center mes-ano-semana">
             <h4>June 2021</h4>
           </div>
           <div class="d-flex px-3 flex-row">
@@ -333,7 +333,7 @@
       <div class="calendar calendar-first" id="calendar_first">
         <div class="calendar_header">
           <button class="switch-month switch-left" id="calendar-prev"> <i class="fa fa-chevron-left"></i></button>
-          <h2 id="mes-ano-calendario">June 2024</h2>
+          <h2 class="mes-ano-calendario">June 2024</h2>
           <button class="switch-month switch-right" id="calendar-next"> <i class="fa fa-chevron-right"></i></button>
       </div>
         <div class="calendar_weekdays rounded rounded-bottom-0">
@@ -443,6 +443,21 @@
   "Sab",
   ]
 
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+];
+
 
   function construirDiasDaSemana(dataDiaSelecionado){
     var diaDaSemana = new Date(dataDiaSelecionado).getDay()
@@ -451,10 +466,17 @@
     var ano = new Date(dataDiaSelecionado).getFullYear()
 
     var diasDaSemanaElemento = document.querySelectorAll('#dayofweek')
-    // Modificando os valores do dia atual
-    diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
-    diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
 
+    // Modificando os valores do dia selecionado
+    diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
+    diasDaSemanaElemento[3].childNodes[1].style.color
+    diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
+    diasDaSemanaElemento[3].classList.add("pb-3")
+    diasDaSemanaElemento[3].style.backgroundColor = "#012171"
+    diasDaSemanaElemento[3].classList.add("text-light")
+
+    validarMesEAno(dataDiaSelecionado)
+  
     const iterador = [1, 2, 3, 3, 1, 2, 3]
     const mediador = 2
     for(i = 0; i <= mediador ; i++){
@@ -466,6 +488,22 @@
         diasDaSemanaElemento[i].childNodes[1].innerText = new Date(ano, mes, dia + iterador[i]).getDate() 
         diasDaSemanaElemento[i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia + iterador[i]).getDay()]
     }
+
+    
+    function validarMesEAno(dataDiaSelecionado){
+      var mesEAnoSemanaElemento = document.querySelector(".mes-ano-semana")
+
+      var mesSemana = new Date(mesEAnoSemanaElemento.id).getMonth()
+      var anoSemana = new Date(mesEAnoSemanaElemento.id).getFullYear()
+
+      var mesSelecionado = new Date(dataDiaSelecionado).getMonth()
+      var anoSelecionado = new Date(dataDiaSelecionado).getFullYear()
+
+      if(mesSelecionado != mesSemana || anoSelecionado != anoSemana){
+        mesEAnoSemanaElemento.innerText = `${meses[mesSelecionado]} ${anoSelecionado}`
+      }
+    }
+
 
 }
 
