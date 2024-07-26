@@ -188,7 +188,7 @@ function construirDiasDaSemana(dataDiaSelecionado){
     var mes = new Date(dataDiaSelecionado).getMonth()
     var ano = new Date(dataDiaSelecionado).getFullYear()
 
-    var diasDaSemanaElemento = document.querySelectorAll('#dayofweek')
+    var diasDaSemanaElemento = document.querySelectorAll('.dayofweek')
     // Modificando os valores do dia atual
     diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
     diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
