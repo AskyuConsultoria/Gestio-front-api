@@ -34,7 +34,7 @@
           </div>
           <div class="d-flex px-3 flex-row">
             <div class="d-flex overflow-x-visible w-100 flex-row">
-              <div class="d-flex flex-column align-items-center rounded-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center rounded-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -42,7 +42,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center rounded-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center rounded-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -50,7 +50,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center rounded-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center rounded-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -58,7 +58,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center rounded-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center rounded-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -66,7 +66,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center roudend-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center roudend-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -74,7 +74,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center roudend-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center roudend-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -82,7 +82,7 @@
                   fri
                 </span>
               </div>
-              <div class="d-flex flex-column align-items-center roudend-1 me-2" id="dayofweek" style="width: 14.28%;">
+              <div class="d-flex flex-column align-items-center roudend-1 me-2 dayofweek" onclick="construirDiasDaSemana(this.id)" style="width: 14.28%;">
                 <span>
                   1
                 </span>
@@ -465,12 +465,14 @@
     var mes = new Date(dataDiaSelecionado).getMonth()
     var ano = new Date(dataDiaSelecionado).getFullYear()
 
-    var diasDaSemanaElemento = document.querySelectorAll('#dayofweek')
+    var diasDaSemanaElemento = document.querySelectorAll('.dayofweek')
 
     // Modificando os valores do dia selecionado
+    diasDaSemanaElemento[3].id = dataDiaSelecionado
     diasDaSemanaElemento[3].childNodes[1].innerText =  new Date(dataDiaSelecionado).getDate()
     diasDaSemanaElemento[3].childNodes[1].style.color
     diasDaSemanaElemento[3].childNodes[3].innerText =  diasDaSemana[new Date(dataDiaSelecionado).getDay()]
+    diasDaSemanaElemento[3].classList.add("selecionado")
     diasDaSemanaElemento[3].classList.add("pb-3")
     diasDaSemanaElemento[3].style.backgroundColor = "#012171"
     diasDaSemanaElemento[3].classList.add("text-light")
@@ -480,17 +482,21 @@
     const iterador = [1, 2, 3, 3, 1, 2, 3]
     const mediador = 2
     for(i = 0; i <= mediador ; i++){
+        diasDaSemanaElemento[mediador - i].id = new Date(ano, mes, dia - iterador[i])
         diasDaSemanaElemento[mediador - i].childNodes[1].innerText = new Date(ano, mes, dia - iterador[i]).getDate() 
         diasDaSemanaElemento[mediador - i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia - iterador[i]).getDay()]
     }
 
     for(i = 4; i <= 6; i++){
+        diasDaSemanaElemento[i].id = new Date(ano, mes, dia + iterador[i])
         diasDaSemanaElemento[i].childNodes[1].innerText = new Date(ano, mes, dia + iterador[i]).getDate() 
         diasDaSemanaElemento[i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia + iterador[i]).getDay()]
     }
 
-    
-    function validarMesEAno(dataDiaSelecionado){
+}
+
+
+function validarMesEAno(dataDiaSelecionado){
       var mesEAnoSemanaElemento = document.querySelector(".mes-ano-semana")
 
       var mesSemana = new Date(mesEAnoSemanaElemento.id).getMonth()
@@ -502,9 +508,9 @@
       if(mesSelecionado != mesSemana || anoSelecionado != anoSemana){
         mesEAnoSemanaElemento.innerText = `${meses[mesSelecionado]} ${anoSelecionado}`
       }
-    }
-
-
 }
+
+
+
 
 </script>
