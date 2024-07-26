@@ -105,7 +105,7 @@ async function manipulate(){
  
     // Loop to add the first dates of the next month
     for (let i = dayend; i < 6; i++) {
-        lit += `<div class="inactive dia">${i - dayend + 1}</div>`
+        lit += `<div class="inactive dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i - dayend + 1)}">${i - dayend + 1}</div>`
     }
  
     // Update the text of the current date element 
