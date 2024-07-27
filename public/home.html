@@ -92,10 +92,60 @@
               </div>
             </div>
           </div>
+          <div class="d-flex px-3 flex-row py-3">
+            <div class="d-flex">
+              <span class="d-flex w-100 pe-2 align-items-center text-secondary">
+                Adicionar um novo pedido
+              </span>
+              <button class="rounded-5 adicionar-pedido justify-content-center align-items-center" style="background-color: #012171; width: 35px; height: 30px;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#ffffff"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="d-flex px-3 flex-row py-3 text-secondary">
+            Agendamentos nesse dia:
+          </div>
+          <div class="pb-3" id="pedidos-conteudo-semana">
+            <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+              <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
+                <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
+          
+                <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
+          
+                  <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium">
+                    Patricia Poeta
+                  </div>
+          
+                  <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
+                    09/5/20242 das 15h - 16
+                  </div>
+          
+                </div>
+      
+              </div>
+             </div>
+        
+             <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+              <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
+                <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
+          
+                <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
+          
+                  <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium">
+                    Patricia Poeta
+                  </div>
+          
+                  <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
+                    09/5/20242 das 15h - 16
+                  </div>
+          
+                </div>
+      
+              </div>
+             </div>
+             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="modal-footer pw-0 py-0">
         </div>
       </div>
     </div>
@@ -459,7 +509,7 @@
 ];
 
 
-  function construirDiasDaSemana(dataDiaSelecionado){
+  async function construirDiasDaSemana(dataDiaSelecionado){
     var diaDaSemana = new Date(dataDiaSelecionado).getDay()
     var dia = new Date(dataDiaSelecionado).getDate()
     var mes = new Date(dataDiaSelecionado).getMonth()
@@ -493,6 +543,8 @@
         diasDaSemanaElemento[i].childNodes[3].innerText = diasDaSemana[new Date(ano, mes, dia + iterador[i]).getDay()]
     }
 
+   await buscarPedidosComBaseNoDia(dataDiaSelecionado)
+
 }
 
 
@@ -508,6 +560,86 @@ function validarMesEAno(dataDiaSelecionado){
       if(mesSelecionado != mesSemana || anoSelecionado != anoSemana){
         mesEAnoSemanaElemento.innerText = `${meses[mesSelecionado]} ${anoSelecionado}`
       }
+}
+
+async function buscarPedidosComBaseNoDia(dataDiaSelecionado){
+  var dataDiaSelecionadoObjeto = new Date(dataDiaSelecionado)
+  var inicioDoDia = new Date(dataDiaSelecionadoObjeto).toISOString() 
+  var fimDoDia = new Date(dataDiaSelecionadoObjeto.setHours(23,59,59)).toISOString() 
+  var idUsuario = 1   
+
+  try {
+    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
+      method: "GET"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro de servidor, status: ${response.status}`);
+    }
+
+    if(response.status == '204'){
+      const elementoContainer = document.querySelector("#pedidos-conteudo-semana")
+      elementoContainer.innerHTML = `<span class="text-secondary px-3">Não há nenhum agendamento marcado neste dia<span>` 
+      return
+    }
+
+    const dados = await response.json()
+    console.log(dados)
+    criarPedidosDiario(dados)
+
+  } catch (error) {
+
+    console.log(`Houve um erro: ${error}`)
+  }
+}
+
+function criarPedidosDiario(listaPedido) {
+  const elementoContainer = document.querySelector("#pedidos-conteudo-semana")
+  elementoContainer.innerHTML = ""
+
+
+  for (var i = 0; i < listaPedido.length; i++) {
+    elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+      <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
+        <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
+  
+        <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
+  
+          <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium">
+            ${listaPedido[i].cliente.nome} ${listaPedido[i].cliente.nome}
+          </div>
+  
+          <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
+            ${formatarData(listaPedido[i].dataInicio)} das ${formatarHorario(listaPedido[i].dataInicio)} - ${formatarHorario(listaPedido[i].dataFim)}
+          </div>
+  
+        </div>
+  
+      </div>
+     </div>`
+
+  }
+
+}
+
+function formatarData(data) {
+  dia = data.substring(8, 10)
+  mes = new Date(data).getMonth()
+  ano = new Date(data).getFullYear()
+
+  return `${dia}/${mes}/${ano}`
+}
+
+function formatarHorario(data) {
+  horas = new Date(data).getHours()
+
+  var horarioFormatado = ""
+  if (horas <= 9) {
+    horarioFormatado = `0${horas}h`
+  }
+
+  horarioFormatado = `${horas}h`
+  return horarioFormatado
 }
 
 
