@@ -1,6 +1,6 @@
 
   .calendar, .calendar_weekdays, .calendar_content {
-    max-width: 450px;
+    max-width: 470px;
     }
   
   .calendar {
@@ -124,11 +124,25 @@
     width: 15%;
     -webkit-transition: color .2s;
     -o-transition: color .2s;
-    transition: color .2s; }
-  
+    transition: color .2s; 
+  }
+
   button.switch-month:hover {
     color: #012171; 
 }
+
+button.adicionar-pedido{
+  padding: 0;
+  outline: none;
+  border: none;
+  -webkit-transition: color .2s;
+  -o-transition: color .2s;
+  transition: color .2s; 
+}
+
+
+
+
 
 
 .inactive{
