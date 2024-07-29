@@ -58,7 +58,15 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="John Doe" type="text" id="input-nome">
+                <input class="w-100 form-control" placeholder="John" type="text" id="input-nome">
+            </div>
+
+            <div class="d-flex ps-3 mb-2 w-100">
+                <span class="text-secondary fw-light">Sobrenome</span>
+            </div>
+
+            <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
+                <input class="w-100 form-control" placeholder="Doe" type="text" id="input-sobrenome">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
@@ -93,11 +101,19 @@
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
-                <span class="text-secondary fw-light">Data e Horário do Pedido</span>
+                <span class="text-secondary fw-light">Data e Horário do começo do pedido</span>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Data" type="datetime-local" id="input-datetime-pedido">
+                <input class="w-100 form-control" placeholder="Data" type="datetime-local" id="input-data-inicio">
+            </div>
+
+            <div class="d-flex ps-3 mb-2 w-100">
+                <span class="text-secondary fw-light">Data e Horário do fim do pedido</span>
+            </div>
+
+            <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
+                <input class="w-100 form-control" placeholder="Data" type="datetime-local" id="input-data-fim">
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 w-100 justify-content-center">
@@ -182,7 +198,9 @@
     
     <!-- Ínicio da página de associação de clientes -->
     <div class="d-flex container px-3 flex-row input-group mb-3 componente">
-        <span class="input-group-text  w-auto h-auto bg-body">
+        <button class="input-group-text  w-auto h-auto bg-body" onclick="buscarClientesPorNome(
+            document.querySelector('#input-cliente').value
+        )">
             <?xml version="1.0" ?><svg class="icone-lupa" enable-background="new 0 0 32 32" id="Editable-line"
                 version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -191,8 +209,8 @@
                 <line fill="none" id="XMLID_44_" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
                     stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
             </svg>
-        </span>
-        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes">
+        </button>
+        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes" id="input-cliente" onkeydown="validarEventoKeyboard(event)">
         <span class="input-group-text w-auto h-auto b g-body">
             <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
                 viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +236,7 @@
     </div>
 
     <div class="d-flex flex-column box-cliente h-100 componente" style="background-color: #EEEEEE;">
-        <div class="pb-3" id="pedidos-conteudo-semana">
+        <div class="pb-3" id="conteudo-cliente">
             <div class="d-flex container px-3 col-12 py-2 flex-row w-100" style="height: 76px;">
                 <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
                     <div class="d-flex h-100 w-15 rounded rounded-end-0"

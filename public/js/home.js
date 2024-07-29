@@ -28,7 +28,7 @@ function criarPedidos(listaPedido) {
   for (var i = 0; i < listaPedido.length; i++) {
     // vou ter que corrigir
     elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="consultar-pedido" onclick="salvarDadosETransferirParaOutraPagina(this.id)">
+      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="consultar-pedido" onclick="salvarDadosETransferirParaOutraPagina(this.id, ${listaPedido[i].id})">
         <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
   
         <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
@@ -76,14 +76,16 @@ function adicionarNomeDeUsuario() {
   containerNomeUsuario.textContent = nomeUsuario
 }
 
-function salvarDadosETransferirParaOutraPagina(classe){
+function salvarDadosETransferirParaOutraPagina(classe, agendamentoId){
 
   if(typeof classe != 'string'){
     classe = classe[0]
   }
   
   sessionStorage.removeItem("PAGINA-PEDIDO")
- // sessionStorage.setItem("DATA-PEDIDO", dataPedido)
+  sessionStorage.removeItem("AGENDAMENTO-ID")
+
+  sessionStorage.setItem("AGENDAMENTO-ID", agendamentoId)
 
   if(classe == "adicionar-pedido"){
     sessionStorage.setItem("PAGINA-PEDIDO", "adicionar-pedido")
