@@ -97,7 +97,7 @@
               <span class="d-flex w-100 pe-2 align-items-center text-secondary">
                 Adicionar um novo pedido
               </span>
-              <button class="rounded-5 adicionar-pedido justify-content-center align-items-center" style="background-color: #012171; width: 35px; height: 30px;">
+              <button class="adicionar-pedido rounded-5 justify-content-center align-items-center" id="adicionar-pedido" onclick="salvarDadosETransferirParaOutraPagina(this.id)" style="background-color: #012171; width: 35px; height: 30px;">
                 <svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#ffffff"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
               </button>
             </div>
@@ -112,11 +112,11 @@
           
                 <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
           
-                  <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium">
+                  <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium" onclick="salvarDadosETransferirParaOutraPagina(this.id)">
                     Patricia Poeta
                   </div>
           
-                  <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
+                  <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4" onclick="salvarDadosETransferirParaOutraPagina(this.id)">
                     09/5/20242 das 15h - 16
                   </div>
           
@@ -600,7 +600,7 @@ function criarPedidosDiario(listaPedido) {
 
   for (var i = 0; i < listaPedido.length; i++) {
     elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
+      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="${listaPedido[i].id}" onclick="salvarDadosETransferirParaOutraPagina(this.classList)">
         <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
   
         <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
@@ -641,8 +641,4 @@ function formatarHorario(data) {
   horarioFormatado = `${horas}h`
   return horarioFormatado
 }
-
-
-
-
 </script>
