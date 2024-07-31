@@ -58,15 +58,15 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="John" type="text" id="input-nome">
+                <input class="w-100 form-control cliente" placeholder="John" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoNome)" id="input-nome">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
-                <span class="text-secondary fw-light">Sobrenome</span>
+                <span class="text-secondary fw-light cliente">Sobrenome</span>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Doe" type="text" id="input-sobrenome">
+                <input class="w-100 form-control cliente" placeholder="Doe" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoSobrenome)" id="input-sobrenome">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
@@ -74,7 +74,7 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="11-93230192010" type="text" id="input-numero-celular">
+                <input class="w-100 form-control telefone" placeholder="11-93230192010" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoTelefone)" id="input-numero-celular">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
@@ -83,7 +83,7 @@
 
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="john.doe@gmail.com" type="text" id="input-email">
+                <input class="w-100 form-control cliente" placeholder="john.doe@gmail.com" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoEmail)" id="input-email">
             </div>
 
 
@@ -105,7 +105,7 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Data" type="datetime-local" id="input-data-inicio">
+                <input class="w-100 form-control pedido" placeholder="Data" type="datetime-local" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataInicioPedido)" id="input-data-inicio">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
@@ -113,7 +113,7 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Data" type="datetime-local" id="input-data-fim">
+                <input class="w-100 form-control pedido" placeholder="Data" type="datetime-local" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataFimPedido)" id="input-data-fim">
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 w-100 justify-content-center">
@@ -145,10 +145,10 @@
 
             <div class="d-flex flex-row">
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                    <input class="w-75 form-control" placeholder="00000-000" type="text" id="input-cep">
+                    <input class="w-75 form-control endereco" placeholder="00000-000" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCep)" id="input-cep">
                 </div>
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                    <input class="w-75 form-control" placeholder="00" type="text" id="input-numero">
+                    <input class="w-75 form-control endereco" placeholder="00" type="text"  id="input-numero">
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Av. Marechal teodoro" type="text" id="input-rua">
+                <input class="w-100 form-control endereco" placeholder="Av. Marechal teodoro" type="text"  onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoRua)" id="input-rua">
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
@@ -165,7 +165,7 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                <input class="w-100 form-control" placeholder="Paulista" type="text" id="input-bairro">
+                <input class="w-100 form-control endereco" placeholder="Paulista" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoBairro)" id="input-bairro">
             </div>
 
             <div class="d-flex flex-row">
@@ -180,10 +180,10 @@
 
             <div class="d-flex flex-row">
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                    <input class="w-75 form-control" placeholder="SP" type="text" id="input-cidade">
+                    <input class="w-75 form-control endereco" placeholder="SP" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCidade)" id="input-cidade">
                 </div>
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group">
-                    <input class="w-75 form-control" placeholder="00" type="text" id="input-uf">
+                    <input class="w-75 form-control endereco" placeholder="00" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoUf)" id="input-uf">
                 </div>
             </div>
 
@@ -278,6 +278,10 @@
         
         
     </div>
+
+    <button id="confirmButton" class="d-none justify-content-center align-items-center rounded-5 p-3" onclick="salvarModificacao()" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
 </body>
 </html>
 <script src="./js/pedido.js"></script>
