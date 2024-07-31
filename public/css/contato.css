@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #EEEEEE;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+:root {
+    --azul: #012171;
+    --sombra: rgba(0, 0, 14, 0.163);
+}
+
+header {
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+}
+
+.bold-title {
+    color: var(--azul);
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.place-title {
+    color: #696969;
+    font-size: 16px;
+}
+
+.place-title-bold {
+    color: #696969;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.card-subtitle{
+    color: #696969;
+    font-size: 16px;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+}
+
+.tooltip .popover-header {
+    background-color: orange;
+}
