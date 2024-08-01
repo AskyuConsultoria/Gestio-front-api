@@ -43,9 +43,26 @@ header {
     font-size: 18px;
 }
 
-.card-subtitle{
+.card-subtitle {
     color: #696969;
     font-size: 16px;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+}
+
+.search-input input {
+    padding-left: 30px;
 }
 
 .tooltip {
