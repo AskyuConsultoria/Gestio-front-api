@@ -54,13 +54,15 @@ async function acessarDados(idUsuario){
     var dataInicio = montarDataParaISO(new Date(year, month, 1))
     var dataFim = montarDataParaISO(new Date(year, month + 1, 0))
 
+    listaFormatada = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",  "", ""]
     listaPedido = await buscarPedidosEmIntervaloDeTempo(1, dataInicio, dataFim)
 
-    for(let i = 0; i < listaPedido.length; i++){
-        var dia = new Date(listaPedido[i].dataInicio).getDate()
-        listaFormatada[dia] = dia 
+    if(listaPedido.length > 0){
+        for(let i = 0; i < listaPedido.length; i++){
+            var dia = new Date(listaPedido[i].dataInicio).getDate()
+            listaFormatada[dia] = dia 
+        }
     }
-
     console.log(listaPedido)
 }
  
