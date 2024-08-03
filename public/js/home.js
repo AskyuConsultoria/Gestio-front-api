@@ -34,7 +34,7 @@ function criarPedidos(listaPedido) {
         <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
   
           <div class="d-flex w-100 h-75 align-items-center ps-3 fw-medium">
-            ${listaPedido[i].cliente.nome} ${listaPedido[i].cliente.nome}
+            ${listaPedido[i].cliente.nome} ${listaPedido[i].cliente.sobrenome}
           </div>
   
           <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
@@ -51,9 +51,9 @@ function criarPedidos(listaPedido) {
 }
 
 function formatarData(data) {
-  dia = data.substring(8, 10)
-  mes = new Date(data).getMonth()
-  ano = new Date(data).getFullYear()
+  var dia = new Date(data).getDate()
+  var mes = new Date(data).getMonth()
+  var ano = new Date(data).getFullYear()
 
   return `${dia}/${mes}/${ano}`
 }
@@ -85,14 +85,13 @@ function salvarDadosETransferirParaOutraPagina(classe, agendamentoId){
   sessionStorage.removeItem("PAGINA-PEDIDO")
   sessionStorage.removeItem("AGENDAMENTO-ID")
 
-  sessionStorage.setItem("AGENDAMENTO-ID", agendamentoId)
-
   if(classe == "adicionar-pedido"){
     sessionStorage.setItem("PAGINA-PEDIDO", "adicionar-pedido")
   }
 
   if(classe == "consultar-pedido"){
     sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
+    sessionStorage.setItem("AGENDAMENTO-ID", agendamentoId)
   }
 
   window.location = "pedido.html"
