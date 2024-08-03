@@ -623,15 +623,15 @@ function criarPedidosDiario(listaPedido) {
 }
 
 function formatarData(data) {
-  dia = data.substring(8, 10)
-  mes = new Date(data).getMonth()
-  ano = new Date(data).getFullYear()
+  var dia = new Date(data).getDate()
+  var mes = new Date(data).getMonth()
+  var ano = new Date(data).getFullYear()
 
   return `${dia}/${mes}/${ano}`
 }
 
 function formatarHorario(data) {
-  horas = new Date(data).getHours()
+  var horas = new Date(data).getHours()
 
   var horarioFormatado = ""
   if (horas <= 9) {

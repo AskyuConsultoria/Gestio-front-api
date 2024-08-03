@@ -211,7 +211,6 @@ function preencherDadosCliente(cliente) {
   inputAntigoBairro = cliente.bairro
   inputAntigoUf = cliente.uf
 
-  escolherRenderizacao(false, "adicionar-pedido")
 }
 
 async function buscarClientesPorNome(clienteNome) {
@@ -325,14 +324,14 @@ function verificarDadosEExibirBotaoDeConfirmacao(idInput, dadoAntigo) {
 }
 
 function salvarModificacao() {
-  let agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+  var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
   if (salvarCliente) atualizarDadosCliente(clienteId)
   // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
   // if (salvarEndereco) atualizarDadosEndereco(enderecoId)
 
-  // if (salvarPedido && agendamentoId != null) {
-  //   criarPedido(agendamentoId)
-  // } else if (salvarPedido) atualizarDadosPedido()
+  if (salvarPedido && agendamentoId == null) {
+    criarPedido(agendamentoId)
+  } else if (salvarPedido) atualizarDadosPedido(agendamentoId)
 }
 
 async function atualizarDadosCliente(clienteId) {
@@ -362,19 +361,57 @@ async function atualizarDadosCliente(clienteId) {
 }
 
 async function atualizarDadosPedido(agendamentoId) {
-  var usuarioId = sessionStorage.getItem("id")
+  var usuarioId = parseInt(sessionStorage.getItem("id"))
 
   try {
-    const response = await fetch(`http://localhost:8080/agendamento/${agendamentoId}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        id: clienteId,
-        nome: document.querySelector('#input-nome').value,
-        sobrenome: document.querySelector('#input-sobrenome').value,
-        email: document.querySelector('#input-sobrenome').value
+        nome: "Agendamento",
+        dataInicio: document.querySelector("#input-data-inicio").value,
+        dataFim: document.querySelector("#input-data-fim").value,
+        usuario: {
+          id: usuarioId
+        },
+        cliente: {
+          id: clienteId
+        },
+        etapa: {
+          id: 1
+        }
+      })
+    });
+
+    const dados = await response.json()
+    console.log(dados)
+
+  } catch (error) {
+
+    console.log(`Houve um erro: ${error}`)
+  }
+
+}
+
+
+async function criarPedido() {
+  var usuarioId = parseInt(sessionStorage.getItem("id"))
+
+  try {
+    const response = await fetch(`http://localhost:8080/agendamento`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        nome: "Agendamento",
+        dataInicio: document.querySelector("#input-data-inicio").value,
+        dataFim: document.querySelector("#input-data-inicio").value,
+        usuario: usuarioId,
+        cliente: clienteId,
+        etapa: 1
       })
     });
 
