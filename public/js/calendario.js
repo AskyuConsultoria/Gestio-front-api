@@ -1,4 +1,4 @@
-
+var listaFormatada = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",  "", ""]
 var listaPedido = []
 
 let date = new Date();
@@ -55,6 +55,12 @@ async function acessarDados(idUsuario){
     var dataFim = montarDataParaISO(new Date(year, month + 1, 0))
 
     listaPedido = await buscarPedidosEmIntervaloDeTempo(1, dataInicio, dataFim)
+
+    for(let i = 0; i < listaPedido.length; i++){
+        var dia = new Date(listaPedido[i].dataInicio).getDate()
+        listaFormatada[dia] = dia 
+    }
+
     console.log(listaPedido)
 }
  
@@ -88,19 +94,13 @@ async function manipulate(){
     // Loop to add the dates of the current month
     for (let i = 1; i <= lastdate; i++) {
  
-        if(i < listaPedido.length && listaPedido.length != 0){
-            var dataIteracao = new Date(listaPedido[i].dataInicio).getDate()
-
-            if(i == dataIteracao){
-                lit +=`<div class="com-pedido dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
-            } else{
-                lit += `<div class="dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
-            }
-            
-        } else{
-            lit += `<div class="dia" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
+        let comOuSemPedido = "dia"
+    
+        if(listaFormatada[i] != ""){
+            comOuSemPedido = "com-pedido dia"
         }
 
+        lit += `<div class="${comOuSemPedido}" onclick="construirDiasDaSemana(this.id)" id="${new Date(year, month, i)}">${i}</div>`
     }
  
     // Loop to add the first dates of the next month
