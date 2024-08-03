@@ -23,7 +23,7 @@ async function buscarUltimos7Pedidos(idUsuario) {
 function criarPedidos(listaPedido) {
   const elementoContainer = document.querySelector("#pedidos-conteudo")
   elementoContainer.innerHTML = ""
-
+  formatarData(listaPedido[0].dataInicio)
 
   for (var i = 0; i < listaPedido.length; i++) {
     // vou ter que corrigir
@@ -52,7 +52,7 @@ function criarPedidos(listaPedido) {
 
 function formatarData(data) {
   var dia = new Date(data).getDate()
-  var mes = new Date(data).getMonth()
+  var mes = new Date(data).getMonth() + 1
   var ano = new Date(data).getFullYear()
 
   return `${dia}/${mes}/${ano}`
