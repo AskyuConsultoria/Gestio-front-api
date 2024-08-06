@@ -1,3 +1,4 @@
+
 var listaFormatada = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",  "", ""]
 var listaPedido = []
 
@@ -172,18 +173,7 @@ function montarDataParaISO(data){
 }
 
 // Funções do calendário semanal
-var modal = new bootstrap.Modal(document.getElementById('modal'))
 
-function adicionarListeners(){
-    // inicializa a construção do calendário semanal
-    var dias = document.querySelectorAll('.dia')
-    for(var i = 0; i < dias.length; i++){
-        dias[i].addEventListener('click', function () {
-            modal.show()
-        })
-    }
-  }
- 
 function construirDiasDaSemana(dataDiaSelecionado){
     var diaDaSemana = new Date(dataDiaSelecionado).getDay()
     var dia = new Date(dataDiaSelecionado).getDate()
@@ -210,6 +200,5 @@ function construirDiasDaSemana(dataDiaSelecionado){
     }
 
 }
-
 
 
