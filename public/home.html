@@ -202,7 +202,7 @@
       </svg>
     </span>
     <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por Pedidos">
-    <span class="input-group-text w-auto h-auto b g-body">
+    <span class="input-group-text w-auto h-auto bg-body">
       <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
         viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -599,7 +599,7 @@ function criarPedidosDiario(listaPedido) {
 
   for (var i = 0; i < listaPedido.length; i++) {
     elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="${listaPedido[i].id}" onclick="salvarDadosETransferirParaOutraPagina(this.classList, this.id)">
+      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="${listaPedido[i].dataInicio}" onclick="salvarDadosETransferirParaOutraPagina('consultar-pedido',${listaPedido[i].id}, this.id)">
         <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
   
         <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
@@ -640,4 +640,31 @@ function formatarHorario(data) {
   horarioFormatado = `${horas}h`
   return horarioFormatado
 }
+
+function adicionarListeners(){
+    // inicializa a construção do calendário semanal
+    var dias = document.querySelectorAll('.dia')
+    for(var i = 0; i < dias.length; i++){
+        dias[i].addEventListener('click', function () {
+            modal.show()
+        })
+    }
+  }
+ 
+
+const exibicaoModal = sessionStorage.getItem("EXIBICAO-MODAL")
+
+var modal = new bootstrap.Modal(document.getElementById('modal'))
+
+function renderizarModal(){
+    sessionStorage.removeItem("EXIBICAO-MODAL")
+    var dataAgendamento = sessionStorage.getItem("DATA-AGENDAMENTO")
+    if(dataAgendamento != "undefined"){
+      construirDiasDaSemana(new Date(dataAgendamento))
+      modal.show()
+    }
+}
+  
+if(exibicaoModal) renderizarModal()
+
 </script>
