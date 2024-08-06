@@ -80,7 +80,6 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
   var listaComponente = document.querySelectorAll('.componente')
 
   if (paginaEscolhida == "adicionar-pedido") {
-    sessionStorage.removeItem("AGENDAMENTO-ID")
     document.querySelector('.botao-confirmacao').id = "home.html"
     listaComponenteExibido.push(listaComponente[0], listaComponente[2], listaComponente[3])
     listaComponenteOcultado.push(listaComponente[1], listaComponente[4], listaComponente[5], listaComponente[6])
@@ -115,7 +114,11 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 function fecharJanela() {
   var paginaParaIr = document.querySelector('.botao-confirmacao').id
 
-  if (paginaParaIr == "home.html") window.location = paginaParaIr
+  if (paginaParaIr == "home.html"){
+     sessionStorage.setItem("EXIBICAO-MODAL", true)
+     window.location = paginaParaIr
+  }
+  
   if (paginaParaIr == "adicionar-pedido") escolherRenderizacao(false, paginaParaIr)
 }
 
@@ -211,6 +214,7 @@ function preencherDadosCliente(cliente) {
   inputAntigoBairro = cliente.bairro
   inputAntigoUf = cliente.uf
 
+  escolherRenderizacao(false, "adicionar-pedido")
 }
 
 async function buscarClientesPorNome(clienteNome) {
@@ -303,6 +307,7 @@ function associarClienteACriacaoDePedido(novoClienteId, cliente) {
   document.querySelector('#input-nome').value = cliente.nome
   document.querySelector('#input-sobrenome').value = cliente.sobrenome
   document.querySelector('#input-email').value = cliente.email
+  sessionStorage.removeItem("AGENDAMENTO-ID")
   escolherRenderizacao(false, "adicionar-pedido")
 }
 

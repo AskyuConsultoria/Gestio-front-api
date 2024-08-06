@@ -1,3 +1,5 @@
+
+
 async function buscarUltimos7Pedidos(idUsuario) {
 
   try {
@@ -26,9 +28,8 @@ function criarPedidos(listaPedido) {
   formatarData(listaPedido[0].dataInicio)
 
   for (var i = 0; i < listaPedido.length; i++) {
-    // vou ter que corrigir
     elementoContainer.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="consultar-pedido" onclick="salvarDadosETransferirParaOutraPagina(this.id, ${listaPedido[i].id})">
+      <div class="consultar-pedido d-flex flex-row w-100 bg-body rounded shadow-sm" id="${listaPedido[i].dataInicio}" onclick="salvarDadosETransferirParaOutraPagina('consultar-pedido',${listaPedido[i].id})">
         <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
   
         <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
@@ -76,7 +77,7 @@ function adicionarNomeDeUsuario() {
   containerNomeUsuario.textContent = nomeUsuario
 }
 
-function salvarDadosETransferirParaOutraPagina(classe, agendamentoId){
+function salvarDadosETransferirParaOutraPagina(classe, agendamentoId, dataPedido){
 
   if(typeof classe != 'string'){
     classe = classe[0]
@@ -84,6 +85,11 @@ function salvarDadosETransferirParaOutraPagina(classe, agendamentoId){
   
   sessionStorage.removeItem("PAGINA-PEDIDO")
   sessionStorage.removeItem("AGENDAMENTO-ID")
+  sessionStorage.setItem("DATA-AGENDAMENTO", dataPedido)
+
+  if(classe == "adicionar-pedido" || "consultar-pedido" && dataPedido != undefined){
+    sessionStorage.setItem("DATA-AGENDAMENTO", dataPedido)
+  }
 
   if(classe == "adicionar-pedido"){
     sessionStorage.setItem("PAGINA-PEDIDO", "adicionar-pedido")
@@ -91,12 +97,12 @@ function salvarDadosETransferirParaOutraPagina(classe, agendamentoId){
 
   if(classe == "consultar-pedido"){
     sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
+    sessionStorage.setItem("DATA-AGENDAMENTO", dataPedido)
     sessionStorage.setItem("AGENDAMENTO-ID", agendamentoId)
   }
 
   window.location = "pedido.html"
 }
-
 
 
 buscarUltimos7Pedidos(1)
