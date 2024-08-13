@@ -75,15 +75,43 @@
             src="./assets/botao-voltar 4.svg"
             alt="botao-voltar"
             class="mx-3"
+            onclick="window.history.back()"
         /></a>
-        <img
-          src="./assets/burger-bar 1 (1).svg"
-          alt="menu-lateral"
-          onclick="redirecionar()"
-          class="mx-3"
-        />
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <img
+            src="./assets/burger-bar 1 (1).svg"
+            alt="menu-lateral"
+            class="navbar-toggler-icon mx-3"/>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #012171; color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Lista-peca.html">Pedidos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contatos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Fichas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Produtos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Tecidos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Monitoramento</a>
+              </li>
+          </div>
+        </div>
       </div>
     </header>
+
     <div class="container-custom mt-4">
       <div class="visualizacao">
         <span> Deseja ver os dados em que período? </span>
@@ -158,7 +186,7 @@
             </div>
             <div class="kpi-container-info-numbers">
               <div class="kpi-container-info-principal-number">
-                <span id="kpi-pedido-numero"> 12 </span>
+                <span id="kpi-pedido-numero"> 0 </span>
               </div>
               <div class="kpi-container-info-secondary-number">
                 <div id="container-seta-pedido">
@@ -175,7 +203,7 @@
                   </svg>
                 </div>
 
-                <span id="kpi-pedido-porcentagem"> 20% </span>
+                <span id="kpi-pedido-porcentagem"> 0% </span>
               </div>
             </div>
           </div>
@@ -213,7 +241,7 @@
             </div>
             <div class="kpi-container-info-numbers">
               <div class="kpi-container-info-principal-number">
-                <span id="kpi-cliente-numero"> 12 </span>
+                <span id="kpi-cliente-numero"> 0 </span>
               </div>
               <div class="kpi-container-info-secondary-number">
                 <div id="container-seta-cliente">
@@ -229,7 +257,7 @@
                     </g>
                   </svg>
                 </div>
-                <span id="kpi-cliente-porcentagem"> 20% </span>
+                <span id="kpi-cliente-porcentagem"> 0% </span>
               </div>
             </div>
           </div>
