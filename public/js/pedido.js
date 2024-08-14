@@ -113,6 +113,10 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 
 function fecharJanela() {
   var paginaParaIr = document.querySelector('.botao-confirmacao').id
+  if(houveMudancaDeDados()){
+    construirModalGenerico("closeButton")
+    return
+  }  
 
   if (paginaParaIr == "home.html"){
      sessionStorage.setItem("EXIBICAO-MODAL", true)
@@ -120,6 +124,11 @@ function fecharJanela() {
   }
   
   if (paginaParaIr == "adicionar-pedido") escolherRenderizacao(false, paginaParaIr)
+}
+
+function houveMudancaDeDados(){
+  if(salvarPedido || salvarCliente || salvarEndereco || salvarTelefone) return true 
+  else return false
 }
 
 
@@ -311,11 +320,6 @@ function associarClienteACriacaoDePedido(novoClienteId, cliente) {
   escolherRenderizacao(false, "adicionar-pedido")
 }
 
-function validarEventoKeyboard(evento) {
-  if (evento.key == "Enter") {
-    buscarClientesPorNome(document.querySelector("#input-cliente").value)
-  }
-}
 
 function verificarDadosEExibirBotaoDeConfirmacao(idInput, dadoAntigo) {
   var inputElemento = document.querySelector(`#${idInput}`)
@@ -359,6 +363,8 @@ async function atualizarDadosCliente(clienteId) {
     const dados = await response.json()
     console.log(dados)
 
+   await exibirStatusDaRespostaAPI(response)
+
   } catch (error) {
 
     console.log(`Houve um erro: ${error}`)
@@ -393,6 +399,8 @@ async function atualizarDadosPedido(agendamentoId) {
     const dados = await response.json()
     console.log(dados)
 
+   await exibirStatusDaRespostaAPI(response.status)
+
   } catch (error) {
 
     console.log(`Houve um erro: ${error}`)
@@ -423,9 +431,94 @@ async function criarPedido() {
     const dados = await response.json()
     console.log(dados)
 
+    await exibirStatusDaRespostaAPI(response.status)
+
+
   } catch (error) {
 
     console.log(`Houve um erro: ${error}`)
   }
 
 }
+
+
+function validarEventoKeyboard(evento) {
+  if (evento.key == "Enter") {
+    buscarClientesPorNome(document.querySelector("#input-cliente").value)
+  }
+}
+
+const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
+
+function construirModalGenerico(elementoId, status){
+  var textoModal = ""
+  var elementoBody = document.querySelector("#body-modal-generico")
+  var elementoFooter = document.querySelector("#footer-modal-generico")
+
+  elementoFooter.innerHTML = ""
+
+  if(elementoId == "statusButton"){
+    elementoFooter.innerHTML =
+    `
+     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="modalGenerico.hide()" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+    `
+    textoModal = status
+    modalGenerico.show()
+  }
+  
+  if(elementoId == "confirmButton"){
+    elementoFooter.innerHTML = `
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="salvarModificacao()"  style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="modalGenerico.hide()" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    </button>
+    ` 
+
+    textoModal = "Deseja salvar as alterações no pedido?"
+    modalGenerico.show()
+  }
+
+  if(elementoId == "closeButton"){
+   elementoFooter.innerHTML = `
+   <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="salvarModificacao()"  style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="modalGenerico.hide()" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    </button>
+    `
+    textoModal = "Existem alterações não salvas no seu pedido, deseja salvar?"
+    modalGenerico.show()
+  }
+
+  elementoBody.innerHTML = textoModal
+}
+
+function dadosForamAtualizados(){
+  salvarCliente = false
+  salvarPedido = false
+  salvarEndereco = false
+  salvarEndereco = false
+  salvarTelefone = false
+}
+
+async function exibirStatusDaRespostaAPI(response){
+  var status = "Alterações salvas com sucesso"
+  if(response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
+  dadosForamAtualizados() 
+  modalGenerico.toggle()  
+  construirModalGenerico("statusButton", status)
+  esconderBotaoSalvar()
+}
+
+function esconderBotaoSalvar(){
+  document.querySelector('#confirmButton').classList.replace('d-flex', 'd-none')
+}
+
