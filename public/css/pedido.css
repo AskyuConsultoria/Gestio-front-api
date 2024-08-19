@@ -49,3 +49,8 @@ button#confirmButton:hover {
 input.is-valid, .is-invalid{
  z-index: 0 !important;
 }
+
+#search::-webkit-search-cancel-button{
+    position:relative;
+    right:20px;    
+}
