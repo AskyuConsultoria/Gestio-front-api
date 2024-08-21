@@ -25,7 +25,7 @@ FormatedData.forEach(tecido => {
                 </div>
             </div>
             <div class="container-right">
-                <img src="./assets/lixeira.svg" alt="lixeira exclusão" class="lixeira btn btn-danger"
+                <img src="./assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarMedida(${tecido.id})">
             </div>
         </div>`
