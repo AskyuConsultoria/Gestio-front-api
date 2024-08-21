@@ -515,7 +515,6 @@ async function exibirStatusDaRespostaAPI(response){
   dadosForamAtualizados() 
   modalGenerico.toggle()  
   construirModalGenerico("statusButton", status)
-  esconderBotaoSalvar()
 }
 
 function esconderBotaoSalvar(){
