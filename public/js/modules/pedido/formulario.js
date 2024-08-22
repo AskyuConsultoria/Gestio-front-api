@@ -1,6 +1,8 @@
 
 import * as pedido from "./pedido.js"
 
+window.validarConteudosNulosEEspecificos = validarConteudosNulosEEspecificos
+
 function agregarConteudosEEnviarParaValidar(){
     var conteudoNome = document.querySelector('#content-nome')
     var conteudoSobrenome = document.querySelector('#content-sobrenome')
@@ -44,7 +46,7 @@ function agregarConteudosEEnviarParaValidar(){
         digitos: 8,
         mensagem: "Número de digitos do Cep inválido."
       },
-      numero = {
+      {
         nome: 'numero-celular',
         validacao: 'diferente',
         digitos: 11,
