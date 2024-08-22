@@ -1,6 +1,8 @@
-async function buscarFinalizado(usuarioId) {
+async function buscarFinalizado(usuarioId, etapaId) {
   try {
-    const response = await fetch(`http://localhost:8080/agendamento/etapa-ativo/ultima-etapa/${usuarioId}`, {
+
+    var usuarioId = parseInt(usuarioId)
+    const response = await fetch(`http://localhost:8080/agendamento/etapa-ativo/${usuarioId}/${etapaId}`, {
       method: "GET"
     }
     );
@@ -46,12 +48,16 @@ async function criarModalAtivo(usuarioId, etapaId, nomeEtapa) {
     //cria um elemento que vai receber o conteudo do offcanvas
     const offcanvasContent = document.createElement('div');
 
-    const totalOriginal= data.length
+    const totalOriginal = data.length 
 
-    var finalizados= await buscarFinalizado(usuarioId)
+
+
+    var finalizados = await buscarFinalizado(usuarioId, etapaId)
+  
+
 
     //variavel que armazena os clientes com pedidos ativos
-    var cardPessoa= data.map(agenda =>{
+    var cardPessoa = data.map(agenda => {
       return `<div class="card-pessoa d-flex align-items-start justify-content-evenly flex-column mt-3">
          <div class="texto-card">
            <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
@@ -63,18 +69,18 @@ async function criarModalAtivo(usuarioId, etapaId, nomeEtapa) {
 
 
     const cardsConcluidos = finalizados.map(agenda => {
-        return `<div class="card-pessoa d-flex align-items-start justify-content-evenly flex-column mt-3">
+      return `<div class="card-pessoa d-flex align-items-start justify-content-evenly flex-column mt-3">
         <div class="texto-card">
           <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
           <span class="dthora">${formatarData(agenda.dataInicio)} - ${formatarHorario(agenda.dataFim)}</span> 
         </div>
       </div>`}
     ).join('');
-  
+
 
     //conteudo do offcanvas + etapas com uppercase + clientes com pedidos ativos
     if (!finalizados || finalizados.length === 0) {
-      offcanvasContent.innerHTML= `<div class ="offcanvas-header d-flex align-items-center justify-content-between flex-column">
+      offcanvasContent.innerHTML = `<div class ="offcanvas-header d-flex align-items-center justify-content-between flex-column">
         <img src="./assets/linha drag.svg" alt="voltar" type="button" data-bs-dismiss="offcanvas" id="fechar">
         <div class="header-off d-flex align-items-center">
           <h5 class="offcanvas-title mt-2" id="offcanvasTopLabel">${nomeUpper}</h5>
@@ -90,7 +96,7 @@ async function criarModalAtivo(usuarioId, etapaId, nomeEtapa) {
       </div>
     `;
     } else {
-      offcanvasContent.innerHTML= `
+      offcanvasContent.innerHTML = `
           <div class="offcanvas-header d-flex align-items-center justify-content-between flex-column">
             <img src="./assets/linha drag.svg" alt="voltar" type="button" data-bs-dismiss="offcanvas" id="fechar">
             <div class="header-off d-flex align-items-center">
@@ -153,7 +159,7 @@ async function criarModalAtivo(usuarioId, etapaId, nomeEtapa) {
 
       //validação do switch
       if (i == 1) {
-        if(cancelados && cancelados.length > 0){
+        if (cancelados && cancelados.length > 0) {
           containerPessoa.innerHTML = ''
           totalPedidos.innerHTML = cancelados.length
           cancelados.map(cancelado => containerPessoa.innerHTML += `<div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
@@ -164,24 +170,24 @@ async function criarModalAtivo(usuarioId, etapaId, nomeEtapa) {
           </div>`)
         }
         //se estiver vazio subscreve para mensagem
-        else{
-       totalPedidos.innerHTML= '0'   
-       containerPessoa.innerHTML = ''
-       containerPessoa.innerHTML= `<img src="./assets/not-found.svg">
+        else {
+          totalPedidos.innerHTML = '0'
+          containerPessoa.innerHTML = ''
+          containerPessoa.innerHTML = `<img src="./assets/not-found.svg">
          <div>Você não possui pedidos cancelados</div>`
-       containerPessoa.classList.add('zero');
-       etapa.innerHTML = ''
-       i++
+          containerPessoa.classList.add('zero');
+          etapa.innerHTML = ''
+          i++
         }
 
-      subPedido.style.width = '85%'
-      etapa.innerHTML = '<div style="color: red">CANCELADOS</div>'
-      i++
+        subPedido.style.width = '85%'
+        etapa.innerHTML = '<div style="color: red">CANCELADOS</div>'
+        i++
 
-      //se n estiver clicado o switch, volta ao andamento
+        //se n estiver clicado o switch, volta ao andamento
       } else {
         etapa.innerHTML = 'EM ANDAMENTO'
-        totalPedidos.innerHTML= totalOriginal
+        totalPedidos.innerHTML = totalOriginal
         containerPessoa.innerHTML = ''
         subPedido.style.width = originalWidth
         containerPessoa.innerHTML += cardPessoa
@@ -220,15 +226,15 @@ function formatarData(data) {
   var diaFormatado = ''
   var mesFormatado = ''
 
-  if(dia <= 9){
+  if (dia <= 9) {
     diaFormatado = `0${dia}`
   }
-  if(mes<=9){
+  if (mes <= 9) {
     mesFormatado = `0${mes}`
   }
 
-  diaFormatado= `${dia}`
-  mesFormatado= `${mes}`
+  diaFormatado = `${dia}`
+  mesFormatado = `${mes}`
 
   return `${diaFormatado}/${mesFormatado}/${ano}`
 }
@@ -286,25 +292,28 @@ async function listarEtapas() {
       const nomeEtapa = data[i].nome
       console.log("ID:", etapaId)
 
-      cardAgendamento.innerHTML += `
-          <div class="etapa-card card mx-auto position-relative mb-3" value="${nomeEtapa}" id="${etapaId}" data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasBottom">
-          <div class="row g-0">
-            <div class="col-md-8">
-              <div class="card-body">
-                <div class="d-flex flex-row align-items-center justify-content-between mx-3">
-                  <h5 class="etapa-nome card-title mb-0">${nomeEtapa}</h5>
-                  <div class="total-etapa d-flex flex-column align-items-center">
-                  <span id="n-total">${totalEtapa[i].qtd_agendamento}</span>
-                    <span>total</span>
-                  </div>
+      if (i < totalEtapa.length && data[i].ativo != false) {
+        cardAgendamento.innerHTML += `
+        <div class="etapa-card card mx-auto position-relative mb-3" value="${nomeEtapa}" id="${etapaId}" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom">
+        <div class="row g-0">
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="d-flex flex-row align-items-center justify-content-between mx-3">
+                <h5 class="etapa-nome card-title mb-0">${nomeEtapa}</h5>
+                <div class="total-etapa d-flex flex-column align-items-center">
+                <span id="n-total">${totalEtapa[i].qtd_agendamento}</span>
+                  <span>total</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        `;
+      </div>
+      `;
+      }
     }
+
 
   } catch (error) {
     console.error("Erro: ", error);
