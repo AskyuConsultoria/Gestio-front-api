@@ -11,56 +11,44 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/Style.css">
-  <script defer src="js/peca_editar.js"></script>
-
+  <script defer src="js/etapa.js"></script>
 </head>
 
-<body onload="listarPecas()">
-  <header class="header py-4 bg-light w-100 px-0">
+<body style="background-color: var(--cinzaClaro) !important;" onload="listarEtapas()">
+  <header class="header py-4 bg-light w-100 px-0" style="background-color: var(--cinzaClaro) !important;">
     <div class="container d-flex justify-content-between">
       <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3">
       <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="" class="mx-3">
     </div>
   </header>
   <div class="container-md mt-3 p-3">
-    <div class="d-flex justify-content-between align-items-center mx-3">
-      <span class="bold-title">Etapas dos pedidos</span>
+    <div class="pd-title d-flex justify-content-between align-items-center mx-3">
+      <span>Minhas <b>Etapas</b></span>
     </div>
-    <div class="sub-title d-flex justify-content-between align-items-center mx-3 mt-2">
-      <span>Mantenha-se informado(a) sobre todos os seus <b>pedidos em cada etapa:</b></span>
+    <!-- <div class="barra-busca d-flex align-items-center justify-content-evenly mx-2 mt-2 mb-1">
+      <img src="./assets/search.svg" alt="lupa-pesquisa">
+      <input type="text" placeholder="Pesquise pedidos">
+      <img src="./assets/filter.svg" alt="filtro de busca">
+    </div> -->
+    <div class="descricao-page d-flex align-items-center justify-content-center mx-2 mt-3">
+      <span>Consulte o total de pedidos em cada etapa:</span>
     </div>
   </div>
-  <div class="container" id="container">
-    <!-- USAR O Etapa-CARD PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
-    <div class="etapa-card card mb-2 mx-auto position-relative">
-      <div class="row g-0">
-        <div class="col-md-8">
-          <div class="card-body">
-            <div class="d-flex flex-row align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <div class="imagem-container">
-                  <img src="./assets/tesoura.svg" alt="icone-tesoura" class="imagem1">
-                  <img src="./assets/tesoura-hover.svg" alt="icone-tesoura" class="imagem2">
-                </div>
-                <h5 class="etapa-nome card-title mb-0 ms-2">Entrevista</h5>
-              </div>
-            </div>
-            <div class="card-text mt-2">
-              <small class="descricao etapa">Veja os compromissos na etapa de Entrevista</small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container-right mt-4" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="Para visualizar as medidas da peça clique aqui">
-        <div class="seta-container">
-          <img src="./assets/next 3.svg" alt="seta visualizar medida da peça" class="seta1">
-          <img src="./assets/proximo 1.svg" alt="seta visualizar medida da peça" class="seta2">
-        </div>
-      </div>
-    </div>
+  <div class="container etapas" id="container">
+    <!-- USAR O ETAPAS PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
+
+    <!-- INSERIR PELO ID , PUXAR DADOS DA ETAPA ESPECIFICA PELO ID -->
 
   </div>
+
+  <!-- <div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
+    <div class="texto-card">
+      <div class="nome-pessoa">John Doe</div>
+    <span class="dthora">01/01/2021 18:02</span>
+    </div>
+  </div>   -->
+
+
 </body>
 
 </html>
