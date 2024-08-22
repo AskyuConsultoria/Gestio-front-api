@@ -2,6 +2,11 @@
 import * as pedido from "./pedido.js"
 import * as api from "./api.js"
 
+var clienteId = pedido.clienteId
+
+window.escolherRenderizacao = escolherRenderizacao
+window.fecharJanela = fecharJanela
+
 export var listaComponenteExibido = []
 export var listaComponenteOcultado = []
 
