@@ -1,6 +1,10 @@
 
 import * as pedido from "./pedido.js"
 
+var clienteId = pedido.clienteId
+
+window.buscarAgendamento = buscarAgendamento
+
 async function buscarAgendamento() {
 
     var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")

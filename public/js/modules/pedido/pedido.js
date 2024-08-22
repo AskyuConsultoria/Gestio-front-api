@@ -2,6 +2,52 @@
 import * as motorGrafico  from "./motorGrafico.js"
 import * as api from "./api.js"
 
+window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
+window.construirModalGenerico = construirModalGenerico
+window.validarEventoKeyboard = validarEventoKeyboard
+window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
+
+
+window.clienteId = clienteId
+window.inputClienteId = clienteId;
+window.inputTelefoneId = telefoneId;
+window.inputAgendamentoId = agendamentoId;
+window.inputEnderecoId = enderecoId;
+
+window.inputAntigoNome = inputAntigoNome;
+window.inputAntigoSobrenome = inputAntigoSobrenome;
+window.inputAntigoTelefone = inputAntigoTelefone;
+window.inputAntigoEmail = inputAntigoEmail;
+
+window.inputAntigoDataInicioPedido = inputAntigoDataInicioPedido;
+window.inputAntigoDataFimPedido = inputAntigoDataFimPedido;
+
+window.inputAntigoCep = inputAntigoCep;
+window.inputAntigoRua = inputAntigoRua;
+window.inputAntigoBairro = inputAntigoBairro;
+window.inputAntigoCidade = inputAntigoCidade;
+window.inputAntigoUf = inputAntigoUf;
+
+window.inputNovoNome = inputNovoNome;
+window.inputNovoSobrenome = inputNovoSobrenome;
+window.inputNovoTelefone = inputNovoTelefone;
+window.inputNovoEmail = inputNovoEmail;
+
+window.inputNovoDataInicioPedido = inputNovoDataInicioPedido;
+window.inputNovoDataFimPedido = inputNovoDataFimPedido;
+
+window.inputNovoCep = inputNovoCep;
+window.inputNovoRua = inputNovoRua;
+window.inputNovoBairro = inputNovoBairro;
+window.inputNovoCidade = inputNovoCidade;
+window.inputNovoUf = inputNovoUf;
+
+window.inputSalvarCliente = salvarCliente;
+window.inputSalvarPedido = salvarPedido;
+window.inputSalvarEndereco = salvarEndereco;
+window.inputSalvarTelefone = salvarTelefone;
+
+
 export var clienteId = ""
 export var telefoneId = ""
 export var agendamentoId = ""
@@ -136,6 +182,8 @@ export function verificarDadosEExibirBotaoDeConfirmacao(idInput, dadoAntigo) {
 
 const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
 
+window.modalGenerico = modalGenerico
+
 export function construirModalGenerico(elementoId, status) {
   var textoModal = ""
   var elementoBody = document.querySelector("#body-modal-generico")
@@ -217,6 +265,7 @@ export async function exibirStatusDaRespostaAPI(response) {
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
   dadosForamAtualizados()
   modalGenerico.toggle()
+  pedido.esconderBotaoSalvar()
   construirModalGenerico("statusButton", status)
 }
 
