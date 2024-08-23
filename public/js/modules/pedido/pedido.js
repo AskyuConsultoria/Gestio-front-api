@@ -127,7 +127,6 @@ export function preencherDadosCliente(cliente) {
   inputAntigoBairro = cliente.bairro
   inputAntigoUf = cliente.uf
 
- motorGrafico.escolherRenderizacao(false, "adicionar-pedido")
 }
 
 export function preencherCardsDeCliente(listaCliente) {
