@@ -6,6 +6,7 @@ var clienteId = pedido.clienteId
 
 window.escolherRenderizacao = escolherRenderizacao
 window.fecharJanela = fecharJanela
+window.desbloquearFormulario = desbloquearFormulario
 
 export var listaComponenteExibido = []
 export var listaComponenteOcultado = []
@@ -52,6 +53,8 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         document.querySelector('.botao-confirmacao').id = "home.html"
         listaComponenteExibido.push(listaComponente[0], listaComponente[2], listaComponente[3])
         listaComponenteOcultado.push(listaComponente[1], listaComponente[4], listaComponente[5], listaComponente[6])
+        desbloquearInputs()
+        esconderBotoesEdicao()
 
         if (clienteId != "") {
             listaComponenteExibido.shift()
@@ -67,6 +70,9 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         document.querySelector('.botao-confirmacao').id = "home.html"
         listaComponenteExibido.push(listaComponente[1], listaComponente[2], listaComponente[3])
         listaComponenteOcultado.push(listaComponente[0], listaComponente[4], listaComponente[5], listaComponente[6])
+        bloquearInputs()
+        exibirBotoesEdicao()
+        
         api.buscarAgendamento()
         renderizar("130%", "Pedido")
     }
@@ -95,13 +101,77 @@ function fecharJanela() {
     if (paginaParaIr == "adicionar-pedido") escolherRenderizacao(false, paginaParaIr)
 }
 
-escolherRenderizacao()
+
+function agregarInputsEmLista(){
+    var listaInput = []
+    var inputs = document.querySelectorAll('input')
+    for(var i = 0; i < inputs.length; i++){
+        listaInput.push(inputs[i])
+    }
+    return listaInput
+}
+
+function bloquearInputs(){
+    var listaInput = agregarInputsEmLista()
+
+    for(var i = 0; i < listaInput.length; i++){
+        listaInput[i].disabled = true
+    }
+}
+
+function desbloquearInputs(){
+    var listaInput = agregarInputsEmLista()
+
+    for(var i = 0; i < listaInput.length; i++){
+        listaInput[i].disabled = false
+    }
+}
+
+function desbloquearFormulario(botaoId){
+
+    var classe = botaoId.substring(botaoId.indexOf('-') + 1);
+    var listaInput = document.querySelectorAll(`.${classe}`)
+
+    if(classe == 'cliente'){
+        var elNumero = document.querySelector('#input-numero-celular')
+        elNumero.disabled = false
+    } 
+
+    for(var i = 0; i < listaInput.length; i++){
+        listaInput[i].disabled = false
+    }
+}
+
+
+function esconderBotoesEdicao(){
+    var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
+
+    for(var i = 0; i < listaBotaoEdicao.length; i++){
+        if(!listaBotaoEdicao[i].classList.contains('d-none')){
+            listaBotaoEdicao[i].classList.add('d-none')
+        } 
+    }
+}
+
+function exibirBotoesEdicao(){
+    var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
+
+    for(var i = 0; i < listaBotaoEdicao.length; i++){
+        if(!listaBotaoEdicao[i].classList.contains('d-block')){
+            listaBotaoEdicao[i].classList.add('d-block')
+        } 
+    }
+}
 
 
 export {
     renderizar,
     escolherRenderizacao,
-    fecharJanela
+    fecharJanela,
+    agregarInputsEmLista,
+    bloquearInputs,
+    desbloquearInputs,
+    desbloquearFormulario
 }
 
 

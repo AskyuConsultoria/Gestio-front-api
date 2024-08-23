@@ -16,7 +16,7 @@ button.botao-confirmacao{
         transition: color .2s; 
 }
 
-button.botao-pedido{
+button.botao-pedido, button.botao-edicao{
     outline: none;
     border-style: none;
     background: linear-gradient(45deg, #012171, #023FD7)
