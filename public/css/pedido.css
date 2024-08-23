@@ -16,7 +16,7 @@ button.botao-confirmacao{
         transition: color .2s; 
 }
 
-button.botao-pedido, button.botao-edicao{
+button.botao-pedido, button.botao-edicao, button.botao-salvar{
     outline: none;
     border-style: none;
     background: linear-gradient(45deg, #012171, #023FD7)
@@ -46,7 +46,7 @@ button#confirmButton:hover {
 }
 
 
-input.is-valid, .is-invalid{
+.is-valid, .is-invalid{
  z-index: 0 !important;
 }
 
