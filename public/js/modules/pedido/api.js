@@ -228,6 +228,8 @@ async function buscarEtapas() {
 
         const dados = await response.json()
         console.log(dados)
+
+        pedido.preencherOptionsEtapa(dados)
     }
     catch (error) {
         console.log(`Houve um erro no servidor ${error}`)
