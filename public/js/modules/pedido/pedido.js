@@ -1,5 +1,5 @@
 
-import * as motorGrafico  from "./motorGrafico.js"
+import * as motorGrafico from "./motorGrafico.js"
 import * as api from "./api.js"
 
 window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
@@ -93,11 +93,14 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
   var clienteId = agendamento.cliente.id
   document.querySelector('#input-data-inicio').value = agendamento.dataInicio
   document.querySelector('#input-data-fim').value = agendamento.dataFim
-  
+
+  await api.buscarEtapas()
   var elSelectEtapa = document.querySelector('#input-etapa')
-  var indiceSelecionado = elSelectEtapa.selectedIndex
-  elSelectEtapa.options[indiceSelecionado].innerText = agendamento.etapa.nome
-  elSelectEtapa.options[indiceSelecionado].value = agendamento.id
+  for(var i = 0; i < elSelectEtapa.options.length; i++){
+    if(elSelectEtapa.options[i].value == agendamento.id){
+      elSelectEtapa.selectedIndex = i 
+    } 
+  }
 
   inputAntigoDataInicioPedido = agendamento.dataInicio
   inputAntigoDataFimPedido = agendamento.dataFim
@@ -106,9 +109,9 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
 }
 
 export function preencherDadosCliente(cliente) {
-  sessionStorage.setItem('CLIENTE-ID', cliente.id) 
+  sessionStorage.setItem('CLIENTE-ID', cliente.id)
   sessionStorage.setItem('TELEFONE-ID', cliente.telefone_id)
-  sessionStorage.setItem('ENDERECO-ID', cliente.endereco_id) 
+  sessionStorage.setItem('ENDERECO-ID', cliente.endereco_id)
 
 
   document.querySelector('#input-nome').value = cliente.nome
@@ -133,7 +136,7 @@ export function preencherDadosCliente(cliente) {
   inputAntigoBairro = cliente.bairro
   inputAntigoUf = cliente.uf
 
-  if(sessionStorage.getItem('PAGINA-PEDIDO') == 'adicionar-pedido'){
+  if (sessionStorage.getItem('PAGINA-PEDIDO') == 'adicionar-pedido') {
     motorGrafico.escolherRenderizacao(false, 'adicionar-pedido')
   }
 
@@ -164,6 +167,20 @@ export function preencherCardsDeCliente(listaCliente) {
         `
   }
 }
+
+export function preencherOptionsEtapa(listaEtapas) {
+  const elEtapa = document.querySelector('#input-etapa')
+  elEtapa.innerHTML = ""
+
+  for (var i = 0; i < listaEtapas.length; i++) {
+    var option = document.createElement('option')
+    option.value = listaEtapas[i].id
+    option.innerText = listaEtapas[i].nome
+    elEtapa.appendChild(option)
+  }
+
+}
+
 
 
 
@@ -281,7 +298,7 @@ export async function exibirStatusDaRespostaAPI(response) {
 
 export function validarEventoKeyboard(evento) {
   if (evento.key == "Enter") {
-   api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
+    api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
   }
 }
 
