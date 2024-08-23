@@ -212,7 +212,30 @@ async function criarPedido() {
 
 }
 
+async function buscarEtapas() {
 
+    try {
+        const usuarioId = parseInt(sessionStorage.getItem('id'))
+
+        const response = await fetch(`http://localhost:8080/etapas/${usuarioId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+
+        const dados = await response.json()
+        console.log(dados)
+    }
+    catch (error) {
+        console.log(`Houve um erro no servidor ${error}`)
+    }
+
+}
+
+buscarEtapas()
 
 export {
     buscarAgendamento,
@@ -221,5 +244,6 @@ export {
     buscarClientesPorNome,
     atualizarDadosCliente,
     atualizarDadosPedido,
-    criarPedido
+    criarPedido,
+    buscarEtapas
 }
