@@ -55,6 +55,8 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         listaComponenteOcultado.push(listaComponente[1], listaComponente[4], listaComponente[5], listaComponente[6])
         desbloquearInputs()
         esconderBotoesEdicao()
+        esconderEtapa()
+        exibirBotaoSalvar()
 
         if (clienteId != "") {
             listaComponenteExibido.shift()
@@ -72,6 +74,8 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         listaComponenteOcultado.push(listaComponente[0], listaComponente[4], listaComponente[5], listaComponente[6])
         bloquearInputs()
         exibirBotoesEdicao()
+        exibirEtapa()
+        exibirBotaoSalvar()
         
         api.buscarAgendamento()
         renderizar("130%", "Pedido")
@@ -116,6 +120,7 @@ function bloquearInputs(){
 
     for(var i = 0; i < listaInput.length; i++){
         listaInput[i].disabled = true
+        document.querySelector('#input-etapa').disabled = true
     }
 }
 
@@ -124,6 +129,7 @@ function desbloquearInputs(){
 
     for(var i = 0; i < listaInput.length; i++){
         listaInput[i].disabled = false
+        document.querySelector('#input-etapa').disabled = false
     }
 }
 
@@ -136,6 +142,11 @@ function desbloquearFormulario(botaoId){
         var elNumero = document.querySelector('#input-numero-celular')
         elNumero.disabled = false
     } 
+
+    if(classe == 'pedido'){
+        var elEtapa = document.querySelector('#input-etapa')
+        elEtapa.disabled = false
+    }
 
     for(var i = 0; i < listaInput.length; i++){
         listaInput[i].disabled = false
@@ -160,6 +171,49 @@ function exibirBotoesEdicao(){
         if(!listaBotaoEdicao[i].classList.contains('d-block')){
             listaBotaoEdicao[i].classList.add('d-block')
         } 
+    }
+}
+
+function esconderBotaoSalvar(){
+    var botaoSalvar = document.querySelector('#botao-salvar')
+
+    if(!botaoSalvar.classList.contains('d-none')){
+        botaoSalvar.classList.add('d-none')
+    } 
+}
+
+function exibirBotaoSalvar(){
+    var botaoSalvar = document.querySelector('#botao-salvar')
+
+    if(!botaoSalvar.classList.contains('d-block')){
+        botaoSalvar.classList.add('d-block')
+    } 
+
+}
+
+function esconderEtapa(){
+    var labelEtapa = document.querySelector('#label-etapa')
+    var contentEtapa = document.querySelector('#content-etapa')
+
+    if(!labelEtapa.classList.contains('d-none')){
+        labelEtapa.classList.add('d-none')
+    }
+
+    if(!contentEtapa.classList.contains('d-none')){
+        contentEtapa.classList.add('d-none')
+    }
+}
+
+function exibirEtapa(){
+    var labelEtapa = document.querySelector('#label-etapa')
+    var contentEtapa = document.querySelector('#content-etapa')
+
+    if(!labelEtapa.classList.contains('d-block')){
+        labelEtapa.classList.add('d-block')
+    }
+
+    if(!contentEtapa.classList.contains('d-block')){
+        contentEtapa.classList.add('d-block')
     }
 }
 

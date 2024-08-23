@@ -6,9 +6,10 @@ window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeCon
 window.construirModalGenerico = construirModalGenerico
 window.validarEventoKeyboard = validarEventoKeyboard
 window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
+window.construirModalGenerico = construirModalGenerico
 
 
-window.clienteId = clienteId
+window.clienteId = sessionStorage.getItem('CLIENTE-ID')
 window.inputClienteId = clienteId;
 window.inputTelefoneId = telefoneId;
 window.inputAgendamentoId = agendamentoId;
@@ -92,6 +93,11 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
   var clienteId = agendamento.cliente.id
   document.querySelector('#input-data-inicio').value = agendamento.dataInicio
   document.querySelector('#input-data-fim').value = agendamento.dataFim
+  
+  var elSelectEtapa = document.querySelector('#input-etapa')
+  var indiceSelecionado = elSelectEtapa.selectedIndex
+  elSelectEtapa.options[indiceSelecionado].innerText = agendamento.etapa.nome
+  elSelectEtapa.options[indiceSelecionado].value = agendamento.id
 
   inputAntigoDataInicioPedido = agendamento.dataInicio
   inputAntigoDataFimPedido = agendamento.dataFim
@@ -100,9 +106,9 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
 }
 
 export function preencherDadosCliente(cliente) {
-  clienteId = cliente.id
-  telefoneId = cliente.telefone_id
-  enderecoId = cliente.endereco_id
+  sessionStorage.setItem('CLIENTE-ID', cliente.id) 
+  sessionStorage.setItem('TELEFONE-ID', cliente.telefone_id)
+  sessionStorage.setItem('ENDERECO-ID', cliente.endereco_id) 
 
 
   document.querySelector('#input-nome').value = cliente.nome
@@ -127,12 +133,16 @@ export function preencherDadosCliente(cliente) {
   inputAntigoBairro = cliente.bairro
   inputAntigoUf = cliente.uf
 
+  if(sessionStorage.getItem('PAGINA-PEDIDO') == 'adicionar-pedido'){
+    motorGrafico.escolherRenderizacao(false, 'adicionar-pedido')
+  }
+
 }
 
 export function preencherCardsDeCliente(listaCliente) {
   var boxCliente = document.querySelector("#conteudo-cliente")
   boxCliente.innerHTML = ""
-  for (i = 0; i < listaCliente.length; i++) {
+  for (var i = 0; i < listaCliente.length; i++) {
     boxCliente.innerHTML +=
       `
         <div class="d-flex container px-3 col-12 py-2 flex-row w-100" style="height: 76px;" id="${listaCliente[i].id}" onclick="buscarClienteView(this.id)">
@@ -201,7 +211,7 @@ export function construirModalGenerico(elementoId, status) {
     modalGenerico.show()
   }
 
-  if (elementoId == "confirmButton") {
+  if (elementoId == "botao-salvar") {
     elementoFooter.innerHTML = `
 
     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="validarConteudosNulosEEspecificos()"  style="background-color: #012171;">
@@ -264,14 +274,14 @@ export async function exibirStatusDaRespostaAPI(response) {
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
   dadosForamAtualizados()
   modalGenerico.toggle()
-  pedido.esconderBotaoSalvar()
+  esconderBotaoSalvar()
   construirModalGenerico("statusButton", status)
 }
 
 
 export function validarEventoKeyboard(evento) {
   if (evento.key == "Enter") {
-    buscarClientesPorNome(document.querySelector("#input-cliente").value)
+   api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
   }
 }
 
