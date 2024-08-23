@@ -10,6 +10,7 @@ function agregarConteudosEEnviarParaValidar(){
     var conteudoTelefone = document.querySelector('#content-numero-celular')
     var conteudoDataInicio = document.querySelector('#content-data-inicio')
     var conteudoDataFim = document.querySelector('#content-data-fim')
+    var conteudoEtapa = document.querySelector('#content-etapa')
     var conteudoCep = document.querySelector('#content-cep')
     var conteudoRua = document.querySelector('#content-rua')
     var conteudoBairro = document.querySelector('#content-bairro')
@@ -17,7 +18,7 @@ function agregarConteudosEEnviarParaValidar(){
     var conteudoUf = document.querySelector('#content-uf')
   
     var listaDeConteudo = [
-      conteudoNome, conteudoSobrenome, conteudoEmail, conteudoTelefone, conteudoDataInicio, conteudoDataFim, conteudoCep, conteudoRua,
+      conteudoNome, conteudoSobrenome, conteudoEmail, conteudoTelefone, conteudoDataInicio, conteudoDataFim, conteudoEtapa, conteudoCep, conteudoRua,
       conteudoBairro, conteudoCidade, conteudoUf
     ]
   

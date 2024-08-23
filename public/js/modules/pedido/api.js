@@ -4,6 +4,7 @@ import * as pedido from "./pedido.js"
 var clienteId = pedido.clienteId
 
 window.buscarAgendamento = buscarAgendamento
+window.buscarClienteView = buscarClienteView
 
 async function buscarAgendamento() {
 
@@ -192,8 +193,8 @@ async function criarPedido() {
                 nome: "Agendamento",
                 dataInicio: document.querySelector("#input-data-inicio").value,
                 dataFim: document.querySelector("#input-data-inicio").value,
-                usuario: usuarioId,
-                cliente: clienteId,
+                usuario: sessionStorage.getItem('id'),
+                cliente: sessionStorage.getItem('CLIENTE-ID'),
                 etapa: 1
             })
         });
