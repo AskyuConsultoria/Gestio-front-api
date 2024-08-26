@@ -15,39 +15,64 @@
 </head>
 
 <body style="background-color: var(--cinzaClaro) !important;" onload="listarEtapas()">
-  <header class="header py-4 bg-light w-100 px-0" style="background-color: var(--cinzaClaro) !important;">
+  <header class="header-container py-4 bg-light w-100 px-0 " style="background-color: var(--cinzaClaro) !important;">
     <div class="container d-flex justify-content-between">
       <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3">
-      <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="" class="mx-3">
+      <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" class="navbar-toggler mx-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"> 
     </div>
   </header>
-  <div class="container-md mt-3 p-3">
+  <div class="container-md cont-etapa mt-3 p-3">
     <div class="pd-title d-flex justify-content-between align-items-center mx-3">
       <span>Minhas <b>Etapas</b></span>
     </div>
-    <!-- <div class="barra-busca d-flex align-items-center justify-content-evenly mx-2 mt-2 mb-1">
-      <img src="./assets/search.svg" alt="lupa-pesquisa">
-      <input type="text" placeholder="Pesquise pedidos">
-      <img src="./assets/filter.svg" alt="filtro de busca">
-    </div> -->
     <div class="descricao-page d-flex align-items-center justify-content-center mx-2 mt-3">
       <span>Consulte o total de pedidos em cada etapa:</span>
     </div>
   </div>
   <div class="container etapas" id="container">
     <!-- USAR O ETAPAS PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
-
     <!-- INSERIR PELO ID , PUXAR DADOS DA ETAPA ESPECIFICA PELO ID -->
 
   </div>
-
-  <!-- <div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
-    <div class="texto-card">
-      <div class="nome-pessoa">John Doe</div>
-    <span class="dthora">01/01/2021 18:02</span>
+  
+  <div class="offcanvas offcanvas-end menu" data-bs-dismiss="offcanvas"tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style=" color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+    <div class="offcanvas-body menu">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contatos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Fichas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Lista-peca.html">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Lista-tecido.html">Tecidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Monitoramento</a>
+        </li>
     </div>
-  </div>   -->
+  </div>
+</div>
 
+
+  <script>
+    $(document).ready(function() {
+  $(document).on('click', function(event) {
+    if (!document.getElementById('offcanvasNavbar').contains(event.target)) {
+      $('#offcanvasNavbar').offcanvas('hide');
+    }
+  });
+});
+  </script>
 
 </body>
 

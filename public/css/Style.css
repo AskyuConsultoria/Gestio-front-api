@@ -185,6 +185,7 @@ header {
 
 .finalizado{
     border-left: 30px solid var(--azul) !important;
+    margin-left: 6%;
 }
 
 .card-pessoa {
@@ -328,13 +329,13 @@ header {
 .offcanvas-header{
     background-color: var(--azul) !important;
     height: 6rem;
-    width: 25rem;
+    width: 32rem;
 }
 
-/* PARA BOTÃO CLOSE 
+/* PARA BOTÃO CLOSE  */
 .header-off{
-    width: 100%;
-} */
+    width: 67%;
+}
 
 .offcanvas-body{
     background-color: var(--cinzaClaro);
@@ -342,6 +343,12 @@ header {
     height: 100vh;
     overflow-y: auto;
 }
+
+.menu{
+    background-color: var(--azul) !important;
+}
+
+
 
 .offcanvas-backdrop.show{
     opacity: .5;
@@ -416,9 +423,19 @@ header {
     color: var(--azul);
 }
 
+
 /* Adiciona efeito de hover ao botão de fechar */
 .close:hover {
     color: rgb(109, 0, 0);
+  }
+  
+  .header-container {
+    background-color: var(--cinzaClaro);
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+    flex-grow: 1;
   }
 
 
@@ -430,14 +447,22 @@ header {
         }
     }
 
-    .container-md {
-        max-width: 95%;
-        font-size: 19px;
-        height: auto;
+
+    .offcanvas-header {
+        width: 51rem;
     }
 
+    .header-off {
+        width: 86%;
+    }
+
+    .header-container {
+        width: 100%;
+        max-width: 100%;      }
+
     .card {
-        max-width: 97%;
+        max-width: 90%;
+
 
         .peca-nome {
             font-size: 32px;
@@ -458,6 +483,33 @@ header {
         .etapa{
             font-size: 18px;
         }   
+    }
+
+    .pd-title{
+        font-size: 30px;
+    }
+
+    .cont-etapa{
+        margin-left: 10%;
+    } 
+
+    .etapa-card{
+        max-width: 80%;
+        height: 5rem;
+
+        .etapa-nome {
+            font-size: 22px;
+        }
+
+        img {
+            height: 5vh
+        }
+
+        ;
+
+        .medidas {
+            font-size: 25px;
+        }
     }
 
     .etapa-nome{
