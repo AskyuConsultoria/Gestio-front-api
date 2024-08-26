@@ -58,14 +58,14 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         esconderEtapa()
         exibirBotaoSalvar()
 
-        if (clienteId != "") {
+        if (sessionStorage.getItem("CLIENTE-ID") != null) {
             listaComponenteExibido.shift()
             listaComponenteOcultado.shift()
             listaComponenteExibido.push(listaComponente[1])
             renderizar("130%", "Novo Pedido")
             return
         }
-        renderizar("110%", "Novo Pedido")
+        renderizar("150%", "Novo Pedido")
     }
 
     if (paginaEscolhida == "consultar-pedido") {
@@ -78,10 +78,11 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         exibirBotaoSalvar()
         
         api.buscarAgendamento()
-        renderizar("130%", "Pedido")
+        renderizar("160%", "Pedido")
     }
 
     if (paginaEscolhida == "associar-cliente") {
+        sessionStorage.removeItem("CLIENTE-ID")
         document.querySelector('#confirmButton').classList.replace("d-flex", "d-none")
         document.querySelector('.botao-confirmacao').id = "adicionar-pedido"
         listaComponenteExibido.push(listaComponente[4], listaComponente[5], listaComponente[6])
@@ -99,6 +100,7 @@ function fecharJanela() {
 
     if (paginaParaIr == "home.html") {
         sessionStorage.setItem("EXIBICAO-MODAL", true)
+        sessionStorage.removeItem("CLIENTE-ID")
         window.location = paginaParaIr
     }
 
@@ -158,6 +160,10 @@ function esconderBotoesEdicao(){
     var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
 
     for(var i = 0; i < listaBotaoEdicao.length; i++){
+        if(listaBotaoEdicao[i].classList.contains('d-block')){
+            listaBotaoEdicao[i].classList.remove('d-block')
+        }
+
         if(!listaBotaoEdicao[i].classList.contains('d-none')){
             listaBotaoEdicao[i].classList.add('d-none')
         } 
@@ -168,6 +174,10 @@ function exibirBotoesEdicao(){
     var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
 
     for(var i = 0; i < listaBotaoEdicao.length; i++){
+        if(listaBotaoEdicao[i].classList.contains('d-none')){
+            listaBotaoEdicao[i].classList.remove('d-none')
+        }
+
         if(!listaBotaoEdicao[i].classList.contains('d-block')){
             listaBotaoEdicao[i].classList.add('d-block')
         } 
@@ -177,6 +187,10 @@ function exibirBotoesEdicao(){
 function esconderBotaoSalvar(){
     var botaoSalvar = document.querySelector('#botao-salvar')
 
+    if(botaoSalvar.classList.contains('d-block')){
+        botaoSalvar.classList.remove('d-block')
+    }
+
     if(!botaoSalvar.classList.contains('d-none')){
         botaoSalvar.classList.add('d-none')
     } 
@@ -184,6 +198,10 @@ function esconderBotaoSalvar(){
 
 function exibirBotaoSalvar(){
     var botaoSalvar = document.querySelector('#botao-salvar')
+
+    if(botaoSalvar.classList.contains('d-none')){
+        botaoSalvar.classList.remove('d-none')
+    }
 
     if(!botaoSalvar.classList.contains('d-block')){
         botaoSalvar.classList.add('d-block')
@@ -208,12 +226,35 @@ function exibirEtapa(){
     var labelEtapa = document.querySelector('#label-etapa')
     var contentEtapa = document.querySelector('#content-etapa')
 
+    if(labelEtapa.classList.contains('d-none')){
+        labelEtapa.classList.remove('d-none')
+    }
+
+    if(contentEtapa.classList.contains('d-none')){
+        contentEtapa.classList.remove('d-none')
+    }
+
+
     if(!labelEtapa.classList.contains('d-block')){
         labelEtapa.classList.add('d-block')
     }
 
     if(!contentEtapa.classList.contains('d-block')){
         contentEtapa.classList.add('d-block')
+    }
+}
+
+function removerEstilizacaoDasInputs(){
+    var inputs = document.querySelectorAll('input')
+    for(var i = 0; i < inputs.length; i++){
+        if(inputs[i].classList.contains('is-valid')){
+            inputs[i].classList.remove('is-valid')
+        }
+    }
+
+    const selectEtapa = document.querySelector('#input-etapa')
+    if(selectEtapa.classList.contains('is-valid')){
+        selectEtapa.classList.remove('is-valid')
     }
 }
 
@@ -225,7 +266,8 @@ export {
     agregarInputsEmLista,
     bloquearInputs,
     desbloquearInputs,
-    desbloquearFormulario
+    desbloquearFormulario,
+    removerEstilizacaoDasInputs
 }
 
 
