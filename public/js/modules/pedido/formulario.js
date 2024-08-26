@@ -88,7 +88,7 @@ function agregarConteudosEEnviarParaValidar(){
     } else {
       if(elInput.classList.contains('is-valid')) elInput.classList.remove('is-valid')
       if(!elInput.classList.contains('is-invalid'))  elInput.classList.add('is-invalid')  
-      if(mensagem != null) elDivContent.innerHTML = mensagem
+      if(mensagem != undefined) elDivContent.innerHTML = mensagem
       elDivContent.classList.remove('d-none')
       if(!elDivContent.classList.contains('d-block')) elDivContent.classList.add('d-block')
     }
@@ -101,7 +101,7 @@ function agregarConteudosEEnviarParaValidar(){
     if(tipoValidacao == 'diferente'){
   
       if(valorCampo.length != digitos){
-        return true
+        return false
       } else{
         return true
       }

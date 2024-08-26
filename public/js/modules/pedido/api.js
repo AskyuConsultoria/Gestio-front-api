@@ -1,4 +1,5 @@
 
+import { escolherRenderizacao, renderizar, removerEstilizacaoDasInputs } from "./motorGrafico.js"
 import * as pedido from "./pedido.js"
 
 var clienteId = pedido.clienteId
@@ -117,6 +118,7 @@ async function buscarClientesPorNome(clienteNome) {
 
 async function atualizarDadosCliente(clienteId) {
     var usuarioId = sessionStorage.getItem("id")
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
         const response = await fetch(`http://localhost:8080/clientes/${clienteId}`, {
@@ -134,8 +136,8 @@ async function atualizarDadosCliente(clienteId) {
 
         const dados = await response.json()
         console.log(dados)
-
-        await pedido.exibirStatusDaRespostaAPI(response)
+        return response.status
+       
 
     } catch (error) {
 
@@ -145,6 +147,7 @@ async function atualizarDadosCliente(clienteId) {
 
 async function atualizarDadosPedido(agendamentoId) {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
         const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
@@ -163,15 +166,15 @@ async function atualizarDadosPedido(agendamentoId) {
                     id: clienteId
                 },
                 etapa: {
-                    id: 1
+                    id: document.querySelector("#input-etapa").value
                 }
             })
         });
 
         const dados = await response.json()
         console.log(dados)
+        return response.status
 
-        await pedido.exibirStatusDaRespostaAPI(response.status)
 
     } catch (error) {
 
@@ -203,7 +206,11 @@ async function criarPedido() {
         console.log(dados)
 
         await pedido.exibirStatusDaRespostaAPI(response.status)
-
+        sessionStorage.setItem("AGENDAMENTO-ID", dados.id)
+        sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
+        
+        removerEstilizacaoDasInputs()
+        escolherRenderizacao(false, null)
 
     } catch (error) {
 
@@ -236,6 +243,9 @@ async function buscarEtapas() {
     }
 
 }
+
+
+
 
 buscarEtapas()
 

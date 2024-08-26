@@ -91,6 +91,8 @@ export var salvarTelefone = false
 export async function preencherDadosDePedidoCompleto(agendamento) {
   agendamentoId = agendamento.id
   var clienteId = agendamento.cliente.id
+  sessionStorage.setItem("ETAPA-ID", agendamento.etapa.id)
+
   document.querySelector('#input-data-inicio').value = agendamento.dataInicio
   document.querySelector('#input-data-fim').value = agendamento.dataFim
 
@@ -169,6 +171,7 @@ export function preencherCardsDeCliente(listaCliente) {
 }
 
 export function preencherOptionsEtapa(listaEtapas) {
+  const etapaId = sessionStorage.getItem('ETAPA-ID')
   const elEtapa = document.querySelector('#input-etapa')
   elEtapa.innerHTML = ""
 
@@ -177,6 +180,7 @@ export function preencherOptionsEtapa(listaEtapas) {
     option.value = listaEtapas[i].id
     option.innerText = listaEtapas[i].nome
     elEtapa.appendChild(option)
+    if(listaEtapas[i].id == etapaId) elEtapa.selectedIndex = i
   }
 
 }
@@ -261,15 +265,27 @@ export function construirModalGenerico(elementoId, status) {
   elementoBody.innerHTML = textoModal
 }
 
-export function salvarModificacao() {
-  var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
-  if (salvarCliente) api.atualizarDadosCliente(clienteId)
+export async function salvarModificacao() {
+  const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+  const listaDeResponse = []
+
+  if (salvarCliente){
+    listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
+  } 
   // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
   // if (salvarEndereco) atualizarDadosEndereco(enderecoId)
 
   if (salvarPedido && agendamentoId == null) {
     api.criarPedido(agendamentoId)
-  } else if (salvarPedido) api.atualizarDadosPedido(agendamentoId)
+  } else if (salvarPedido){
+    listaDeResponse.push(await api.atualizarDadosPedido(agendamentoId))
+  } 
+
+  if(listaDeResponse.length == 0 && salvarPedido == false){
+    construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
+    return
+  }
+  validarRetornoEExibirModalDeStatus(listaDeResponse)
 }
 
 export function houveMudancaDeDados() {
@@ -285,12 +301,22 @@ export function dadosForamAtualizados() {
   salvarTelefone = false
 }
 
+function validarRetornoEExibirModalDeStatus(listaResponse){
+  var responseInvalida = 404 || 400 || 501 || 500
+  for(var i = 0; i < listaResponse.length; i++){
+      if(listaResponse[i] == responseInvalida){
+           exibirStatusDaRespostaAPI(listaResponse[i])
+          return
+      }
+  }
 
-export async function exibirStatusDaRespostaAPI(response) {
+  exibirStatusDaRespostaAPI(listaResponse[0])
+}
+
+export function exibirStatusDaRespostaAPI(response) {
   var status = "Alterações salvas com sucesso"
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
-  dadosForamAtualizados()
-  modalGenerico.toggle()
+  dadosForamAtualizados()   
   esconderBotaoSalvar()
   construirModalGenerico("statusButton", status)
 }
