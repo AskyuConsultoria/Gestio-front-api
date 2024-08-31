@@ -186,7 +186,123 @@ export function preencherOptionsEtapa(listaEtapas) {
 }
 
 
+export function preencherStatusAgendamento(listaAgendamento){
+  const tamanhoLista = listaAgendamento.length
+  var elStatus = document.querySelector('#conteudo-status')
+  elStatus.innerHTML = ''
 
+  var i = 0
+    while(i < tamanhoLista){
+      if(tamanhoLista %2 != 0 && i == (tamanhoLista - 1)){
+        elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 45%">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                        fill="#012171">
+                        <path
+                            d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z">
+                        </path>
+                    </svg>
+
+                </div>
+                <div class="d-flex flex-column w-75 align-items-center justify-content-center">
+                    <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
+                        ${listaAgendamento[i].etapa.nome}
+                    </div>
+
+                    <div class="d-flex m-1 justify-content-center">
+                        ${formatarData(listaAgendamento[i].agendamento.dataInicio)}
+                    </div>
+                    <div class="d-flex m-1 justify-content-center">
+                      ${formatarHorario(listaAgendamento[i].agendamento.dataInicio)} - ${formatarHorario(listaAgendamento[i].agendamento.dataFim)}
+                    </div>
+                </div>
+            </div>
+            <div>
+            `
+            return
+      }
+
+      elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 45%">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                        fill="#012171">
+                        <path
+                            d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z">
+                        </path>
+                    </svg>
+
+                </div>
+                <div class="d-flex flex-column w-75 align-items-center  justify-content-center">
+                    <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
+                        ${listaAgendamento[i].etapa.nome}
+                    </div>
+
+                    <div class="d-flex m-1 justify-content-center">
+                      ${formatarData(listaAgendamento[i].agendamento.dataInicio)}
+                    </div>
+                    <div class="d-flex m-1 justify-content-center">
+                      ${formatarHorario(listaAgendamento[i].agendamento.dataInicio)} ${formatarHorario(listaAgendamento[i].agendamento.dataFim)}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 45%">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                        fill="#012171">
+                        <path
+                            d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z">
+                        </path>
+                    </svg>
+
+                </div>
+                <div class="d-flex flex-column w-75 align-items-center  justify-content-center">
+                    <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
+                        ${listaAgendamento[i+1].etapa.nome}
+                    </div>
+
+                    <div class="d-flex m-1 justify-content-center">
+                        ${formatarData(listaAgendamento[i+1].agendamento.dataInicio)}
+                    </div>
+                    <div class="d-flex m-1 justify-content-center">
+                         ${formatarHorario(listaAgendamento[i+1].agendamento.dataInicio)} - ${formatarHorario(listaAgendamento[i+1].agendamento.dataFim)}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>`
+
+    i += 2
+    }
+  }
+
+
+
+
+function formatarData(data) {
+  var dia = new Date(data).getDate()
+  var mes = new Date(data).getMonth() + 1
+  var ano = new Date(data).getFullYear()
+
+  return `${dia}/${mes}/${ano}`
+}
+
+function formatarHorario(data) {
+  var horas = new Date(data).getHours()
+
+  var horarioFormatado = ""
+  if (horas <= 9) {
+    horarioFormatado = `0${horas}h`
+  }
+
+  horarioFormatado = `${horas}h`
+  return horarioFormatado
+}
 
 export function associarClienteACriacaoDePedido(novoClienteId, cliente) {
   clienteId = novoClienteId
