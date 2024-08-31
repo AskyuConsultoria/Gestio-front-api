@@ -18,36 +18,48 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <script src="./js/modules/pedido/api.js" type="module"></script>
     <script src="./js/modules/pedido/formulario.js" type="module"></script>
-    <script src="./js/modules/pedido/motorGrafico.js" type="module"></script>      
-    <script src="./js/modules/pedido/pedido.js" type="module"></script>     
+    <script src="./js/modules/pedido/motorGrafico.js" type="module"></script>
+    <script src="./js/modules/pedido/pedido.js" type="module"></script>
 </head>
 
 <body onload="escolherRenderizacao()" id="body">
-    
+
 
 
     <!-- ínicio do modal genérico -->
-    <div class="modal fade" id="modal-generico" tabindex="-1" role="dialog" aria-labelledby="modalGenerico" aria-hidden="true">
+    <div class="modal fade" id="modal-generico" tabindex="-1" role="dialog" aria-labelledby="modalGenerico"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header border-bottom-0">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                </div>
+                <div class="modal-body fs-4 text-center" id="body-modal-generico">
+                    Existem alterações não salvas no seu pedido, deseja salvar?
+                </div>
+                <div class="modal-footer d-flex border-top-0 pt-0" id="conteudo-botao-modal">
+                    <div class="d-flex w-100 justify-content-center align-items-center" id="footer-modal-generico">
+                        <button type="button"
+                            class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3"
+                            data-dismiss="modal" style="background-color: #012171;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                                fill="#FFFF">
+                                <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+                            </svg>
+                        </button>
+                        <button type="button"
+                            class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3"
+                            style="background-color: #012171;">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                                fill="#FFFF">
+                                <path
+                                    d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body fs-4 text-center" id="body-modal-generico">
-              Existem alterações não salvas no seu pedido, deseja salvar?
-            </div>
-            <div class="modal-footer d-flex border-top-0 pt-0" id="conteudo-botao-modal">
-              <div class="d-flex w-100 justify-content-center align-items-center" id="footer-modal-generico">
-                    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" data-dismiss="modal" style="background-color: #012171;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
-                    </button>
-                    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" style="background-color: #012171;">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-                    </button>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
 
 
@@ -72,7 +84,8 @@
     <!-- Botão de assosiar cliente -->
     <div class="d-flex px-3 pt-3 mb-3 componente">
         <div class="d-flex rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
-            <button class="botao-pedido rounded-pill text-white w-75" onclick="escolherRenderizacao(true)" style="height: 40px;">Cliente Responsável</button>
+            <button class="botao-pedido rounded-pill text-white w-75" onclick="escolherRenderizacao(true)"
+                style="height: 40px;">Cliente Responsável</button>
         </div>
     </div>
 
@@ -89,20 +102,24 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-nome">
-                <input class="w-100 form-control cliente" placeholder="John" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoNome)" id="input-nome" required>
+                <input class="w-100 form-control cliente" placeholder="John" type="text"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoNome)" id="input-nome"
+                    required>
                 <div class="invalid-feedback">
-                 Por favor insira o nome do cliente.
+                    Por favor insira o nome do cliente.
                 </div>
             </div>
 
-           
+
 
             <div class="d-flex ps-3 mb-2 w-100">
                 <label for="input-sobrenome" class="text-secondary fw-light cliente">Sobrenome</label>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-sobrenome">
-                <input class="w-100 form-control cliente" placeholder="Doe" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoSobrenome)" id="input-sobrenome" required>
+                <input class="w-100 form-control cliente" placeholder="Doe" type="text"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoSobrenome)"
+                    id="input-sobrenome" required>
                 <div class="invalid-feedback">
                     Por favor insira o sobrenome do cliente.
                 </div>
@@ -113,7 +130,9 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-numero-celular">
-                <input class="w-100 form-control telefone" placeholder="11-93230192010" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoTelefone)" id="input-numero-celular" required>
+                <input class="w-100 form-control telefone" placeholder="11-93230192010" type="text"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoTelefone)"
+                    id="input-numero-celular" required>
                 <div class="invalid-feedback">
                     Por favor insira o número de telefone do cliente.
                 </div>
@@ -125,14 +144,17 @@
 
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-email">
-                <input class="w-100 form-control cliente" placeholder="john.doe@gmail.com" type="email" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoEmail)" id="input-email" required>
+                <input class="w-100 form-control cliente" placeholder="john.doe@gmail.com" type="email"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoEmail)" id="input-email"
+                    required>
                 <div class="invalid-feedback">
                     Por favor insira corretamente o e-mail.
                 </div>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
-                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)" id="botao-cliente" style="height: 40px;">
+                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)"
+                    id="botao-cliente" style="height: 40px;">
                     Editar
                 </button>
             </div>
@@ -152,11 +174,14 @@
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
-                <label for="input-data-inicio" class="text-secondary fw-light">Data e Horário do começo do pedido</label>
+                <label for="input-data-inicio" class="text-secondary fw-light">Data e Horário do começo do
+                    pedido</label>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-data-inicio">
-                <input for="input-data-fim" class="w-100 form-control pedido" placeholder="Data" type="datetime-local" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataInicioPedido)" id="input-data-inicio" required>
+                <input for="input-data-fim" class="w-100 form-control pedido" placeholder="Data" type="datetime-local"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataInicioPedido)"
+                    id="input-data-inicio" required>
                 <div class="invalid-feedback">
                     Por favor insira corretamente o data e horário.
                 </div>
@@ -167,7 +192,9 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-data-fim">
-                <input class="w-100 form-control pedido" placeholder="Data" type="datetime-local" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataFimPedido)" id="input-data-fim" required>
+                <input class="w-100 form-control pedido" placeholder="Data" type="datetime-local"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataFimPedido)"
+                    id="input-data-fim" required>
                 <div class="invalid-feedback">
                     Por favor insira corretamente o data e horário.
                 </div>
@@ -179,15 +206,17 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-etapa">
-                <select class="w-100 form-select pedido" placeholder="Etapa" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataFimPedido)" id="input-etapa" required>
+                <select class="w-100 form-select pedido" placeholder="Etapa"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoDataFimPedido)"
+                    id="input-etapa" required>
                     <option value="">
                     </option>
-                <select>
-                <div class="invalid-feedback">
-                    Por favor selecione corretamente a etapa.
-                </div>
+                    <select>
+                        <div class="invalid-feedback">
+                            Por favor selecione corretamente a etapa.
+                        </div>
             </div>
-            
+
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
                 <button class="botao-pedido rounded-pill text-white w-75" style="height: 40px;">
@@ -197,18 +226,19 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
-                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)" id="botao-pedido" style="height: 40px;">
+                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)"
+                    id="botao-pedido" style="height: 40px;">
                     Editar
                 </button>
             </div>
 
         </div>
 
-       
+
 
     </div>
 
-      <!-- Componente com endereço do pedido -->
+    <!-- Componente com endereço do pedido -->
     <div class="d-flex px-3 flex-column componente needs-validation" novalidate>
         <div class="d-flex flex-column bg-body rounded">
             <div class="d-flex ps-3 pt-2 mb-2 w-100">
@@ -227,13 +257,15 @@
 
             <div class="d-flex flex-row">
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-cep">
-                    <input class="w-75 form-control endereco" placeholder="00000-000" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCep)" id="input-cep" required>
+                    <input class="w-75 form-control endereco" placeholder="00000-000" type="text"
+                        onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCep)" id="input-cep"
+                        required>
                     <div class="invalid-feedback">
                         Por favor insira corretamente o CEP.
                     </div>
                 </div>
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-numero">
-                    <input class="w-75 form-control endereco" placeholder="00" type="tel"  id="input-numero" required>
+                    <input class="w-75 form-control endereco" placeholder="00" type="tel" id="input-numero" required>
                     <div class="invalid-feedback">
                         Por favor insira corretamente o número do endereco.
                     </div>
@@ -245,7 +277,8 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-rua">
-                <input class="w-100 form-control endereco" placeholder="Av. Marechal teodoro" type="text"  onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoRua)" id="input-rua" required>
+                <input class="w-100 form-control endereco" placeholder="Av. Marechal teodoro" type="text"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoRua)" id="input-rua" required>
                 <div class="invalid-feedback">
                     Por favor insira a rua do pedido.
                 </div>
@@ -256,7 +289,9 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-bairro">
-                <input class="w-100 form-control endereco" placeholder="Paulista" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoBairro)" id="input-bairro" required>
+                <input class="w-100 form-control endereco" placeholder="Paulista" type="text"
+                    onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoBairro)" id="input-bairro"
+                    required>
                 <div class="invalid-feedback">
                     Por favor insira o bairro do pedido.
                 </div>
@@ -274,13 +309,17 @@
 
             <div class="d-flex flex-row">
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-cidade">
-                    <input class="w-75 form-control endereco" placeholder="SP" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCidade)" id="input-cidade" required>
+                    <input class="w-75 form-control endereco" placeholder="SP" type="text"
+                        onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCidade)" id="input-cidade"
+                        required>
                     <div class="invalid-feedback">
                         Por favor insira a cidade do pedido.
                     </div>
                 </div>
                 <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-uf">
-                    <input class="w-75 form-control endereco" placeholder="00" type="text" onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoUf)" id="input-uf" required>
+                    <input class="w-75 form-control endereco" placeholder="00" type="text"
+                        onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoUf)" id="input-uf"
+                        required>
                     <div class="invalid-feedback">
                         Por favor insira o uf do pedido.
                     </div>
@@ -288,7 +327,8 @@
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
-                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)" id="botao-endereco" style="height: 40px;">
+                <button class="botao-edicao rounded-pill text-white w-75" onclick="desbloquearFormulario(this.id)"
+                    id="botao-endereco" style="height: 40px;">
                     Editar
                 </button>
             </div>
@@ -297,7 +337,8 @@
 
         <div class="d-flex pt-3 mb-3">
             <div class="d-flex rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
-                <button class="botao-salvar rounded-pill text-white w-75" id="botao-salvar" onclick="construirModalGenerico(this.id, null)" style="height: 40px;">Salvar</button>
+                <button class="botao-salvar rounded-pill text-white w-75" id="botao-salvar"
+                    onclick="construirModalGenerico(this.id, null)" style="height: 40px;">Salvar</button>
             </div>
         </div>
 
@@ -306,7 +347,7 @@
     <div class="d-flex px-3 pt-3 flex-row justify-content-center mb-3 componente">
         <span class="text-white fw-light">Associe o responsável pelo pedido</span>
     </div>
-    
+
     <!-- Ínicio da página de associação de clientes -->
     <div class="d-flex container px-3 flex-row input-group mb-3 componente">
         <button class="input-group-text  w-auto h-auto bg-body" onclick="buscarClientesPorNome(
@@ -321,7 +362,8 @@
                     stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
             </svg>
         </button>
-        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes" id="input-cliente" onkeydown="validarEventoKeyboard(event)">
+        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes" id="input-cliente"
+            onkeydown="validarEventoKeyboard(event)">
         <span class="input-group-text w-auto h-auto b g-body">
             <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
                 viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -365,7 +407,7 @@
                 </div>
             </div>
 
-            
+
             <div class="d-flex container px-3 col-12 py-2 flex-row w-100" style="height: 76px;">
                 <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
                     <div class="d-flex h-100 w-15 rounded rounded-end-0"
@@ -386,10 +428,72 @@
 
     </div>
     <!-- Fim da página de associação de clientes -->
-    
 
-    <button id="confirmButton" class="d-none justify-content-center align-items-center rounded-5 p-3" onclick="construirModalGenerico(this.id, null)" style="background-color: #012171;">
-        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    <div class="d-flex justify-content-center px-3 pt-2 pb-2 text-light">
+        <h4>Status</h4>
+    </div>
+
+    <div id="conteudo-status">
+    <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
+        <div class="d-flex justify-content-between w-100">
+            <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 45%">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                        fill="#012171">
+                        <path
+                            d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z">
+                        </path>
+                    </svg>
+
+                </div>
+                <div class="d-flex flex-column w-75">
+                    <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
+                        Entrevista
+                    </div>
+
+                    <div class="d-flex m-1 justify-content-center">
+                        Dia 01/01/24
+                    </div>
+                    <div class="d-flex m-1 justify-content-center">
+                        00h - 00h
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
+                <div class="d-flex justify-content-center align-items-center" style="width: 45%">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
+                        fill="#012171">
+                        <path
+                            d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z">
+                        </path>
+                    </svg>
+
+                </div>
+                <div class="d-flex flex-column w-75">
+                    <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
+                        Entrevista
+                    </div>
+
+                    <div class="d-flex m-1 justify-content-center">
+                        Dia 01/01/24
+                    </div>
+                    <div class="d-flex m-1 justify-content-center">
+                        00h - 00h
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <button id="confirmButton" class="d-none justify-content-center align-items-center rounded-5 p-3"
+        onclick="construirModalGenerico(this.id, null)" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFF">
+            <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+        </svg>
     </button>
 </body>
+
 </html>
