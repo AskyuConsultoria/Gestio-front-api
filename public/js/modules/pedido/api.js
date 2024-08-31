@@ -244,6 +244,33 @@ async function buscarEtapas() {
 
 }
 
+async function buscarStatusAgendamento(){
+
+    try{
+        const usuarioId = parseInt(sessionStorage.getItem('id'))
+        const agendamentoId = parseInt(sessionStorage.getItem('AGENDAMENTO-ID'))
+    
+        const response = await fetch(`http://localhost:8080/agendamento-log/${usuarioId}/${agendamentoId}`, {
+            method: "GET"
+        });
+
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+
+        const dados = await response.json()
+        console.log(dados)
+
+        pedido.preencherStatusAgendamento(dados)
+
+    } catch(error){
+            console.log(`Houve um erro no servidor ${error}`)
+    }
+   
+}
+
 
 
 
@@ -257,5 +284,6 @@ export {
     atualizarDadosCliente,
     atualizarDadosPedido,
     criarPedido,
-    buscarEtapas
+    buscarEtapas,
+    buscarStatusAgendamento
 }

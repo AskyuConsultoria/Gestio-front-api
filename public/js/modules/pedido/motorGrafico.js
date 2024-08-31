@@ -78,7 +78,8 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         exibirBotaoSalvar()
         
         api.buscarAgendamento()
-        renderizar("160%", "Pedido")
+        api.buscarStatusAgendamento()
+        renderizar("200%", "Pedido")
     }
 
     if (paginaEscolhida == "associar-cliente") {
