@@ -181,7 +181,7 @@ header {
     border-left: 30px solid var(--vermelho) !important;
 }
 
-.finalizado {
+.finalizados {
     border-left: 30px solid var(--azul) !important;
     margin-left: 6%;
 }
@@ -194,10 +194,9 @@ header {
     color: black;
     border-left: 30px solid var(--amarelo);
     background-color: white;
+    /* margin-left: 8%; */
 
     .texto-card {
-        margin-left: 8%;
-
         div {
             font-weight: 400;
             font-size: 18px;
@@ -306,12 +305,13 @@ header {
 }
 
 
-.offcanvas {
+.modal-etapa {
     color: white;
     transition-duration: 600ms;
+
 }
 
-.offcanvas-title {
+.modal-etapa-title {
     font-size: 28px;
 }
 
@@ -324,7 +324,11 @@ header {
     }
 }
 
-.offcanvas-header {
+.pedido-etapa {
+    width: 50%;
+}
+
+.modal-etapa-header {
     background-color: var(--azul) !important;
     height: 6rem;
     width: 32rem;
@@ -335,30 +339,51 @@ header {
     width: 67%;
 }
 
-.offcanvas-body {
+.modal-etapa-body {
     background-color: var(--cinzaClaro);
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     overflow-y: auto;
+
+    .pedido-etapa {
+        margin-right: 23%;
+    }
+}
+
+.finalizado {
+    transition: transform 1s ease-in-out;
+}
+
+.finalizado.subir {
+    transform: translateY(-100%);
+}
+
+.finalizado.descer {
+    transform: translateY(100%);
+}
+
+.comum {
+    transition: transform 1s ease-in-out;
+}
+
+.comum.subir {
+    transform: translateY(-100%);
+}
+
+.comum.descer {
+    transform: translateY(100%);
 }
 
 .menu {
     background-color: var(--azul) !important;
 }
 
-
-
-.offcanvas-backdrop.show {
-    opacity: .5;
-    display: none;
-}
-
 .barra-busca {
     background-color: white;
     height: 2.4rem;
     border-radius: 4px;
-    width: 86%;
-    margin-left: 7%;
+    width: 60%;
+    margin-left: 8%;
 
     input {
         border: none;
@@ -389,15 +414,16 @@ header {
     color: black;
     font-weight: 500;
     font-size: 14px;
-    width: 90%;
+    width: 71%;
     text-align: center;
 
     .status-etapa {
         color: var(--azul);
         font-weight: 700;
-    }
-
+        margin-right: 9%;
+        }
 }
+   
 
 .custom-switch:checked {
     background-color: #007bff;
@@ -415,7 +441,7 @@ header {
 }
 
 .form-switch {
-    width: 50%;
+    width: 35%;
 }
 
 .nome-etapa {
@@ -457,11 +483,11 @@ header {
     }
 
 
-    .offcanvas-title {
+    .modal-etapa-title {
         font-size: 36px;
     }
 
-    .offcanvas-header {
+    .modal-etapa-header {
         width: 51rem;
     }
 
@@ -501,15 +527,16 @@ header {
         max-width: 100%;
     }
 
-    .barra-busca{
+    .barra-busca {
         width: 50%;
-    margin-left: 24%;
-        img{
+        margin-left: 24%;
+
+        img {
             height: 3vh;
         }
     }
 
-    .card-pessoa{
+    .card-pessoa {
         width: 55vw;
     }
 

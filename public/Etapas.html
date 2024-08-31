@@ -15,10 +15,11 @@
 </head>
 
 <body style="background-color: var(--cinzaClaro) !important;" onload="listarEtapas()">
-  <header class="header-container py-4 bg-light w-100 px-0 " style="background-color: var(--cinzaClaro) !important;">
+  <header class="header-container py-4 bg-light w-100 px-0 " style="background-color: var(--cinzaClaro) !important;" >
     <div class="container d-flex justify-content-between">
       <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3">
-      <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" class="navbar-toggler mx-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"> 
+      <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" class="navbar-toggler mx-3 " type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
     </div>
   </header>
   <div class="container-md cont-etapa mt-3 p-3">
@@ -32,12 +33,70 @@
   <div class="container etapas" id="container">
     <!-- USAR O ETAPAS PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
     <!-- INSERIR PELO ID , PUXAR DADOS DA ETAPA ESPECIFICA PELO ID -->
+  </div>
+
+  
+  <div class="modal-etapa">
+    <div id="finalizado" class="finalizado" style="display: block; position: fixed; top: 100%; z-index: 100;">
+      <div class="modal-etapa-header d-flex align-items-center">
+        <div class="header-off d-flex align-items-center justify-content-evenly flex-row">
+          <h5 class="modal-etapa-title mt-4"></h5>
+        </div>
+        <img src="./assets/marca-x 2.svg" class="mt-2" alt="voltar" type="button" id="fechar">
+      </div>
+      <div class="modal-etapa-body">
+        <div class="etapa-title mt-3">
+          <span class="pedido-etapa">PEDIDOS NA ETAPA <span class="nome-etapa"></span></span>
+        </div>
+          <!-- CRIA CARD PESSOA = CLIENTE -->
+        <div class="container-pessoa" id="container-pessoa-finalizado">
+        </div>
+      </div>
+    </div>
+
+    <div id="comum" class="comum" style="display: block; position: fixed; top: 100%; z-index: 100;">
+      <div class="modal-etapa-header d-flex align-items-center">
+        <div class="header-off d-flex align-items-center justify-content-evenly flex-row">
+          <h5 class="modal-etapa-title title2 mt-4"></h5>
+        </div>
+        <img src="./assets/marca-x 2.svg" class="mt-2" alt="voltar" type="button" id="fechar2">
+      </div>
+      <div class="modal-etapa-body">
+        <div class="etapa-title mt-3">
+          <span class="pedido-etapa">PEDIDOS NA ETAPA <span class="nome-etapa nome2"></span></span>
+        </div>
+        <div class="sub-pedido mt-3 d-flex align-items-center justify-content-evenly flex-row mt-3">
+          <div>VOCÊ ESTÁ VENDO PEDIDOS</div>
+          <div class="status-etapa">EM ANDAMENTO</div>
+        </div>
+        <div class="barra-busca d-flex align-items-center justify-content-evenly mt-3">
+          <img src="./assets/search.svg" alt="lupa-pesquisa">
+          <input type="text" placeholder="Pesquise os clientes do pedido">
+        </div>
+        <div class="switch-card d-flex align-items-center flex-column">
+          <div class="form-check form-switch d-flex align-items-center justify-content-between mt-3 p-0 m-0">
+            <!-- TOTAL DE PEDIDOS DA ETAPA -->
+            <div class="text-switch mt-1">Total de pedidos: <span class="total-pedidos"></span></div>
+            <input class="form-check-input custom-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+              checked>
+          </div>
+          <!-- CRIA CARD PESSOA = CLIENTE -->
+          <div class="container-pessoa" id="container-pessoa-comum">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   </div>
-  
-  <div class="offcanvas offcanvas-end menu" data-bs-dismiss="offcanvas"tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style=" color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+
+
+
+  <div class="offcanvas offcanvas-end menu" data-bs-dismiss="offcanvas" tabindex="-1" id="offcanvasNavbar"
+    aria-labelledby="offcanvasNavbarLabel" style=" color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
     <div class="offcanvas-body menu">
-      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4"
+        style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
@@ -61,18 +120,8 @@
         </li>
     </div>
   </div>
-</div>
+  </div>
 
-
-  <script>
-    $(document).ready(function() {
-  $(document).on('click', function(event) {
-    if (!document.getElementById('offcanvasNavbar').contains(event.target)) {
-      $('#offcanvasNavbar').offcanvas('hide');
-    }
-  });
-});
-  </script>
 
 </body>
 
