@@ -6,6 +6,8 @@ var clienteId = pedido.clienteId
 
 window.buscarAgendamento = buscarAgendamento
 window.buscarClienteView = buscarClienteView
+window.buscarEnderecoPorClienteId = buscarEnderecoPorClienteId
+window.atualizarEnderecoAgendamento = atualizarEnderecoAgendamento
 
 async function buscarAgendamento() {
 
@@ -85,6 +87,34 @@ async function buscarClientePorId(novoClienteId) {
     }
 
 }
+
+async function buscarEnderecoPorClienteId(nomeModal) {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        pedido.escolherModalMultivalorado(nomeModal, dados)
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 
 
 async function buscarClientesPorNome(clienteNome) {
@@ -183,6 +213,25 @@ async function atualizarDadosPedido(agendamentoId) {
 
 }
 
+async function atualizarEnderecoAgendamento(enderecoId) {
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
+            method: "PATCH"
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
 
@@ -259,6 +308,9 @@ async function buscarStatusAgendamento(){
             throw new Error(`Erro de servidor, status: ${response.status}`);
         }
 
+        if (response.status == 204) {
+            return []
+        }
 
         const dados = await response.json()
         console.log(dados)
@@ -273,7 +325,6 @@ async function buscarStatusAgendamento(){
 
 
 
-
 buscarEtapas()
 
 export {
@@ -281,8 +332,10 @@ export {
     buscarClienteView,
     buscarClientePorId,
     buscarClientesPorNome,
+    buscarEnderecoPorClienteId,
     atualizarDadosCliente,
     atualizarDadosPedido,
+    atualizarEnderecoAgendamento,
     criarPedido,
     buscarEtapas,
     buscarStatusAgendamento
