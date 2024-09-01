@@ -98,22 +98,37 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
 
   await api.buscarEtapas()
   var elSelectEtapa = document.querySelector('#input-etapa')
-  for(var i = 0; i < elSelectEtapa.options.length; i++){
-    if(elSelectEtapa.options[i].value == agendamento.id){
-      elSelectEtapa.selectedIndex = i 
-    } 
+  for (var i = 0; i < elSelectEtapa.options.length; i++) {
+    if (elSelectEtapa.options[i].value == agendamento.id) {
+      elSelectEtapa.selectedIndex = i
+    }
   }
 
   inputAntigoDataInicioPedido = agendamento.dataInicio
   inputAntigoDataFimPedido = agendamento.dataFim
 
+  if(agendamento.endereco != null){
+    document.querySelector('#input-cep').value = agendamento.endereco.cep
+    // document.querySelector('#input-numero').value = agendamento.numeroEndereco
+    document.querySelector('#input-rua').value = agendamento.endereco.localidade
+    document.querySelector('#input-bairro').value = agendamento.endereco.bairro
+    // document.querySelector('#input-cidade').value = agendamento.cidade 
+    document.querySelector('#input-uf').value = agendamento.endereco.uf
+  
+    inputAntigoCep = agendamento.endereco.cep
+    inputAntigoRua = agendamento.endereco.localidade
+    inputAntigoBairro = agendamento.endereco.bairro
+    inputAntigoUf = agendamento.endereco.uf
+  }
+
+  sessionStorage.setItem('CLIENTE-ID', agendamento.cliente.id)
+  
   api.buscarClienteView(clienteId)
 }
 
-export function preencherDadosCliente(cliente) {
+export function preencherDadosCliente(cliente) { 
   sessionStorage.setItem('CLIENTE-ID', cliente.id)
   sessionStorage.setItem('TELEFONE-ID', cliente.telefone_id)
-  sessionStorage.setItem('ENDERECO-ID', cliente.endereco_id)
 
 
   document.querySelector('#input-nome').value = cliente.nome
@@ -126,17 +141,6 @@ export function preencherDadosCliente(cliente) {
   inputAntigoTelefone = cliente.numero
   inputAntigoEmail = cliente.email
 
-  document.querySelector('#input-cep').value = cliente.cep
-  // document.querySelector('#input-numero').value = cliente.numeroEndereco
-  document.querySelector('#input-rua').value = cliente.localidade
-  document.querySelector('#input-bairro').value = cliente.bairro
-  // document.querySelector('#input-cidade').value = cliente.cidade 
-  document.querySelector('#input-uf').value = cliente.uf
-
-  inputAntigoCep = cliente.cep
-  inputAntigoRua = cliente.localidade
-  inputAntigoBairro = cliente.bairro
-  inputAntigoUf = cliente.uf
 
   if (sessionStorage.getItem('PAGINA-PEDIDO') == 'adicionar-pedido') {
     motorGrafico.escolherRenderizacao(false, 'adicionar-pedido')
@@ -180,21 +184,21 @@ export function preencherOptionsEtapa(listaEtapas) {
     option.value = listaEtapas[i].id
     option.innerText = listaEtapas[i].nome
     elEtapa.appendChild(option)
-    if(listaEtapas[i].id == etapaId) elEtapa.selectedIndex = i
+    if (listaEtapas[i].id == etapaId) elEtapa.selectedIndex = i
   }
 
 }
 
 
-export function preencherStatusAgendamento(listaAgendamento){
+export function preencherStatusAgendamento(listaAgendamento) {
   const tamanhoLista = listaAgendamento.length
   var elStatus = document.querySelector('#conteudo-status')
   elStatus.innerHTML = ''
 
   var i = 0
-    while(i < tamanhoLista){
-      if(tamanhoLista %2 != 0 && i == (tamanhoLista - 1)){
-        elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
+  while (i < tamanhoLista) {
+    if (tamanhoLista % 2 != 0 && i == (tamanhoLista - 1)) {
+      elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
         <div class="d-flex justify-content-between w-100">
             <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
                 <div class="d-flex justify-content-center align-items-center" style="width: 45%">
@@ -221,10 +225,10 @@ export function preencherStatusAgendamento(listaAgendamento){
             </div>
             <div>
             `
-            return
-      }
+      return
+    }
 
-      elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
+    elStatus.innerHTML += ` <div class="d-flex flew-row px-3 pt-2 pb-2 w-100">
         <div class="d-flex justify-content-between w-100">
             <div class="d-flex justify-content-around rounded bg-body" style="width: 48%;">
                 <div class="d-flex justify-content-center align-items-center" style="width: 45%">
@@ -262,14 +266,14 @@ export function preencherStatusAgendamento(listaAgendamento){
                 </div>
                 <div class="d-flex flex-column w-75 align-items-center  justify-content-center">
                     <div class="d-flex m-1 justify-content-center" style="color: #012171; font-weight: bold">
-                        ${listaAgendamento[i+1].etapa.nome}
+                        ${listaAgendamento[i + 1].etapa.nome}
                     </div>
 
                     <div class="d-flex m-1 justify-content-center">
-                        ${formatarData(listaAgendamento[i+1].agendamento.dataInicio)}
+                        ${formatarData(listaAgendamento[i + 1].agendamento.dataInicio)}
                     </div>
                     <div class="d-flex m-1 justify-content-center">
-                         ${formatarHorario(listaAgendamento[i+1].agendamento.dataInicio)} - ${formatarHorario(listaAgendamento[i+1].agendamento.dataFim)}
+                         ${formatarHorario(listaAgendamento[i + 1].agendamento.dataInicio)} - ${formatarHorario(listaAgendamento[i + 1].agendamento.dataFim)}
                     </div>
                 </div>
             </div>
@@ -278,8 +282,8 @@ export function preencherStatusAgendamento(listaAgendamento){
     </div>`
 
     i += 2
-    }
   }
+}
 
 
 
@@ -381,23 +385,70 @@ export function construirModalGenerico(elementoId, status) {
   elementoBody.innerHTML = textoModal
 }
 
+const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
+window.modalMultivalorado = modalMultivalorado
+
+export async function escolherModalMultivalorado(nomeModal, lista) {
+  const conteudoModal = document.querySelector('#conteudo-modal-multivalorado')
+  conteudoModal.innerHTML = ""
+
+  var titulo = ""
+  var corpo = ""
+  var id = ""
+
+  if (nomeModal == "endereco") {
+    titulo = "Endereço do Cliente"
+    corpo = "exibirEnderecoCompleto(lista[i])"
+  } else if (nomeModal == "telefone") {
+    titulo = "Telefone do Cliente"
+    corpo = "lista[i].numero"
+  }
+
+  for(var i = 0; i < lista.length; i++) {
+    conteudoModal.innerHTML += `<div class="d-flex px-3 flex-column">
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="${lista[i].id}">
+    <span>${lista[i].cliente.nome} ${lista[i].cliente.sobrenome}</span>
+  </div>
+  </div>
+   <div class="d-flex pt-1 pb-1 text-secondary" style="padding-left: 2.5rem; width: 85%">
+    <span style="width: -18px;">${eval(corpo)}</span>
+   </div>
+   <hr></hr>
+  <div>
+  `
+  }
+  conteudoModal.innerHTML += `<div class="d-flex justify-content-end px-3">
+                        <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal" style="border-color: #eeeaea;">Cancelar</button>
+                        <button type="button" class="btn text-white" style="background-color: #012171;" onclick="atualizarEnderecoAgendamento(
+                        document.querySelector('.form-check-input:checked').id)">Confirmar</button>
+                    </div>`
+
+  modalMultivalorado.show()
+}
+
+export function exibirEnderecoCompleto(endereco) {
+  // Necessita de inclusão de Cidade antes de cep.
+  return `${endereco.logradouro}, ${endereco.localidade}, ${endereco.bairro}, ${endereco.cep}`
+}
+
 export async function salvarModificacao() {
   const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
   const listaDeResponse = []
 
-  if (salvarCliente){
+  if (salvarCliente) {
     listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
-  } 
+  }
   // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
   // if (salvarEndereco) atualizarDadosEndereco(enderecoId)
 
   if (salvarPedido && agendamentoId == null) {
     api.criarPedido(agendamentoId)
-  } else if (salvarPedido){
+  } else if (salvarPedido) {
     listaDeResponse.push(await api.atualizarDadosPedido(agendamentoId))
-  } 
+  }
 
-  if(listaDeResponse.length == 0 && salvarPedido == false){
+  if (listaDeResponse.length == 0 && salvarPedido == false) {
     construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
     return
   }
@@ -417,13 +468,13 @@ export function dadosForamAtualizados() {
   salvarTelefone = false
 }
 
-function validarRetornoEExibirModalDeStatus(listaResponse){
+function validarRetornoEExibirModalDeStatus(listaResponse) {
   var responseInvalida = 404 || 400 || 501 || 500
-  for(var i = 0; i < listaResponse.length; i++){
-      if(listaResponse[i] == responseInvalida){
-           exibirStatusDaRespostaAPI(listaResponse[i])
-          return
-      }
+  for (var i = 0; i < listaResponse.length; i++) {
+    if (listaResponse[i] == responseInvalida) {
+      exibirStatusDaRespostaAPI(listaResponse[i])
+      return
+    }
   }
 
   exibirStatusDaRespostaAPI(listaResponse[0])
@@ -432,7 +483,7 @@ function validarRetornoEExibirModalDeStatus(listaResponse){
 export function exibirStatusDaRespostaAPI(response) {
   var status = "Alterações salvas com sucesso"
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
-  dadosForamAtualizados()   
+  dadosForamAtualizados()
   esconderBotaoSalvar()
   construirModalGenerico("statusButton", status)
 }
