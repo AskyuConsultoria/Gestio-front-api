@@ -88,6 +88,33 @@ async function buscarClientePorId(novoClienteId) {
 
 }
 
+async function buscarEnderecoPorId() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
+    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        pedido.preencherDadosEndereco(dados)
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function buscarEnderecoPorClienteId(nomeModal) {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
@@ -217,6 +244,13 @@ async function atualizarEnderecoAgendamento(enderecoId) {
     var usuarioId = parseInt(sessionStorage.getItem("id")) 
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
+   if(enderecoId == sessionStorage.getItem("ENDERECO-ID")){
+      pedido.esconderModalMultivalorado()
+      return
+   } else{
+     sessionStorage.setItem("ENDERECO-ID", enderecoId)
+   }
+
     try {
         const response = await fetch(`http://localhost:8080/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
             method: "PATCH"
@@ -224,6 +258,9 @@ async function atualizarEnderecoAgendamento(enderecoId) {
 
         const dados = await response.json()
         console.log(dados)
+        
+        buscarEnderecoPorId()
+        pedido.esconderModalMultivalorado()
         return response.status
        
     } catch (error) {
@@ -322,8 +359,6 @@ async function buscarStatusAgendamento(){
     }
    
 }
-
-
 
 buscarEtapas()
 
