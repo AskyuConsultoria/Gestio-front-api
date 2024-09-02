@@ -92,6 +92,7 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
   agendamentoId = agendamento.id
   var clienteId = agendamento.cliente.id
   sessionStorage.setItem("ETAPA-ID", agendamento.etapa.id)
+  sessionStorage.setItem("ENDERECO-ID", agendamento.endereco.id)
 
   document.querySelector('#input-data-inicio').value = agendamento.dataInicio
   document.querySelector('#input-data-fim').value = agendamento.dataFim
@@ -146,6 +147,21 @@ export function preencherDadosCliente(cliente) {
     motorGrafico.escolherRenderizacao(false, 'adicionar-pedido')
   }
 
+}
+
+
+export function preencherDadosEndereco(endereco){
+    document.querySelector('#input-cep').value = endereco.cep
+    // document.querySelector('#input-numero').value = numeroEndereco
+    document.querySelector('#input-rua').value = endereco.localidade
+    document.querySelector('#input-bairro').value = endereco.bairro
+    // document.querySelector('#input-cidade').value = cidade 
+    document.querySelector('#input-uf').value = endereco.uf
+  
+    inputAntigoCep = endereco.cep
+    inputAntigoRua = endereco.localidade
+    inputAntigoBairro = endereco.bairro
+    inputAntigoUf = endereco.uf
 }
 
 export function preencherCardsDeCliente(listaCliente) {
@@ -320,9 +336,7 @@ export function associarClienteACriacaoDePedido(novoClienteId, cliente) {
 
 export function verificarDadosEExibirBotaoDeConfirmacao(idInput, dadoAntigo) {
   var inputElemento = document.querySelector(`#${idInput}`)
-  var dadoNovo = inputElemento.value
 
-  if (dadoNovo != dadoAntigo) document.querySelector('#confirmButton').classList.replace("d-none", "d-flex")
   if (inputElemento.classList.contains("cliente")) salvarCliente = true
   if (inputElemento.classList.contains("telefone")) salvarTelefone = true
   if (inputElemento.classList.contains("endereco")) salvarEndereco = true
@@ -385,13 +399,15 @@ export function construirModalGenerico(elementoId, status) {
   elementoBody.innerHTML = textoModal
 }
 
-const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
+export const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
 window.modalMultivalorado = modalMultivalorado
 
 export async function escolherModalMultivalorado(nomeModal, lista) {
+  const enderecoId = sessionStorage.getItem('ENDERECO-ID')
   const conteudoModal = document.querySelector('#conteudo-modal-multivalorado')
   conteudoModal.innerHTML = ""
 
+  var inputChecked = ""
   var titulo = ""
   var corpo = ""
   var id = ""
@@ -408,16 +424,20 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     conteudoModal.innerHTML += `<div class="d-flex px-3 flex-column">
   <div class="form-check">
     <input class="form-check-input" type="radio" name="flexRadioDefault" id="${lista[i].id}">
-    <span>${lista[i].cliente.nome} ${lista[i].cliente.sobrenome}</span>
+    <span id="span-multivalorado-${i}">${lista[i].cliente.nome} ${lista[i].cliente.sobrenome}</span>
   </div>
   </div>
    <div class="d-flex pt-1 pb-1 text-secondary" style="padding-left: 2.5rem; width: 85%">
-    <span style="width: -18px;">${eval(corpo)}</span>
+    <span style="width: -18px;" id="corpo-multivalorado-${i}">${eval(corpo)}</span>
    </div>
    <hr></hr>
   <div>
   `
+
+
+  if(lista[i].id == enderecoId && i != 0 && lista.length > 1) exibirEnderecoSalvoPrimeiro(lista[i], i)
   }
+
   conteudoModal.innerHTML += `<div class="d-flex justify-content-end px-3">
                         <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal" style="border-color: #eeeaea;">Cancelar</button>
                         <button type="button" class="btn text-white" style="background-color: #012171;" onclick="atualizarEnderecoAgendamento(
@@ -425,12 +445,39 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
                     </div>`
 
   modalMultivalorado.show()
+  document.getElementById(`${parseInt(enderecoId)}`).checked = true 
+
 }
 
 export function exibirEnderecoCompleto(endereco) {
   // Necessita de inclusão de Cidade antes de cep.
   return `${endereco.logradouro}, ${endereco.localidade}, ${endereco.bairro}, ${endereco.cep}`
 }
+
+export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
+  var spanMultivalorado = document.querySelector(`#span-multivalorado-${iterador}`)
+  var corpoMultivalorado = document.querySelector(`#corpo-multivalorado-${iterador}`)
+  var inputCheck = document.getElementById(`${endereco.id}`)
+
+
+  var primeiroSpan = document.querySelector(`#span-multivalorado-0`)
+  var primeiroCorpo = document.querySelector(`#corpo-multivalorado-0`)
+  var modalMultivalorado = document.querySelector("#conteudo-modal-multivalorado")
+  var primeiraInput = modalMultivalorado.childNodes[0].childNodes[1].childNodes[1]
+
+  var textoPrimeiroSpan = primeiroSpan.innerText
+  var textoPrimeiroCorpo = primeiroCorpo.innerText
+  var textoPrimeiraInputId = primeiraInput.id
+
+  primeiroSpan.innerText = spanMultivalorado.innerText
+  primeiroCorpo.innerText = corpoMultivalorado.innerText
+  primeiraInput.id = inputCheck.id
+
+  spanMultivalorado.innerText = textoPrimeiroSpan
+  corpoMultivalorado.innerText = textoPrimeiroCorpo
+  inputCheck.id = textoPrimeiraInputId
+}
+
 
 export async function salvarModificacao() {
   const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
@@ -440,7 +487,7 @@ export async function salvarModificacao() {
     listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
   }
   // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
-  // if (salvarEndereco) atualizarDadosEndereco(enderecoId)
+   if (salvarEndereco) atualizarDadosEndereco(enderecoId)
 
   if (salvarPedido && agendamentoId == null) {
     api.criarPedido(agendamentoId)
@@ -453,6 +500,10 @@ export async function salvarModificacao() {
     return
   }
   validarRetornoEExibirModalDeStatus(listaDeResponse)
+}
+
+export function esconderModalMultivalorado(){
+  modalMultivalorado.hide()
 }
 
 export function houveMudancaDeDados() {
