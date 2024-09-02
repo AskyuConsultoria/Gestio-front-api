@@ -117,6 +117,7 @@ function criarFinalizado(nomeUpper, nomeEtapa, cardsConcluidos) {
   }
 }
 
+
 async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOriginal, usuarioId) {
   cardsCriados = false;
 
@@ -129,9 +130,8 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
   nomeEtapa.innerHTML = nomeUpper;
 
   var containerPessoa = document.querySelector('#container-pessoa-comum');
-  containerPessoa.innerHTML += cardPessoa
-  containerPessoa.style.marginRight='35%'
-
+  containerPessoa.innerHTML = cardPessoa;
+  containerPessoa.style.marginRight = '22%';
 
   var totalPedidos = document.querySelector('.total-pedidos');
   totalPedidos.innerHTML = totalOriginal;
@@ -139,7 +139,12 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
   const switchElement = document.querySelector('.custom-switch');
   var isActive = true; // Variável para controlar o estado do switch
 
-  switchElement.addEventListener('click', async function () {
+  // Limpar event listeners antigos para evitar múltiplas execuções
+  switchElement.replaceWith(switchElement.cloneNode(true));
+  const newSwitchElement = document.querySelector('.custom-switch');
+
+  // Adicionar event listener ao novo elemento
+  newSwitchElement.addEventListener('click', async function () {
     const etapa = document.querySelector('.status-etapa');
     const subPedido = document.querySelector('.sub-pedido');
     const totalPedidos = document.querySelector('.total-pedidos');
@@ -149,7 +154,7 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
       const cancelados = await buscarInativo(usuarioId, etapaId);
 
       if (cancelados && cancelados.length > 0) {
-        containerPessoa.innerHTML=''
+        containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
         containerPessoa.innerHTML = cancelados.map(cancelado => {
           return `<div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
                         <div class="texto-card">
@@ -168,20 +173,18 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
       }
 
       subPedido.style.marginLeft = '8%';
-      containerPessoa.style.marginLeft = '12%';
       etapa.style.marginRight = '15%';
       etapa.innerHTML = '<div style="color: red">CANCELADOS</div>'; 
 
     } else {
       // Se o switch não está ativo, mostra os pedidos em andamento
-      containerPessoa.innerHTML=''
+      containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
       etapa.innerHTML = 'EM ANDAMENTO';
       totalPedidos.innerHTML = totalOriginal;
-      containerPessoa.innerHTML = cardPessoa
+      containerPessoa.innerHTML = cardPessoa;
       containerPessoa.classList.remove('zero');
       etapa.style.marginRight = '9%';
       subPedido.style.marginLeft = '6%';  
-
     }
 
     // Alterna o estado do switch
@@ -194,8 +197,8 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
       switchElement.classList.add('active'); // Adicione a classe que indica que está inativo
     }
   });
-
 }
+
 
 
 function formatarData(data) {
