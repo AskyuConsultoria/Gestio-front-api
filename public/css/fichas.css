@@ -1,0 +1,110 @@
+*{
+    font-family: Inter, sans-serif;
+}
+button{
+    border-style: none;
+}
+.hamburguer{
+    height:20px;
+    width:auto
+
+}
+.h4 b{
+    color:#012171;
+}
+
+h4{
+    margin-left: 26px;
+    text-size-adjust: 24;
+    margin-bottom:30px;
+    font-size:1.5rem;
+    color:white;
+}
+h5{
+    text-size-adjust: 16px;
+    margin-top:1rem;
+    font-size: 1.2rem;
+    color:white;
+}
+h6{
+    font-size:1rem;
+    color:white
+}
+
+.dependente{
+    margin-bottom:1.5rem
+}
+
+.pontinhos2{
+    width:2.75rem;
+    height:0.8rem
+}
+.divpontinhos{
+    display:flex;
+    justify-content: center;
+}
+main{
+    background-color: white;
+    border-radius: 10px;
+    padding:20px;
+    height:37.75rem;
+}
+.mb-3{
+    margin:1.5rem 1rem;
+}
+
+
+.item{
+    position:relative;
+    width:78.5vw;
+    right:15.5%;
+    font-size:1rem;
+    padding:1rem;    
+}
+
+.salvar{
+    box-shadow:4px #000000;
+    border-radius:20px;
+    width:100%;
+    color:white;
+    font-size:1rem;
+    font-weight: bolder;
+    background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    
+}
+
+html{
+    font-family: Inter, sans-serif;
+    font-size:62,5%;
+}
+.navegacao{
+    background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    display: flex;
+    flex-direction: column;
+    padding-top:10%;
+    color:white;
+    align-items: center;
+}
+.group{
+    width: 80%;
+    justify-content: space-between;
+}
+.pontinhos{
+    display:flex;
+    margin-top:5%
+}
+main{
+    display:flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    width: 90%; align-self: center; 
+    background-color: white; 
+    overflow-y: scroll; 
+    overflow-x: hidden; 
+    min-height: 37rem;
+}
+.container{
+    margin: 5%;
+    width: 100%;
+    align-self: center;
+}
