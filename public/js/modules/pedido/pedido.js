@@ -1,12 +1,15 @@
 
 import * as motorGrafico from "./motorGrafico.js"
 import * as api from "./api.js"
+import * as formulario from "./formulario.js"
 
 window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
 window.construirModalGenerico = construirModalGenerico
 window.validarEventoKeyboard = validarEventoKeyboard
 window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
 window.construirModalGenerico = construirModalGenerico
+window.validarAtualizacaoEndereco = validarAtualizacaoEndereco
+window.reexbirValoresDaConsulta = reexbirValoresDaConsulta
 
 
 window.clienteId = sessionStorage.getItem('CLIENTE-ID')
@@ -87,6 +90,7 @@ export var salvarCliente = false
 export var salvarPedido = false
 export var salvarEndereco = false
 export var salvarTelefone = false
+export var atualizarEndereco = false
 
 export async function preencherDadosDePedidoCompleto(agendamento) {
   agendamentoId = agendamento.id
@@ -109,17 +113,7 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
   inputAntigoDataFimPedido = agendamento.dataFim
 
   if(agendamento.endereco != null){
-    document.querySelector('#input-cep').value = agendamento.endereco.cep
-    // document.querySelector('#input-numero').value = agendamento.numeroEndereco
-    document.querySelector('#input-rua').value = agendamento.endereco.localidade
-    document.querySelector('#input-bairro').value = agendamento.endereco.bairro
-    // document.querySelector('#input-cidade').value = agendamento.cidade 
-    document.querySelector('#input-uf').value = agendamento.endereco.uf
-  
-    inputAntigoCep = agendamento.endereco.cep
-    inputAntigoRua = agendamento.endereco.localidade
-    inputAntigoBairro = agendamento.endereco.bairro
-    inputAntigoUf = agendamento.endereco.uf
+    preencherDadosEndereco(agendamento.endereco)
   }
 
   sessionStorage.setItem('CLIENTE-ID', agendamento.cliente.id)
@@ -152,10 +146,10 @@ export function preencherDadosCliente(cliente) {
 
 export function preencherDadosEndereco(endereco){
     document.querySelector('#input-cep').value = endereco.cep
-    // document.querySelector('#input-numero').value = numeroEndereco
-    document.querySelector('#input-rua').value = endereco.localidade
+    document.querySelector('#input-numero').value = endereco.numero
+    document.querySelector('#input-rua').value = endereco.logradouro
     document.querySelector('#input-bairro').value = endereco.bairro
-    // document.querySelector('#input-cidade').value = cidade 
+    document.querySelector('#input-cidade').value = endereco.cidade
     document.querySelector('#input-uf').value = endereco.uf
   
     inputAntigoCep = endereco.cep
@@ -205,6 +199,18 @@ export function preencherOptionsEtapa(listaEtapas) {
 
 }
 
+export function removerOptionsEtapa(){
+  var selectEtapa = document.querySelector("#input-etapa")
+  var opcaoSelecionada = selectEtapa.options.selectedIndex
+  var listaOptions = selectEtapa.childNodes
+
+  var i = 0
+  while(i < opcaoSelecionada){
+    listaOptions[0].remove()
+    i++
+  }
+
+}
 
 export function preencherStatusAgendamento(listaAgendamento) {
   const tamanhoLista = listaAgendamento.length
@@ -358,7 +364,7 @@ export function construirModalGenerico(elementoId, status) {
   if (elementoId == "statusButton") {
     elementoFooter.innerHTML =
       `
-     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="modalGenerico.hide()" style="background-color: #012171;">
+     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="reexbirValoresDaConsulta()" style="background-color: #012171;">
         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
     </button>
     `
@@ -397,6 +403,12 @@ export function construirModalGenerico(elementoId, status) {
   }
 
   elementoBody.innerHTML = textoModal
+}
+
+function reexbirValoresDaConsulta(){
+  setTimeout(modalGenerico.hide(), 1000)
+  motorGrafico.escolherRenderizacao(false, "consultar-pedido")
+  formulario.removerEstilizacaoDoFormulario()
 }
 
 export const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
@@ -439,8 +451,8 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   }
 
   conteudoModal.innerHTML += `<div class="d-flex justify-content-end px-3">
-                        <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal" style="border-color: #eeeaea;">Cancelar</button>
-                        <button type="button" class="btn text-white" style="background-color: #012171;" onclick="atualizarEnderecoAgendamento(
+                        <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal-multivalorado" style="border-color: #eeeaea;">Cancelar</button>
+                        <button type="button" class="btn text-white" style="background-color: #012171;" onclick="validarAtualizacaoEndereco(
                         document.querySelector('.form-check-input:checked').id)">Confirmar</button>
                     </div>`
 
@@ -451,7 +463,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
 
 export function exibirEnderecoCompleto(endereco) {
   // Necessita de inclusão de Cidade antes de cep.
-  return `${endereco.logradouro}, ${endereco.localidade}, ${endereco.bairro}, ${endereco.cep}`
+  return `${endereco.logradouro}, ${endereco.bairro}, ${endereco.cep}`
 }
 
 export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
@@ -478,8 +490,24 @@ export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
   inputCheck.id = textoPrimeiraInputId
 }
 
+export function validarAtualizacaoEndereco(enderecoId){
+
+  if(enderecoId == sessionStorage.getItem("ENDERECO-ID")){
+    esconderModalMultivalorado()
+    return
+ } else{
+   sessionStorage.setItem("ENDERECO-ID", enderecoId)
+   atualizarEndereco = true
+   api.buscarEnderecoPorId()
+   esconderModalMultivalorado()
+ }
+ 
+
+}
 
 export async function salvarModificacao() {
+  const clienteId = sessionStorage.getItem("CLIENTE-ID")
+  const enderecoId = sessionStorage.getItem("ENDERECO-ID")
   const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
   const listaDeResponse = []
 
@@ -487,7 +515,14 @@ export async function salvarModificacao() {
     listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
   }
   // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
-   if (salvarEndereco) atualizarDadosEndereco(enderecoId)
+
+  if (atualizarEndereco){ 
+    listaDeResponse.push(await api.atualizarEnderecoAgendamento(enderecoId))
+  }
+
+  if(salvarEndereco){
+    listaDeResponse.push(await api.atualizarEndereco())
+  }
 
   if (salvarPedido && agendamentoId == null) {
     api.criarPedido(agendamentoId)
@@ -535,7 +570,6 @@ export function exibirStatusDaRespostaAPI(response) {
   var status = "Alterações salvas com sucesso"
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
   dadosForamAtualizados()
-  esconderBotaoSalvar()
   construirModalGenerico("statusButton", status)
 }
 
@@ -547,6 +581,3 @@ export function validarEventoKeyboard(evento) {
 }
 
 
-export function esconderBotaoSalvar() {
-  document.querySelector('#confirmButton').classList.replace('d-flex', 'd-none')
-}

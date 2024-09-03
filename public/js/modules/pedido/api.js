@@ -205,6 +205,7 @@ async function atualizarDadosCliente(clienteId) {
 async function atualizarDadosPedido(agendamentoId) {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
 
     try {
         const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
@@ -224,6 +225,9 @@ async function atualizarDadosPedido(agendamentoId) {
                 },
                 etapa: {
                     id: document.querySelector("#input-etapa").value
+                },
+                endereco: {
+                    id: enderecoId
                 }
             })
         });
@@ -244,13 +248,6 @@ async function atualizarEnderecoAgendamento(enderecoId) {
     var usuarioId = parseInt(sessionStorage.getItem("id")) 
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
-   if(enderecoId == sessionStorage.getItem("ENDERECO-ID")){
-      pedido.esconderModalMultivalorado()
-      return
-   } else{
-     sessionStorage.setItem("ENDERECO-ID", enderecoId)
-   }
-
     try {
         const response = await fetch(`http://localhost:8080/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
             method: "PATCH"
@@ -261,6 +258,46 @@ async function atualizarEnderecoAgendamento(enderecoId) {
         
         buscarEnderecoPorId()
         pedido.esconderModalMultivalorado()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+async function atualizarEndereco(){
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: enderecoId,
+                cep: document.querySelector('#input-cep').value,
+                logradouro: document.querySelector('#input-rua').value,
+                bairro: document.querySelector('#input-bairro').value,
+                uf: document.querySelector('#input-uf').value,
+                usuario: {
+                    id: usuarioId
+                },
+                cliente: {
+                    id: clienteId
+                },
+                cidade: document.querySelector('#input-cidade').value,
+                numero: document.querySelector('#input-numero').value,
+            })
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarEnderecoPorId()
         return response.status
        
     } catch (error) {
@@ -323,6 +360,7 @@ async function buscarEtapas() {
         console.log(dados)
 
         pedido.preencherOptionsEtapa(dados)
+        pedido.removerOptionsEtapa()
     }
     catch (error) {
         console.log(`Houve um erro no servidor ${error}`)
@@ -368,8 +406,10 @@ export {
     buscarClientePorId,
     buscarClientesPorNome,
     buscarEnderecoPorClienteId,
+    buscarEnderecoPorId,
     atualizarDadosCliente,
     atualizarDadosPedido,
+    atualizarEndereco,
     atualizarEnderecoAgendamento,
     criarPedido,
     buscarEtapas,

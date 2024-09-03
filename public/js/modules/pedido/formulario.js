@@ -94,6 +94,13 @@ function agregarConteudosEEnviarParaValidar(){
     }
   
   }
+
+  function removerEstilizacaoDoFormulario(){
+    var inputValidas = document.querySelectorAll('.is-valid')
+    for(var i = 0; i < inputValidas.length; i++){
+      inputValidas[i].classList.remove('is-valid')
+    }
+  }
   
   function verificarSeCampoAtendeValidacao(nomeCampo, tipoValidacao, digitos){
     var valorCampo = document.querySelector(`#input-${nomeCampo}`).value
@@ -115,5 +122,6 @@ export {
     agregarConteudosEEnviarParaValidar,
     validarConteudosNulosEEspecificos,
     estilizarCamposDoFormulario,
+    removerEstilizacaoDoFormulario,
     verificarSeCampoAtendeValidacao
 }
