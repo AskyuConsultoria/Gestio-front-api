@@ -56,7 +56,7 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         desbloquearInputs()
         esconderBotoesEdicao()
         esconderEtapa()
-        exibirBotaoSalvar()
+       
 
         if (sessionStorage.getItem("CLIENTE-ID") != null) {
             listaComponenteExibido.shift()
