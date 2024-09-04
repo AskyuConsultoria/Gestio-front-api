@@ -521,6 +521,7 @@ export function validarAtualizacaoEndereco(id, nomeModal){
      if(nomeModal == 'telefone'){
       atualizarTelefone = true
       api.buscarTelefonePorId()
+      motorGrafico.exibirInputsNumero()
      }
 
      esconderModalMultivalorado()

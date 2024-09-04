@@ -57,11 +57,14 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         esconderBotoesEdicao()
         esconderEtapa()
         esconderInputsEndereco()
+        esconderInputsNumero()
+        esconderCardEndereco()
 
         if (sessionStorage.getItem("CLIENTE-ID") != null) {
             listaComponenteExibido.shift()
             listaComponenteOcultado.shift()
             listaComponenteExibido.push(listaComponente[1])
+            exibirCardEndereco()
             renderizar("130%", "Novo Pedido")
             return
         }
@@ -234,7 +237,39 @@ function exibirInputsEndereco(){
     if(conteudoEndereco.classList.contains('d-none')){
         conteudoEndereco.classList.remove('d-none')
     }
+
 }
+
+function esconderInputsNumero(){
+    var conteudoTelefone = document.querySelector("#conteudo-telefone")
+    if(!conteudoTelefone.classList.contains('d-none')){
+        conteudoTelefone.classList.add('d-none')
+    }
+}
+
+function exibirInputsNumero(){
+    var conteudoTelefone = document.querySelector("#conteudo-telefone")
+    if(conteudoTelefone.classList.contains('d-none')){
+        conteudoTelefone.classList.remove('d-none')
+    }
+
+}
+
+function esconderCardEndereco(){
+    var cardEndereco = document.querySelector("#card-label-endereco")
+    if(!cardEndereco.classList.contains('d-none')){
+        cardEndereco.classList.add('d-none')
+    }
+}
+
+function exibirCardEndereco(){
+    var cardEndereco = document.querySelector("#card-label-endereco")
+    if(cardEndereco.classList.contains('d-none')){
+        cardEndereco.classList.remove('d-none')
+    }
+
+}
+
 
 function exibirEtapa(){
     var labelEtapa = document.querySelector('#label-etapa')
@@ -280,7 +315,9 @@ export {
     agregarInputsEmLista,
     bloquearInputs,
     esconderInputsEndereco,
+    esconderInputsNumero,
     exibirInputsEndereco,
+    exibirInputsNumero,
     desbloquearInputs,
     desbloquearFormulario,
     removerEstilizacaoDasInputs
