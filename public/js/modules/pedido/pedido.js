@@ -120,7 +120,7 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
   if(agendamento.telefone != null) document.querySelector("#input-numero-celular").value = agendamento.telefone.numero
   inputAntigoTelefone = agendamento.telefone.numero
 
-  sessionStorage.setItem('TELEFONE-ID', agendamento.telefone.numero)
+  sessionStorage.setItem('TELEFONE-ID', agendamento.telefone.id)
   sessionStorage.setItem('CLIENTE-ID', agendamento.cliente.id)
   
   api.buscarClienteView(clienteId)
@@ -505,7 +505,7 @@ export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
 export function validarAtualizacaoEndereco(id, nomeModal){
 
   
-    if(id == sessionStorage.getItem(`${nomeModal.toUpperCase()}-ID`)){
+    if(id == sessionStorage.getItem(`${nomeModal.toUpperCase()}-ID`) && sessionStorage.getItem('AGENDAMENTO-ID') != null){
       esconderModalMultivalorado()
       return
     } 
@@ -515,6 +515,7 @@ export function validarAtualizacaoEndereco(id, nomeModal){
      if(nomeModal == 'endereco'){
       atualizarEndereco = true
       api.buscarEnderecoPorId()
+      motorGrafico.exibirInputsEndereco()
      }
 
      if(nomeModal == 'telefone'){
