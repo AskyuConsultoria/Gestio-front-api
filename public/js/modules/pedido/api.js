@@ -7,7 +7,9 @@ var clienteId = pedido.clienteId
 window.buscarAgendamento = buscarAgendamento
 window.buscarClienteView = buscarClienteView
 window.buscarEnderecoPorClienteId = buscarEnderecoPorClienteId
+window.buscarTelefonePorClienteId = buscarTelefonePorClienteId
 window.atualizarEnderecoAgendamento = atualizarEnderecoAgendamento
+
 
 async function buscarAgendamento() {
 
@@ -115,12 +117,66 @@ async function buscarEnderecoPorId() {
     }
 }
 
+async function buscarTelefonePorId() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
+    var enderecoId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/telefone/buscar-um/${usuarioId}/${enderecoId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        pedido.preencherDadosTelefone(dados)
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function buscarEnderecoPorClienteId(nomeModal) {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        pedido.escolherModalMultivalorado(nomeModal, dados)
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+async function buscarTelefonePorClienteId(nomeModal) {
+    var usuarioId = sessionStorage.getItem("id")
+    var clienteId = sessionStorage.getItem("CLIENTE-ID")    
+
+    try {
+        const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${clienteId}`, {
             method: "GET"
         });
 
@@ -206,6 +262,8 @@ async function atualizarDadosPedido(agendamentoId) {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
+    var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
+
 
     try {
         const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
@@ -228,6 +286,9 @@ async function atualizarDadosPedido(agendamentoId) {
                 },
                 endereco: {
                     id: enderecoId
+                },
+                telefone: {
+                    id: telefoneId
                 }
             })
         });
@@ -266,10 +327,34 @@ async function atualizarEnderecoAgendamento(enderecoId) {
     }
 }
 
+
+async function atualizarTelefoneAgendamento(telefoneId) {
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/agendamento/atualizar-telefone/${usuarioId}/${agendamentoId}/${telefoneId}`, {
+            method: "PATCH"
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarTelefonePorId()
+        pedido.esconderModalMultivalorado()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function atualizarEndereco(){
     var usuarioId = parseInt(sessionStorage.getItem("id")) 
-    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
+    var telefoneId = parseInt(sessionStorage.getItem(""))
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
@@ -308,6 +393,7 @@ async function atualizarEndereco(){
 
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
+    
 
     try {
         const response = await fetch(`http://localhost:8080/agendamento`, {
@@ -321,7 +407,10 @@ async function criarPedido() {
                 dataFim: document.querySelector("#input-data-inicio").value,
                 usuario: sessionStorage.getItem('id'),
                 cliente: sessionStorage.getItem('CLIENTE-ID'),
-                etapa: 1
+                etapa: 1,
+                endereco: sessionStorage.getItem('ENDERECO-ID'),
+                telefone: sessionStorage.getItem('TELEFONE-ID')
+
             })
         });
 
@@ -406,11 +495,14 @@ export {
     buscarClientePorId,
     buscarClientesPorNome,
     buscarEnderecoPorClienteId,
+    buscarTelefonePorClienteId,
     buscarEnderecoPorId,
+    buscarTelefonePorId,
     atualizarDadosCliente,
     atualizarDadosPedido,
     atualizarEndereco,
     atualizarEnderecoAgendamento,
+    atualizarTelefoneAgendamento,
     criarPedido,
     buscarEtapas,
     buscarStatusAgendamento

@@ -91,6 +91,7 @@ export var salvarPedido = false
 export var salvarEndereco = false
 export var salvarTelefone = false
 export var atualizarEndereco = false
+export var atualizarTelefone = false
 
 export async function preencherDadosDePedidoCompleto(agendamento) {
   agendamentoId = agendamento.id
@@ -156,6 +157,12 @@ export function preencherDadosEndereco(endereco){
     inputAntigoRua = endereco.localidade
     inputAntigoBairro = endereco.bairro
     inputAntigoUf = endereco.uf
+}
+
+export function preencherDadosTelefone(telefone){
+  document.querySelector('#input-numero-celular').value = telefone.numero 
+
+  inputAntigoTelefone = telefone.numero
 }
 
 export function preencherCardsDeCliente(listaCliente) {
@@ -416,7 +423,10 @@ window.modalMultivalorado = modalMultivalorado
 
 export async function escolherModalMultivalorado(nomeModal, lista) {
   const enderecoId = sessionStorage.getItem('ENDERECO-ID')
+  const telefoneId = sessionStorage.getItem('TELEFONE-ID')
+
   const conteudoModal = document.querySelector('#conteudo-modal-multivalorado')
+  const tituloModal = document.querySelector('#modal-multivadorado-label')
   conteudoModal.innerHTML = ""
 
   var inputChecked = ""
@@ -425,11 +435,13 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   var id = ""
 
   if (nomeModal == "endereco") {
-    titulo = "Endereço do Cliente"
+    tituloModal.innerText = "Endereço do Cliente"
     corpo = "exibirEnderecoCompleto(lista[i])"
+    id = enderecoId
   } else if (nomeModal == "telefone") {
-    titulo = "Telefone do Cliente"
+    tituloModal.innerText = "Telefone do Cliente"
     corpo = "lista[i].numero"
+    id = telefoneId
   }
 
   for(var i = 0; i < lista.length; i++) {
@@ -447,17 +459,17 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   `
 
 
-  if(lista[i].id == enderecoId && i != 0 && lista.length > 1) exibirEnderecoSalvoPrimeiro(lista[i], i)
+  if(lista[i].id == id && i != 0 && lista.length > 1) exibirEnderecoSalvoPrimeiro(lista[i], i)
   }
 
   conteudoModal.innerHTML += `<div class="d-flex justify-content-end px-3">
                         <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal-multivalorado" style="border-color: #eeeaea;">Cancelar</button>
                         <button type="button" class="btn text-white" style="background-color: #012171;" onclick="validarAtualizacaoEndereco(
-                        document.querySelector('.form-check-input:checked').id)">Confirmar</button>
+                        document.querySelector('.form-check-input:checked').id, '${nomeModal}')">Confirmar</button>
                     </div>`
 
   modalMultivalorado.show()
-  document.getElementById(`${parseInt(enderecoId)}`).checked = true 
+  document.getElementById(`${parseInt(id)}`).checked = true 
 
 }
 
@@ -490,20 +502,33 @@ export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
   inputCheck.id = textoPrimeiraInputId
 }
 
-export function validarAtualizacaoEndereco(enderecoId){
+export function validarAtualizacaoEndereco(id, nomeModal){
 
-  if(enderecoId == sessionStorage.getItem("ENDERECO-ID")){
-    esconderModalMultivalorado()
-    return
- } else{
-   sessionStorage.setItem("ENDERECO-ID", enderecoId)
-   atualizarEndereco = true
-   api.buscarEnderecoPorId()
-   esconderModalMultivalorado()
- }
+  
+    if(id == sessionStorage.getItem(`${nomeModal.toUpperCase()}-ID`)){
+      esconderModalMultivalorado()
+      return
+    } 
+    else{
+      sessionStorage.setItem(`${nomeModal.toUpperCase()}-ID`, id)
+     
+     if(nomeModal == 'endereco'){
+      atualizarEndereco = true
+      api.buscarEnderecoPorId()
+     }
+
+     if(nomeModal == 'telefone'){
+      atualizarTelefone = true
+      api.buscarTelefonePorId()
+     }
+
+     esconderModalMultivalorado()
+   }
+
+
+  }
+
  
-
-}
 
 export async function salvarModificacao() {
   const clienteId = sessionStorage.getItem("CLIENTE-ID")
@@ -542,7 +567,7 @@ export function esconderModalMultivalorado(){
 }
 
 export function houveMudancaDeDados() {
-  if (salvarPedido || salvarCliente || salvarEndereco || salvarTelefone) return true
+  if (salvarPedido || salvarCliente || salvarEndereco || salvarTelefone || atualizarEndereco || atualizarTelefone) return true
   else return false
 }
 
@@ -552,6 +577,8 @@ export function dadosForamAtualizados() {
   salvarEndereco = false
   salvarEndereco = false
   salvarTelefone = false
+  atualizarEndereco = false
+  atualizarTelefone = false
 }
 
 function validarRetornoEExibirModalDeStatus(listaResponse) {
