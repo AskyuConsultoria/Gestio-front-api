@@ -56,7 +56,7 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         desbloquearInputs()
         esconderBotoesEdicao()
         esconderEtapa()
-       
+        esconderInputsEndereco()
 
         if (sessionStorage.getItem("CLIENTE-ID") != null) {
             listaComponenteExibido.shift()
@@ -84,7 +84,6 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 
     if (paginaEscolhida == "associar-cliente") {
         sessionStorage.removeItem("CLIENTE-ID")
-        document.querySelector('#confirmButton').classList.replace("d-flex", "d-none")
         document.querySelector('.botao-confirmacao').id = "adicionar-pedido"
         listaComponenteExibido.push(listaComponente[4], listaComponente[5], listaComponente[6])
         listaComponenteOcultado.push(listaComponente[0], listaComponente[1], listaComponente[2], listaComponente[3])
@@ -223,6 +222,20 @@ function esconderEtapa(){
     }
 }
 
+function esconderInputsEndereco(){
+    var conteudoEndereco = document.querySelector("#conteudo-endereco")
+    if(!conteudoEndereco.classList.contains('d-none')){
+        conteudoEndereco.classList.add('d-none')
+    }
+}
+
+function exibirInputsEndereco(){
+    var conteudoEndereco = document.querySelector("#conteudo-endereco")
+    if(conteudoEndereco.classList.contains('d-none')){
+        conteudoEndereco.classList.remove('d-none')
+    }
+}
+
 function exibirEtapa(){
     var labelEtapa = document.querySelector('#label-etapa')
     var contentEtapa = document.querySelector('#content-etapa')
@@ -266,6 +279,8 @@ export {
     fecharJanela,
     agregarInputsEmLista,
     bloquearInputs,
+    esconderInputsEndereco,
+    exibirInputsEndereco,
     desbloquearInputs,
     desbloquearFormulario,
     removerEstilizacaoDasInputs
