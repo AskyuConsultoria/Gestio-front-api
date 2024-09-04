@@ -117,6 +117,10 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
     preencherDadosEndereco(agendamento.endereco)
   }
 
+  if(agendamento.telefone != null) document.querySelector("#input-numero-celular").value = agendamento.telefone.numero
+  inputAntigoTelefone = agendamento.telefone.numero
+
+  sessionStorage.setItem('TELEFONE-ID', agendamento.telefone.numero)
   sessionStorage.setItem('CLIENTE-ID', agendamento.cliente.id)
   
   api.buscarClienteView(clienteId)
@@ -124,17 +128,13 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
 
 export function preencherDadosCliente(cliente) { 
   sessionStorage.setItem('CLIENTE-ID', cliente.id)
-  sessionStorage.setItem('TELEFONE-ID', cliente.telefone_id)
-
 
   document.querySelector('#input-nome').value = cliente.nome
   document.querySelector('#input-sobrenome').value = cliente.sobrenome
-  document.querySelector('#input-numero-celular').value = cliente.numero
   document.querySelector('#input-email').value = cliente.email
 
   inputAntigoNome = cliente.nome
   inputAntigoSobrenome = cliente.sobrenome
-  inputAntigoTelefone = cliente.numero
   inputAntigoEmail = cliente.email
 
 
@@ -533,13 +533,19 @@ export function validarAtualizacaoEndereco(id, nomeModal){
 export async function salvarModificacao() {
   const clienteId = sessionStorage.getItem("CLIENTE-ID")
   const enderecoId = sessionStorage.getItem("ENDERECO-ID")
+  const telefoneId = sessionStorage.getItem("TELEFONE-ID")
   const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+
+
   const listaDeResponse = []
 
   if (salvarCliente) {
     listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
   }
-  // if (salvarTelefone) atualizarDadosTelefone(telefoneId)
+  
+  if (atualizarTelefone){
+    listaDeResponse.push(await api.atualizarTelefoneAgendamento(telefoneId))
+  } 
 
   if (atualizarEndereco){ 
     listaDeResponse.push(await api.atualizarEnderecoAgendamento(enderecoId))
@@ -547,6 +553,10 @@ export async function salvarModificacao() {
 
   if(salvarEndereco){
     listaDeResponse.push(await api.atualizarEndereco())
+  }
+
+  if(salvarTelefone){
+    listaDeResponse.push(await api.atualizarTelefone())
   }
 
   if (salvarPedido && agendamentoId == null) {
