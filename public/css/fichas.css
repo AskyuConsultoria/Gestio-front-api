@@ -108,3 +108,56 @@ main{
     width: 100%;
     align-self: center;
 }
+
+.conteudo{
+    display:flex;
+    align-items: flex-start;
+    gap:20px;
+}
+
+.custom-select{
+    position:relative;
+    width: 95%;
+}
+.select-box{
+    background-color: white;
+    border:1px solid #ced4da;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    height: 56px;
+    padding: 0 10px;
+    cursor:pointer  
+}
+
+.selected-options{
+    display:flex;
+    flex-wrap:wrap;
+    margin-top:0;
+
+}
+.tag{
+    background-color:#f2f2f2;
+    color: #000;
+    border-radius:5px;
+    margin-right: right 5px;
+    padding:6px 14px;
+    display:flex;
+    align-items:center
+}
+.remove-tag{
+    margin-left:6px;
+    cursor:pointer;
+}
+
+.arrow{
+    margin:0 10px;
+}
+.fa-angle-down{
+    color:#404040;
+    font-size:10px;
+}
+
+/* .options{
+
+} */
