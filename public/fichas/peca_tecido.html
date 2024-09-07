@@ -39,41 +39,46 @@
             <div class="conteudo">
                 <div class="custom-select open w-95">
                     <div class="select-box">
-                        <input class="form-control" name="tag" hidden>
+                        <input class="form-control tag_input" name="tags" hidden>
                         <div class="selected-options">
-                            <span class="tag">Egípcio<button type="button" class="btn-close" aria-label="Close"></button></span>
+                            <span class="tag">Egípcio<button type="button" class="btn-close"
+                                    aria-label="Close"></button></span>
                             <span class="tag">Árabe<button type="button" class="btn-close"
                                     aria-label="Close"></button></span>
-                            <span class="tag">Tecido<button type="button" class="btn-close"
-                                    aria-label="Close"></button></span></span>
+                            <span class="tag">Tecido<button type="button" class="btn-close" aria-label="Close"></button>
+                            </span>
                             <span class="tag">5+</span>
                         </div>
+                        <div class="arrow">
+                            <i class="fa fa-angle-down"></i>
+                        </div>
                     </div>
-                    <div class="arrow">
-                        <i class="fa fa-angle-down"></i>
-                    </div>
+                    
 
                     <div class="options">
-                        <div class="options search tags">
-                            <input class="form-control" placeholder="Insira os tecios">
-                            <div class="option all-tags">Select All</div>
-                            <div class="option active" data-value="Black">Black</div>
-                            <div class="option active" data-value="Branco">Branco</div>
-                            <div class="option mb-3" data-value="Vermelho">teste</div>
-                            <div class="option" data-value="Azul">Azul</div>
-                            <div class="option" data-value="Verde">Verde</div>
-                            <div class="option" data-value="Amarelo">Amarelo</div>
-                            <div class="option" data-value="Roxo">Roxo</div>
-                            <div class="no-result-message">Sem tecidos encontrados</div>
-                            
-
+                        <div class="option-search-tags">
+                            <input type="text" class="form-control search-tags" placeholder="Insira os tecios">
+                            <button type="button" class="btn-close clear" aria-label="Close"></button>
                         </div>
-                        <span class="tag_error_message error">
-                            Esse campo é obrigatório
-                        </span>
+
+                        <div class="option all-tags" data-value="All">Select All</div>
+                        <div class="option active" data-value="Black">Black</div>
+                        <div class="option active" data-value="Branco">Branco</div>
+                        <div class="option " data-value="Vermelho">teste</div>
+                        <div class="option" data-value="Azul">Azul</div>
+                        <div class="option" data-value="Verde">Verde</div>
+                        <div class="option" data-value="Amarelo">Amarelo</div>
+                        <div class="option" data-value="Roxo">Roxo</div>
+                        <div class="no-result-message">Sem tecidos encontrados</div>
+
+
                     </div>
+                    <span class="tag_error_message error">
+                        Esse campo é obrigatório
+                    </span>
                 </div>
             </div>
+        </div>
         </div>
         <button onclick="salvarPecaTecido()" class="salvar shadow-sm p-3">
             Próximo
