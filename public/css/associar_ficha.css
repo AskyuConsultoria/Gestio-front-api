@@ -1,0 +1,29 @@
+
+html, body{
+    height: 110%;
+    min-height: 100%;
+    background-color: #EEEEEE;
+    background-repeat: no-repeat;
+}
+
+
+button.adicionar-pedido{
+    padding: 0;
+    outline: none;
+    border: none;
+    -webkit-transition: color .2s;
+    -o-transition: color .2s;
+    transition: color .2s; 
+  }
+  
+
+button.botao-confirmacao{
+    padding: 0;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    -webkit-transition: color .2s;
+    -o-transition: color .2s;
+    transition: color .2s; 
+}
+
