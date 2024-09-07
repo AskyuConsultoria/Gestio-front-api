@@ -209,6 +209,27 @@ main{
     
 }
 
+.option{
+    color:#000;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.tag:hover,
+.option:hover{
+    background-color:#eaeaea;
+}
+
+.no-result-message{
+    padding:0px 0px 12px 12px;
+}
+.error{
+    color:#ff1a2a;
+    margin-top: 5rem;
+}
+
+
+
 
 
 
