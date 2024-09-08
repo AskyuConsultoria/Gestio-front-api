@@ -36,17 +36,21 @@
     <main
         style="display:flex; flex-direction: column; justify-content: space-between; width: 90%; align-self: center; background-color: white; overflow-y: scroll; overflow-x: hidden; min-height: 37rem;">
         <div>
-            <!-- <div class="conteudo" style="margin-bottom:1.2rem;">
+            <!-- aba de peças -->
+            <div class="conteudo" style="margin-bottom:1.2rem;">
                 <div class="custom-select open w-100">
+                    <!-- existe uma seta para baixo para exibir as peças -->
                     <div class="select-box rounded dropdown-toggle" onclick="aparecerPecas()">
                         <input class="form-control tag_input" name="tags" hidden>
+                        <!-- as peças que foram escolhidas pelo usuário -->
                         <div class="selected-options" style="overflow-x: scroll;">
                         </div>
                     </div>
 
-
-                    <div class="pecasOptions rounded-bottom " id="options" style="margin-top:0.8rem; display:none;">
+                    <!-- lista de peças que existem no sistema -->
+                    <div class="options rounded-bottom " id="pecasOptions" style="margin-top:0.8rem; display:none;">
                         <div class="option-search-tags ">
+                            <!-- barra de busca para pesquisar a peça que quer selecionar -->
                             <input type="text" class="form-control search-tags rounded" placeholder="Pesquise tecido"
                                 style="font-size:1.2rem;">
                         </div>
@@ -57,32 +61,29 @@
                         <div class="option" data-value="Paletó">Paletó</div>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <!-- aba de tecidos -->
             <div class="conteudo">
                 <div class="custom-select open w-100">
+                    <!-- existe uma seta para baixo que serve para aparecer um dropdown (bootstrap) -->
                     <div class="select-box rounded dropdown-toggle" onclick="aparecerTecidos()">
                         <input class="form-control tag_input" name="tags" hidden>
+                        <!-- os tecidos que foram escolhidos pelo usuário -->
                         <div class="selected-options" style="overflow-x: scroll;">
+                            <!-- span = tecido, button -> X para tirar da lista escolhida -->
                             <span class="tag" id="Egipcio">Egípcio<button type="button" class="btn-close"
                                     aria-label="Close" onclick="removerTecido()"></button></span>
-                            <span class="tag">Árabe<button type="button" class="btn-close"
-                                    aria-label="Close"></button></span>
-                            <span class="tag">Árabe<button type="button" class="btn-close"
-                                    aria-label="Close"></button></span>
-
-                            <span class="tag">Árabe<button type="button" class="btn-close"
-                                    aria-label="Close"></button></span>
                         </div>
                     </div>
 
-
-                    <div class="TecidosOptions rounded" id="options" style="margin-top:1rem; display:block;">
+                    <!-- aparece as opções de tecidos -->
+                    <div class="TecidosOptions rounded" id="tecidoOptions" style="margin-top:1rem; display:block;">
                         <div class="option-search-tags ">
                             <input type="text" class="form-control search-tags rounded" placeholder="Pesquise tecido"
                                 style="font-size:1.2rem;">
                         </div>
+                        <!-- opções de tecidos que foram cadastrados -->
                         <div class="option " data-value="Vermelho">teste</div>
                         <div class="option" data-value="Azul">Azul</div>
                         <div class="option" data-value="Verde">Verde</div>
@@ -103,26 +104,26 @@
 </html>
 <script>
 
-    
+    // Peças
 
-    // function aparecerPecas(){
-    //     var listaPecas = document.getElementById("pecasOptions")
-    //     if (listaPecas.style.display == "none") {
-    //         listapPecas.style.display = "block"
-    //     } else {
-    //         listaPecas.style.display = "none"
-    //     }
-    // }
+    function aparecerPecas(){
+        var listaPecas = document.getElementById("pecasOptions")
+        if (listaPecas.style.display == "none") {
+            listaPecas.style.display = "block"
+        } else {
+            listaPecas.style.display = "none"
+        }
+    }
 
     // Tecidos
 
-    function listarTecidos(){
-
-    }
+    // function listarTecidos(){
+    //     do
+    // }
 
 
     function aparecerTecidos() {
-        var lista = document.getElementById("options")
+        var lista = document.getElementById("tecidoOptions")
         if (lista.style.display == "none") {
             lista.style.display = "block"
         } else {
