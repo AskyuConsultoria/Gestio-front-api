@@ -292,3 +292,4 @@ function buscarDadosCliente(){
         document.getElementById("clienteInfo").innerHTML += `<h6 style="padding: none; font-weight:200">Dependente de <span>${cliente.responsavel.nome}</span></h6>`
     }
 }
+

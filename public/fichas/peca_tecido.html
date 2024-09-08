@@ -36,46 +36,59 @@
     <main
         style="display:flex; flex-direction: column; justify-content: space-between; width: 90%; align-self: center; background-color: white; overflow-y: scroll; overflow-x: hidden; min-height: 37rem;">
         <div>
-            <div class="conteudo">
-                <div class="custom-select open w-95">
-                    <div class="select-box">
+            <!-- <div class="conteudo" style="margin-bottom:1.2rem;">
+                <div class="custom-select open w-100">
+                    <div class="select-box rounded dropdown-toggle" onclick="aparecerPecas()">
                         <input class="form-control tag_input" name="tags" hidden>
-                        <div class="selected-options">
-                            <span class="tag">Egípcio<button type="button" class="btn-close"
+                        <div class="selected-options" style="overflow-x: scroll;">
+                        </div>
+                    </div>
+
+
+                    <div class="pecasOptions rounded-bottom " id="options" style="margin-top:0.8rem; display:none;">
+                        <div class="option-search-tags ">
+                            <input type="text" class="form-control search-tags rounded" placeholder="Pesquise tecido"
+                                style="font-size:1.2rem;">
+                        </div>
+                        <div class="option " data-value="Peça">Peça</div>
+                        <div class="option" data-value="Blusa">Blusa</div>
+                        <div class="option" data-value="Calça">Calça</div>
+                        <div class="option" data-value="Colete">Colete</div>
+                        <div class="option" data-value="Paletó">Paletó</div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- aba de tecidos -->
+            <div class="conteudo">
+                <div class="custom-select open w-100">
+                    <div class="select-box rounded dropdown-toggle" onclick="aparecerTecidos()">
+                        <input class="form-control tag_input" name="tags" hidden>
+                        <div class="selected-options" style="overflow-x: scroll;">
+                            <span class="tag" id="Egipcio">Egípcio<button type="button" class="btn-close"
+                                    aria-label="Close" onclick="removerTecido()"></button></span>
+                            <span class="tag">Árabe<button type="button" class="btn-close"
                                     aria-label="Close"></button></span>
                             <span class="tag">Árabe<button type="button" class="btn-close"
                                     aria-label="Close"></button></span>
-                            <span class="tag">Tecido<button type="button" class="btn-close" aria-label="Close"></button>
-                            </span>
-                            <span class="tag">5+</span>
-                        </div>
-                        <div class="arrow">
-                            <i class="fa fa-angle-down"></i>
+
+                            <span class="tag">Árabe<button type="button" class="btn-close"
+                                    aria-label="Close"></button></span>
                         </div>
                     </div>
-                    
 
-                    <div class="options">
-                        <div class="option-search-tags">
-                            <input type="text" class="form-control search-tags" placeholder="Insira os tecios">
-                            <button type="button" class="btn-close clear" aria-label="Close"></button>
+
+                    <div class="TecidosOptions rounded" id="options" style="margin-top:1rem; display:block;">
+                        <div class="option-search-tags ">
+                            <input type="text" class="form-control search-tags rounded" placeholder="Pesquise tecido"
+                                style="font-size:1.2rem;">
                         </div>
-
-                        <div class="option all-tags" data-value="All">Select All</div>
-                        <div class="option active" data-value="Black">Black</div>
-                        <div class="option active" data-value="Branco">Branco</div>
                         <div class="option " data-value="Vermelho">teste</div>
                         <div class="option" data-value="Azul">Azul</div>
                         <div class="option" data-value="Verde">Verde</div>
                         <div class="option" data-value="Amarelo">Amarelo</div>
                         <div class="option" data-value="Roxo">Roxo</div>
-                        <div class="no-result-message">Sem tecidos encontrados</div>
-
-
                     </div>
-                    <span class="tag_error_message error">
-                        Esse campo é obrigatório
-                    </span>
                 </div>
             </div>
         </div>
@@ -88,3 +101,39 @@
 </body>
 
 </html>
+<script>
+
+    
+
+    // function aparecerPecas(){
+    //     var listaPecas = document.getElementById("pecasOptions")
+    //     if (listaPecas.style.display == "none") {
+    //         listapPecas.style.display = "block"
+    //     } else {
+    //         listaPecas.style.display = "none"
+    //     }
+    // }
+
+    // Tecidos
+
+    function listarTecidos(){
+
+    }
+
+
+    function aparecerTecidos() {
+        var lista = document.getElementById("options")
+        if (lista.style.display == "none") {
+            lista.style.display = "block"
+        } else {
+            lista.style.display = "none"
+        }
+    }
+
+
+
+    function removerTecido() {
+        document.getElementById('Egipcio').remove()
+        aparecerTecidos()
+    }
+</script>
