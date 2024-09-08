@@ -488,32 +488,7 @@ async function buscarStatusAgendamento(){
 }
 
 
-async function gerarRoteiroViaLLM(contexto, etapa, inputUsuario){
 
-    try {
-        const response = await fetch(`http://localhost:8080/api-llm`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            contexto: contexto,
-            etapa: etapa,
-            input: inputUsuario
-        })
-
-       })
-
-       const dados = await response.text()
-       console.log(dados)
-    }
-    catch(error){
-        console.log("Ocorreu um erro: " + error)
-    }
-  
-}
-
-gerarRoteiroViaLLM("nenhum", "Entrevista", "Skatista, gosta de calças cargo e roupas mais ressistentes")
 buscarEtapas()
 
 export {
@@ -532,6 +507,5 @@ export {
     atualizarTelefoneAgendamento,
     criarPedido,
     buscarEtapas,
-    buscarStatusAgendamento,
-    gerarRoteiroViaLLM
+    buscarStatusAgendamento
 }
