@@ -10,6 +10,7 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39WmHQsspRc+rYqFONFxm+TzbtMQzfgnGfN6A"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/adicionar-contato.css">
+    <script src="./js/cadastro-contato.js"></script>
 
     <title>Adicionar Novo Contato</title>
 </head>
@@ -20,7 +21,7 @@
         <div class="container text-center">
             <div class="icon-wrapper d-flex justify-content-end">
                 <img src="./assets/x-circle (1).svg" alt="botão-sair" id="close-btn"
-                    onclick="document.getElementById('modal-descartar').style.display = 'none'" style="margin-right: -50px;" class="icon-lg">
+                style="margin-right: -50px;" class="icon-lg">
             </div>
         </div>
     </header>
@@ -35,15 +36,10 @@
                     <span style=" color: #696969;">Informações Pessoais</span>
                     <div class="conjunto-contato mt-4">
                         <div class="form-group gap-3">
-                            <input class="form-control" id="usuario" placeholder="Nome Completo" style="height: 3rem;">
+                            <input class="form-control" id="usuario" placeholder="Nome" style="height: 3rem;">
                         </div>
-                        <div style="display: flex; align-items: end;">
-                            <input type="checkbox" class="form-check-input checkmark" id="dependente" onchange="if (this.checked) { window.location.href = 'Adicionar-dependente.html'; }">
-                            <div class="form-check" style="font-size: .8rem; justify-content: center;">
-                                <label class="form-check-label"
-                                    style="padding-right: 2rem; font-weight: 500; color: #6E6969;" for="lembrar">Este
-                                    cliente é dependente?</label>
-                            </div>
+                        <div class="form-group gap-3"></div>
+                            <input class="form-control" id="sobrenome" placeholder="Sobrenome" style="height: 3rem;">
                         </div>
                         <div class="form-group">
                             <input type="tel" class="form-control" id="celular" placeholder="+ Celular"
@@ -54,7 +50,7 @@
                             <span style="color: #696969;">Outros meios de contato</span>
 
                             <div class="form-group gap-3 mt-4">
-                                <input type="tel" class="form-control" id="celular" placeholder="+ Outro Celular"
+                                <input type="tel" class="form-control" id="outroCelular" placeholder="+ Outro Celular"
                                     style="height: 3rem;">
                             </div>
                             <div class="form-group gap-3">
@@ -62,11 +58,11 @@
                                     style="height: 3rem;">
                             </div>
                             <div class="form-group gap-3">
-                                <input class="form-control" id="email" placeholder="Instagram" style="height: 3rem;">
+                                <input class="form-control" id="insta" placeholder="Instagram" style="height: 3rem;">
                             </div>
                         </div>
 
-                        <button onclick="criar_contato()" class="btn btn-primary btn-block mt-4"
+                        <button onclick="cadastrarContato()" class="btn btn-primary btn-block mt-4"
                             style="background: linear-gradient(to bottom, #012171, #023FD7); border: none; border-radius: 50px; height: 4rem; font-size: 1.5rem; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);">
                             Salvar</button>
                     </div>
