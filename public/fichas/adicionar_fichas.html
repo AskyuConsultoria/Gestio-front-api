@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/fichas.css">
     <script defer src="../js/ficha.js"></script>
 </head>
-<body style="display: flex; flex-direction: column;" onload="listarClientes()">
+<body style="display: flex; flex-direction: column;background-color:#EEEEEE" onload="listarClientes()">
     <nav class="navegacao">
         <div class="group" style="display: flex; align-items: space-around;">
             <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"></a>
@@ -22,9 +22,9 @@
         <img src="../assets/imgs/pontinhos.png" alt="" class="pontinhos">
         <h5 style="text-align: center; font-weight: 200; " class=" mb-4 mt-4">Para começar, <b> associe o cliente correspondente</b></h5>
         <div style="width: 95%; align-self: center;">
-            <div class="input-grupo">
+            <div class="input-grupo rounded">
                 <button><img src="../assets/imgs/button_lupa_pesquisar.png" alt=""></button>
-                <input style="width: fit-content;" type="text" placeholder="Pesquise Pedidos" oninput="buscaAvançadaCliente(this.value)">
+                <input style="width: fit-content;" class="w-75" type="text" placeholder="Pesquise Pedidos" oninput="buscaAvançadaCliente(this.value)">
                 <button style="padding-right: 0;"><img src="../assets/imgs/filtro.png" alt=""></button>
             </div>
         </div>

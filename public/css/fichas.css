@@ -64,12 +64,12 @@ main{
 
 .salvar{
     box-shadow:4px #000000;
-    border-radius:20px;
+    border-radius:30px;
     width:100%;
     color:white;
     font-size:1rem;
     font-weight: bolder;
-    background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);
+    background: linear-gradient(90deg, rgba(1,33,113,1) 38%, rgba(2,63,215,1) 100%);
     
 }
 
@@ -97,7 +97,8 @@ main{
     display:flex;
     flex-direction: column; 
     justify-content: space-between; 
-    width: 90%; align-self: center; 
+    width: 90%; 
+    align-self: center; 
     background-color: white; 
     overflow-y: scroll; 
     overflow-x: hidden; 

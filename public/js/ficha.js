@@ -2,17 +2,17 @@ var lista = []
 var cliente = []
 
 // integrar como backend
-function listarFichas(){
-    console.log('listar')
-    document.getElementById('main')
-    main.innerHTML += `
-        <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
-        <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
-        <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
-        <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
-        <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
-    `
-}
+// function listarFichas(){
+//     console.log('listar')
+//     document.getElementById('main')
+//     main.innerHTML += `
+//         <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
+//         <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
+//         <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
+//         <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
+//         <a href="" id="1">Calça &#9826 John Doe <button onclick="deletar()" style="background-color: #012171;"><img src="/imgs/button_trash_apagar.png" ></button></a>
+//     `
+// }
 
 // integrar com o back
 function deletarFicha(){
@@ -40,11 +40,18 @@ function botaoTecido() {
 }
 
 //Integrar com o backend
-function listarBotaoPeca() {
-     const itens = document.getElementById('itens')
-     itens.innerHTML += `
-            <li><input id="item" type="checkbox" onclick="mudar('blusa')">blusa</li>    
-             `
+async function listarBotaoPeca() {
+    const idUsuario = sessionStorage.getItem('id')
+    const data = await fetch(`http://localhost:8080/pecas/${idUsuario}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+    }
+    const dataFormated = await data.json()
+    console.log("Resposta: ", dataFormated)
+    
+    dataFormated.forEach( peca => {
+        document.getElementById('itens').innerHTML += `<li><input id="item${peca.id}" type="checkbox" onclick="mudar('${peca.nome}')">${peca.nome}</li>`
+    })
  }
 
  function listarBotaoTecido() {
@@ -76,40 +83,19 @@ function mudarTecido(texto2) {
     }
 }
 
-function salvarPecaTecido() {
-    sessionStorage.setItem('idPeca', document.getElementById('inputPeca').innerHTML)
-    sessionStorage.setItem('idTecido', document.getElementById('inputTecido').innerHTML)
-    window.location.href="../fichas/vincular_medidas.html"
-}
-
 // Conectar com o backEnd
 async function listarFichas(){
+    const idUsuario = sessionStorage.getItem('id')
+    const data = await fetch(`http://localhost:8080/pedido/${idUsuario}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+        }
 
-//     const data = await fetch(``);
-//         if (!data.ok) {
-//         throw new Error('Erro ' + data.statusText);
-//         }
+const dataFormated = await data.json()
 
-// const lista = await data.json()
+console.log("Resposta: ", lista)
 
-// console.log("Resposta: ", lista)
-
-var teste = [
-    {
-        id: "1",
-        nome: "palito"
-    },
-    {
-        id: "2",
-        nome: "terno"
-    },
-    {
-        id: "3",
-        nome: "calça"
-    }
-]
-
-lista = teste
+lista = dataFormated
 
 lista.forEach(ficha => {
     document.getElementById("container").innerHTML += `
@@ -120,7 +106,7 @@ lista.forEach(ficha => {
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
-                                <span class="medidas card-title mt-2">${ficha.nome}</span>
+                                <span class="medidas card-title mt-2 fs-5"> ${ficha.itemPedido.peca.nome} ♢ ${ficha.itemPedido.cliente.nome} ${ficha.itemPedido.cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>
@@ -196,39 +182,19 @@ function buscaAvançadaCliente(texto){
 })}
 
 // integrar com o backend
-function listarClientes(){
+async function listarClientes(){
     
-//     const data = await fetch(``);
-//         if (!data.ok) {
-//         throw new Error('Erro ' + data.statusText);
-//         }
-
-// const cliente = await data.json()
-
-// console.log("Resposta: ", cliente)
-
-var teste = [
-    {
-        id: "1",
-        nome: "john doe",
-        responsavel: {
-            id: "2",
-            nome: "jane doe"
+    const idUsuario = sessionStorage.getItem('id')
+    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
         }
-    },
-    {
-        id: "2",
-        nome: "jane doe",
-        responsavel: null
-    },
-    {
-        id: "3",
-        nome: "joão",
-        responsavel: null
-    }
-]
 
-cliente = teste
+const formatedData = await data.json()
+
+console.log("Resposta: ", formatedData)
+
+cliente = formatedData
 
 cliente.forEach(cliente => {
     document.getElementById("container").innerHTML += `
@@ -239,7 +205,7 @@ cliente.forEach(cliente => {
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div id="textoDoCliente${cliente.id}" class="d-flex" style="display: flex; flex-direction: column">
-                                <span class="medidas card-title mt-2" style=" width:100%">${cliente.nome}</span>
+                                <span class="medidas card-title mt-2" style=" width:100%">${cliente.nome} ${cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>
@@ -276,17 +242,16 @@ function irParaFinal(peca, tecido){
 }
 
 // configurar o obter dados do cliente
-function buscarDadosCliente(){
+async function buscarDadosCliente(){
     var idCliente = sessionStorage.getItem("idCliente")
-    var idUsuario = sessionStorage.getItem("idUsuario")
-    var cliente = {
-        id: "1",
-        nome: "John doe",
-        responsavel: {
-            id: "2",
-            nome: "Jane doe"
-        }
+
+    const data = await fetch( `http://localhost:8080/clientes/${idCliente}/buscarUm`);
+    if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
     }
+
+    var cliente = await data.json()
+
     document.getElementById("nomeCliente").innerHTML = cliente.nome
     if(cliente.responsavel != null){
         document.getElementById("clienteInfo").innerHTML += `<h6 style="padding: none; font-weight:200">Dependente de <span>${cliente.responsavel.nome}</span></h6>`

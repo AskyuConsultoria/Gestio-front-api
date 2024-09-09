@@ -262,14 +262,14 @@ header {
     background-color:white;
     margin-bottom:30px;
     margin-top:23px;
-    border: 1px black solid;
-    border-radius: 1rem;
+    /* border: 1px black solid; */
+    /* border-radius: 1rem; */
     button{
         background: white;
         border: none;
     }
     input{
-        width: 78%;
+        /* width: 78%; */
         border-style: none;
         text-size-adjust: 1rem;
         padding: 0% 10% 0% 10%;
