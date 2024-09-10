@@ -11,14 +11,59 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/Style.css">
+  <link rel="stylesheet" href="./css/novoForm.css">
   <script defer src="js/peca_editar.js"></script>
+  <script defer src="js/peca_cadastro.js"></script>
 </head>
 
-<body onload="listarPecas()">
-  <header class="header py-4 bg-light w-100 px-0">
+<body onload="listarPecas();">
+  <!-- <header class="header py-4 bg-light w-100 px-0">
     <div class="container d-flex justify-content-between">
       <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3">
       <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="" class="mx-3">
+    </div>
+  </header> -->
+  <header class="header py-4 bg-light px-0">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="">
+        <img
+          src="./assets/botao-voltar 4.svg"
+          alt="botao-voltar"
+          class="mx-3"
+          onclick="window.history.go(-2)"
+      /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <img
+          src="./assets/burger-bar 1 (1).svg"
+          alt="menu-lateral"
+          class="navbar-toggler-icon mx-3"/>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #012171; color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contatos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Fichas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Lista-peca.html">Produtos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="Lista-tecido.html">Tecidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Monitoramento</a>
+            </li>
+        </div>
+      </div>
     </div>
   </header>
   <div class="container-md mt-4 p-3">
@@ -30,11 +75,11 @@
       <div class="d-flex justify-content-between align-items-center mx-3">
         <span class="bold-title">PEÇAS</span>
         <div class="btns d-flex justify-content-around align-items-center">
-          <a href="./Edicao-peca.html">
+          <a id="verEditar">
             <img src="./assets/Editar botão.svg" alt="editar peça" class="mx-2" 
              data-bs-toggle="tooltip" data-bs-placement="top" title="Para editar uma peça clique aqui">
           </a>
-          <a href="./Cadastro-peca.html">
+          <a id="verCadastro">
             <img src="./assets/Adicionar Botão.svg" alt="adicionar-medida" class=""
             data-bs-toggle="tooltip" data-bs-placement="top" title="Para adicionar uma peça clique aqui">
           </a>
@@ -48,11 +93,87 @@
 
 
   </div>
+
+      <!-- Aqui começa OffCanvas -->
+      <div id="cadastro" class="cadastro" style="display: block; position: fixed; top: 100%; z-index: 100; background-color: #012171; width: 100%; height: 90%; padding: 5%;">
+        <div class="container d-flex align-items-center justify-content-between flex-column">
+          <!-- AQUI A BARRA NAVEGAÇÃO POR PUSH VOLTA A PÁGINA DAS PEÇAS PARA MOSTRAR A ATUALIZAÇÃO NA PAGE -->
+          <a id="descerCadastro">
+              <img src="./assets/linha drag.svg" alt="barra push navegação" class="mb-5">
+          </a>
+          <div class="bold-title-cadastro">CRIAR NOVA PEÇA</div>
+          <form class="form-cadastro d-flex flex-column" onsubmit="cadastrarPeca(); return false;" action="">
+              <!-- IMPORTANTE!! PARA CADASTRAR É NECESSÁRIO UTILIZAR ESSE ONSUBMIT POIS COMO 
+              ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
+              <div class="mb-2">
+                <label for="nome" class="mb-2 labelCadastro">Nome</label>
+                <input type="text"class="input-default" id="nome_nova_peca">
+            </div>
+            <div class="mb-2">
+                <label for="descricao" class="mt-4 mb-2 labelCadastro">Descrição</label>
+                <input type="text" class="input-default" id="descricao_nova_peca">
+            </div>
+              <div class="div-botao d-flex justify-content-center mt-5">
+                  <button class="save-btn mb-5">Salvar</button>
+              </div>
+          </form>
+        </div>
+      </div>
+
+
+    <div id="editar" class="editar" style="display: block; position: fixed; top: 100%; z-index: 100; background-color: #012171; width: 100%; height: 90%; padding: 5%;">
+      <div class="container d-flex align-items-center justify-content-between flex-column">
+        <!-- AQUI A BARRA NAVEGAÇÃO POR PUSH VOLTA A PÁGINA DAS PEÇAS PARA MOSTRAR A ATUALIZAÇÃO NA PAGE -->
+      <a id="descerEditar">
+          <img src="./assets/linha drag.svg" alt="barra push navegação" class="mb-5">
+      </a>
+      <div class="bold-title-cadastro">EDITAR UMA PEÇA</div>
+      <form class="form-cadastro d-flex flex-column" onsubmit="editarPeca(); return false;">
+          <!-- IMPORTANTE!! PARA CADASTRAR É NECESSÁRIO UTILIZAR ESSE ONSUBMIT POIS COMO 
+          ESTA DENTRO DE UM FORMULÁRIO, SÓ ASSIM IRA EXECUTAR ALGO -->
+        <div class="d-flex flex-column mb-2">
+            <label for="pecas" class="mb-4 labelCadastro">Peça cadastrada</label>
+            <select class="form-select" name="pecas" id="peca" onchange="descEditar()">
+            </select>
+        </div>
+        <div class="mt-4 mb-4">
+            <label for="descricao" class="mb-4 labelCadastro">Descrição</label>
+            <!-- UTILIZAR DESCRIÇÃO DESC-DEFAULT PARA SUBSCREVER O VALUE A PARTIR DE CONSULTA
+             AO SELECIONAR A PEÇA, FAZ UM SELECT DA DESCRIÇÃO E ATRIBUI ESSE VALUE, AI FICA POSSIVEL ADICIONAR E APAGAR O QUE JÁ EXISTE-->
+            <input type="text" id="desc-default">
+        </div>
+        <div class="div-botao d-flex justify-content-center mt-5">
+            <button class="save-btn mb-5">Salvar</button>
+        </div>
+    </form>
+  </div>
+</div>
+
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     });
+
+    document.getElementById('verCadastro').addEventListener('click', function() {
+          document.querySelector('.cadastro').classList.remove('descer');
+            document.querySelector('.cadastro').classList.toggle('subir');
+        });
+        document.getElementById('descerCadastro').addEventListener('click', function() {
+          document.querySelector('.cadastro').classList.remove('subir');
+            document.querySelector('.cadastro').classList.toggle('descer');
+        });
+
+        document.getElementById('verEditar').addEventListener('click', function() {
+          document.querySelector('.editar').classList.remove('descer');
+            document.querySelector('.editar').classList.toggle('subir');
+        });
+        document.getElementById('descerEditar').addEventListener('click', function() {
+          document.querySelector('.editar').classList.remove('subir');
+            document.querySelector('.editar').classList.toggle('descer');
+        });
+
 </script>
 </body>
 
