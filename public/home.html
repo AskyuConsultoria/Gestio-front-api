@@ -190,7 +190,7 @@
   <!-- Fim da Header -->
 
   <!-- Ínicio da Input -->
-  <div class="d-flex container px-3 flex-row input-group">
+  <div class="d-flex container px-3 pb-2 flex-row input-group">
     <button class="input-group-text  w-auto h-auto bg-body">
       <?xml version="1.0" ?><svg class="icone-lupa" enable-background="new 0 0 32 32" id="Editable-line" version="1.1"
         viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +201,7 @@
           stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
       </svg>
     </button>
-    <input type="text" class="w-75 h-auto form-control" type="search" placeholder="Pesquisar por Pedidos">
+    <input type="text" class="w-75 h-auto form-control" type="search" id="input-search" onchange="realizarPesquisa(this)" placeholder="Pesquisar por Pedidos">
       <button class="input-group-text w-auto h-auto bg-body" id="search" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
           viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -225,17 +225,17 @@
         </svg>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Nome do Cliente</a></li>
-        <li><a class="dropdown-item" href="#">Email do cliente</a></li>
-        <li><a class="dropdown-item" href="#">Peça</a></li>
-        <li><a class="dropdown-item" href="#">Tecido</a></li>
+        <li><button class="dropdown-item" id="clienteNome" onclick="ativarFiltro(this)">Nome do Cliente</button></li>
+        <li><button class="dropdown-item" id="clienteEmail" onclick="ativarFiltro(this)">Email do cliente</button></li>
+        <li><button class="dropdown-item" id="peca" onclick="ativarFiltro(this)">Peça</button></li>
+        <li><button class="dropdown-item" id="tecido" onclick="ativarFiltro(this)">Tecido</button></li>
       </ul>
     
   </div>
   <!-- Fim da Input -->
 
   <!-- Ínicio das Âncoras -->
-  <div class="d-flex container px-3 my-3 flex-row">
+  <div class="d-flex container px-3 my-3 flex-row componente">
 
     <div class="d-flex col-4" type="button" id="evento" data-bs-toggle="modal" 
     data-bs-target="#modal">
@@ -305,7 +305,7 @@
 
   </div>
 
-  <div class="d-flex container px-3 my-3 flex-row">
+  <div class="d-flex container px-3 my-3 flex-row componente">
 
     <div class="d-flex col-4">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
@@ -385,7 +385,7 @@
   <!-- Fim das Âncoras -->
 
   <!-- Ínicio do Calendário -->
-  <div class="px-3">
+  <div class="px-3 componente">
     <div class="col-md-12">
       <div class="calendar calendar-first" id="calendar_first">
         <div class="calendar_header">
@@ -410,7 +410,7 @@
   <!-- Fim do Calendário -->
 
   <!-- Ínicio da Label de Pedidos -->
-   <div class="d-flex col-12 px-3 justify-content-center">
+   <div class="d-flex col-12 px-3 justify-content-center componente">
     <div class="d-flex ps-2 py-4 text-secondary">
       <span>Pedidos mais próximos</span>  
     </div>  
