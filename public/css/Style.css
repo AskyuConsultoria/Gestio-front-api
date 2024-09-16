@@ -127,8 +127,6 @@ header {
     background-color: #0a3abd;
 }
 
-
-
 .total-peca {
     text-align: center;
 }
@@ -194,9 +192,10 @@ header {
     color: black;
     border-left: 30px solid var(--amarelo);
     background-color: white;
-    /* margin-left: 8%; */
 
     .texto-card {
+        margin-left: 10%;
+
         div {
             font-weight: 400;
             font-size: 18px;
@@ -296,11 +295,15 @@ header {
     font-size: 22px;
     text-align: center;
     font-weight: bold;
-    margin-top: 10%;
     color: var(--azul);
 
     img {
         height: 28vh;
+    }
+
+    div {
+        width: 55%;
+        margin-left: 20%;
     }
 }
 
@@ -421,9 +424,9 @@ header {
         color: var(--azul);
         font-weight: 700;
         margin-right: 9%;
-        }
+    }
 }
-   
+
 
 .custom-switch:checked {
     background-color: #007bff;
@@ -438,10 +441,11 @@ header {
     color: black;
     font-size: 14px;
     font-weight: 700;
+    text-align: center;
 }
 
 .form-switch {
-    width: 35%;
+    width: 55%;
 }
 
 .nome-etapa {
