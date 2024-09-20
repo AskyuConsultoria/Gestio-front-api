@@ -86,27 +86,27 @@ function mudarTecido(texto2) {
 // Conectar com o backEnd
 async function listarFichas(){
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/pedido/${idUsuario}`);
+    const data = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
 
 const dataFormated = await data.json()
 
-console.log("Resposta: ", lista)
+console.log("Resposta: ", dataFormated)
 
 lista = dataFormated
 
-lista.forEach(ficha => {
+lista.forEach(itemPedido => {
     document.getElementById("container").innerHTML += `
         <div class="card mb-2 mx-auto position-relative" style="max-width: 92%; background-color: #012171; color: white">
-            <a onclick="irPara(${ficha.id})">
+            <a onclick="irPara(${itemPedido.id})">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
-                                <span class="medidas card-title mt-2 fs-5"> ${ficha.itemPedido.peca.nome} ♢ ${ficha.itemPedido.cliente.nome} ${ficha.itemPedido.cliente.sobrenome}</span>
+                                <span class="medidas card-title mt-2 fs-5"> ${itemPedido.peca.nome} ♢ ${itemPedido.cliente.nome} ${itemPedido.cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ lista.forEach(ficha => {
             </a>
             <div class="container-right">
                 <img src="../assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${ficha.id})">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${itemPedido.id})">
             </div>
         </div>`
 });
@@ -125,19 +125,19 @@ lista.forEach(ficha => {
 }
 
 function buscaAvançada(texto){
-    var listaFiltrada = lista.filter(ficha => ficha.nome.toLowerCase().includes(texto.toLowerCase()));
+    var listaFiltrada = lista.filter(ficha => ficha.cliente.nome.toLowerCase().includes((texto).toLowerCase()));
 
     document.getElementById("container").innerHTML = ``
-    listaFiltrada.forEach(ficha => {
+    listaFiltrada.forEach(itemPedido => {
     document.getElementById("container").innerHTML += `
         <div class="card mb-2 mx-auto position-relative" style="max-width: 92%; background-color: #012171; color: white">
-            <a onclick="irPara(${ficha.id})">
+            <a onclick="irPara(${itemPedido.id})">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
-                                <span class="medidas card-title mt-2">${ficha.nome}</span>
+                                <span class="medidas card-title mt-2 fs-5"> ${itemPedido.peca.nome} ♢ ${itemPedido.cliente.nome} ${itemPedido.cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,7 @@ function buscaAvançada(texto){
             </a>
             <div class="container-right">
                 <img src="../assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${ficha.id})">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${itemPedido.id})">
             </div>
         </div>`
 })}
@@ -165,7 +165,7 @@ function buscaAvançadaCliente(texto){
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div id="textoDoCliente${cliente.id}" class="d-flex" style="display: flex; flex-direction: column">
-                                <span class="medidas card-title mt-2" style=" width:100%">${cliente.nome}</span>
+                                <span class="medidas card-title mt-2" style=" width:100%">${cliente.nome} ${cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>

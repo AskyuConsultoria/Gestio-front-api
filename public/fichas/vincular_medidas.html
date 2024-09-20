@@ -15,7 +15,7 @@
     <script defer src="../js/ficha.js"></script>
 </head>
 
-<body style="display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);" onload="adicionarInformacoes();getmedidasPeca()">
+<body style="display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);" onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente()">
     <nav style="display: flex;flex-direction: column;padding-top:10%;color:white;align-items: center;">
         <div class="group" style="display: flex; align-items: space-around;">
             <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"
@@ -23,10 +23,10 @@
             <p class="h2" style="color:aliceblue">Ficha de<b> Medidas</b></p>
             <a href="Lista_fichas.html"><img src="../assets/imgs/icon_close.png" alt="Fechar" style="width:4vh"></a>
         </div>
-        <img src="../assets/imgs/pontinhos.png" alt="" class="pontinhos" style="width:10%;">
+        <img src="../assets/imgs/pontinhos3.png" alt="" class="pontinhos" style="width:10%;">
 
         <div id="clienteInfo" class="d-flex flex-column center mb-4 mt-3" style="align-items: center;">
-            <h5 style="padding-top: 10%;" id="nomeCliente">Cleitinho<b></b></h5>
+            <h5 style="padding-top: 10%;" id="nomeCliente"><b></b></h5>
         </div>
         <!-- função existeDependente -->
         <div style="width: 95%; align-self: center;" id="dependente">
@@ -51,10 +51,8 @@
 
         <div class="container">
             <div id="medidas" class="row">
-                <div class="col border-bottom border-4 rounded shadow  p-2 " style="margin:1%;padding-right:50%;border-bottom:2px solid #004A97">
-                    <p class="text-uppercase font-weight-normal d-flex justify-content-center">Medida</p>
-                    <input type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
-                </div>
+
+
             </div>
         </div>
         <button onclick="salvar()" class="salvar shadow-sm p-2 pt-3 pb-3">Salvar</button>
@@ -103,6 +101,9 @@
         document.getElementById("tecidoInfo").innerHTML += ` ${formatedData.nome} |`
     }
 
+
+    var medidasTotais = null
+
     async function getmedidasPeca(){
         var idUsuario = sessionStorage.getItem("id")
         var peca = sessionStorage.getItem("peca")
@@ -112,17 +113,17 @@
         }
         var formatedData = await data.json()
         console.log(formatedData)
-
+        medidasTotais = formatedData
         formatedData.forEach(medida => {
             document.getElementById('medidas').innerHTML += `
             <div class="col border-bottom border-4 rounded shadow  p-2 " style="margin:1%;padding-right:50%;border-bottom:2px solid #004A97">
                     <p class="text-uppercase font-weight-normal d-flex justify-content-center" id="${medida.id}">${medida.nome}</p>
-                    <input type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
+                    <input id="inputmedida${medida.id}" type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
                 </div>
                 `
         });
     }
-
+    var idItemPedido = null
     async function salvar(){
         var observacoesInput = document.getElementById("observacoesInput").value
         var idCliente = sessionStorage.getItem("idCliente")
@@ -130,11 +131,17 @@
         var idPeca = sessionStorage.getItem("peca")
         const itemPedidoBody = {
             "observacao": observacoesInput,
-            "cliente": idCliente,
-            "usuario": idUsuario,
-            "peca": idPeca
+            "cliente": {
+                "id": idCliente
+            },
+            "usuario": {
+                "id": idUsuario
+            },
+            "peca": {
+                "id": idPeca
+            }
         }
-        var itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
+        itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
             method: "POST" ,
             body: JSON.stringify(itemPedidoBody),
             headers: {"Content-type": "application/json; charset=UTF-8"},
@@ -144,8 +151,8 @@
         }
         var itemPedidoFormatado = await itemPedido.json()
         console.log(itemPedidoFormatado)
+        idItemPedido = itemPedidoFormatado.id
 
-        var idItemPedido = itemPedidoFormatado.id
         const pedidoBody = {
             "itemPedido": idItemPedido,
             "agendamento": 1,
@@ -153,10 +160,55 @@
             "etapa": 1,
             "cliente": idCliente
         }
-        await fetch(`http://localhost:8080/pedido`, {
+        // var pedidoFetch = await fetch(`http://localhost:8080/pedido`, {
+        //     method: "POST" ,
+        //     body: JSON.stringify(pedidoBody),
+        //     headers: {"Content-type": "application/json; charset=UTF-8"},
+        // })
+        // if (!pedidoFetch.ok) {
+        //     throw new Error('Erro ' + pedidoFetch.statusText);
+        // }
+        vincularMedidas()
+    }
+
+    async function vincularMedidas(){
+        // const selectedMedidas = document.getElementById('medidas');
+        // const medidas = selectedMedidas.querySelectorAll('inputMedida.class');
+        // const medidasId = Array.from(medidas).map(medida => ({
+        //     "id": medida.id,
+        //     "medida": medida.value
+        // }));
+        // console.log(medidasId)
+        var idCliente = sessionStorage.getItem("idCliente")
+        var idUsuario = sessionStorage.getItem("id")
+        var idPeca = sessionStorage.getItem("peca")
+
+        medidasTotais.forEach(medida => {
+            var valorMedida = document.getElementById(`inputmedida${medida.id}`).value
+            cadastrarMedida(medida.id, valorMedida, idUsuario, idCliente, idPeca, idItemPedido)
+        })
+        setTimeout(() => {
+            window.location = "Lista_fichas.html"
+        }, 2000);  
+    }
+
+    async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
+        const medidaBody = {
+            "valor": Number(medidaValue),
+            "nomeMedida": {"id": idMedida},
+            "itemPedido": {"id": idItemPedido},
+            "cliente": {"id": idCliente},
+            "usuario": {"id": idUsuario},
+            "peca": {"id": idPeca}
+        }
+        var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
             method: "POST" ,
-            body: JSON.stringify(pedidoBody),
+            body: JSON.stringify(medidaBody),
             headers: {"Content-type": "application/json; charset=UTF-8"},
         })
+        if (!valorMedida.ok) {
+            throw new Error('Erro ' + valorMedida.statusText);
+        }
+        console.log("Vinculado Medida "+ idMedida)
     }
 </script></script>
