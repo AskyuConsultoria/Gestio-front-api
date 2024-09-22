@@ -339,7 +339,8 @@ header {
 
 /* PARA BOTÃO CLOSE  */
 .header-off {
-    width: 67%;
+    width: 55%;
+    margin-left: 7%;
 }
 
 .modal-etapa-body {
@@ -430,8 +431,8 @@ header {
 
 .custom-switch:checked {
     background-color: #007bff;
-    /* azul */
 }
+
 
 .custom-switch {
     background-color: #dc3545;

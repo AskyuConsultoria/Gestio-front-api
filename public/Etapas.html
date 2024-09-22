@@ -65,19 +65,19 @@
         <div class="etapa-title mt-3">
           <span class="pedido-etapa">PEDIDOS NA ETAPA <span class="nome-etapa nome2"></span></span>
         </div>
-        <div class="sub-pedido mt-3 d-flex align-items-center justify-content-evenly flex-row mt-3">
+        <div class="sub-pedido mt-2 d-flex align-items-center justify-content-evenly flex-row mt-3">
           <div>VOCÊ ESTÁ VENDO PEDIDOS</div>
           <div class="status-etapa">EM ANDAMENTO</div>
         </div>
         <div class="barra-busca d-flex align-items-center justify-content-evenly mt-3">
           <img src="./assets/search.svg" alt="lupa-pesquisa">
-          <input type="text" placeholder="Pesquise os clientes do pedido">
+          <input type="text" onchange="buscaAvancada(this)" placeholder="Pesquise os clientes do pedido">
         </div>
         <div class="switch-card d-flex align-items-center flex-column">
           <div id = "total" class="form-check form-switch d-flex align-items-center justify-content-evenly mt-3 p-0 m-0">
             <!-- TOTAL DE PEDIDOS DA ETAPA -->
             <div class="text-switch ">Total de pedidos: <span class="total-pedidos"></span></div>
-            <input class="form-check-input custom-switch" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+            <input class="form-check-input custom-switch" onclick="mudarSwitch()" type="checkbox" role="switch" id="flexSwitchCheckChecked"
               checked>
           </div>
           <!-- CRIA CARD PESSOA = CLIENTE -->

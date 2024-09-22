@@ -1,4 +1,6 @@
 var cardsCriados = false;
+var clique=0
+var lista= []
 
 async function buscarAtivo(usuarioId, etapaId) {
   try {
@@ -6,7 +8,9 @@ async function buscarAtivo(usuarioId, etapaId) {
       method: "GET"
     });
     const data = await response.json();
-    console.log("Resposta: ", data);
+    console.log("Resposta: ", data);  
+
+    lista = data
 
     return data;
   } catch (error) {
@@ -25,6 +29,8 @@ async function buscarInativo(usuarioId, etapaId) {
     const data = await response.json();
     // validação de se ta vazio ou não, aqui ou no back
     console.log("Resposta: ", data);
+
+    lista = data
 
     return data
   } catch (error) {
@@ -98,7 +104,7 @@ async function criarModal(usuarioId, etapaId, nomeEtapa) {
         console.log("modal descendo");
       }
     });
-    criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOriginal, usuarioId);
+    criarComum(nomeUpper, cardPessoa, totalOriginal);
   }
 }
 
@@ -119,88 +125,7 @@ function criarFinalizado(nomeUpper, nomeEtapa, cardsConcluidos) {
 }
 
 
-// async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOriginal, usuarioId) {
-//   cardsCriados = false;
-
-//   console.log("Criando cards comuns...");
-
-//   var tituloCard = document.querySelector('.title2');
-//   tituloCard.innerHTML = nomeUpper;
-
-//   var nomeEtapa = document.querySelector('.nome2');
-//   nomeEtapa.innerHTML = nomeUpper;
-
-//   var containerPessoa = document.querySelector('#container-pessoa-comum');
-//   containerPessoa.innerHTML = cardPessoa;
-//   containerPessoa.style.marginRight = '22%';
-
-//   var totalPedidos = document.querySelector('.total-pedidos');
-//   totalPedidos.innerHTML = totalOriginal;
-
-//   const switchElement = document.querySelector('.custom-switch');
-//   var isActive = true; // Variável para controlar o estado do switch
-
-//   // Limpar event listeners antigos para evitar múltiplas execuções
-//   switchElement.replaceWith(switchElement.cloneNode(true));
-//   const newSwitchElement = document.querySelector('.custom-switch');
-
-//   // Adicionar event listener ao novo elemento
-//   newSwitchElement.addEventListener('click', async function () {
-//     const etapa = document.querySelector('.status-etapa');
-//     const subPedido = document.querySelector('.sub-pedido');
-//     const totalPedidos = document.querySelector('.total-pedidos');
-
-//     if (isActive) {
-//       // Se o switch está ativo, busca os cancelados
-//       const cancelados = await buscarInativo(usuarioId, etapaId);
-
-//       if (cancelados && cancelados.length > 0) {
-//         containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
-//         containerPessoa.innerHTML = cancelados.map(cancelado => {
-//           return `<div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
-//                         <div class="texto-card">
-//                           <div class="nome-pessoa">${cancelado.cliente.nome} ${cancelado.cliente.sobrenome}</div>
-//                           <span class="dthora">${formatarData(cancelado.dataInicio)} - ${formatarHorario(cancelado.dataFim)}</span> 
-//                         </div>
-//                       </div>`;
-//         }).join('');
-//         totalPedidos.innerHTML = cancelados.length;
-//       } else {
-//         totalPedidos.innerHTML = '0';
-//         containerPessoa.innerHTML = `<img src="./assets/not-found.svg">
-//                     <div>Você não possui pedidos cancelados</div>`;
-//         containerPessoa.classList.add('zero');
-//         etapa.innerHTML = '';
-//       }
-
-//       subPedido.style.marginLeft = '8%';
-//       etapa.style.marginRight = '15%';
-//       etapa.innerHTML = '<div style="color: red">CANCELADOS</div>';
-
-//     } else {
-//       // Se o switch não está ativo, mostra os pedidos em andamento
-//       containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
-//       etapa.innerHTML = 'EM ANDAMENTO';
-//       totalPedidos.innerHTML = totalOriginal;
-//       containerPessoa.innerHTML = cardPessoa;
-//       containerPessoa.classList.remove('zero');
-//       etapa.style.marginRight = '9%';
-//       subPedido.style.marginLeft = '6%';
-//     }
-
-//     // Alterna o estado do switch
-//     isActive = !isActive; // Inverte o estado
-
-//     // Opcional: Atualize a aparência do switch para refletir o estado
-//     if (switchElement) {
-//       switchElement.classList.remove('active'); // Remova a classe que indica que está ativo
-//     } else {
-//       switchElement.classList.add('active'); // Adicione a classe que indica que está inativo
-//     }
-//   });
-// }
-
-async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOriginal, usuarioId) {
+async function criarComum(nomeUpper, cardPessoa, totalOriginal) {
   cardsCriados = false;
 
   console.log("Criando cards comuns...");
@@ -219,72 +144,92 @@ async function criarComum(etapaId, nomeUpper, nomeEtapa, cardPessoa, totalOrigin
   totalPedidos.innerHTML = totalOriginal;
 
   const switchElement = document.querySelector('.custom-switch');
-  var isActive = true; // Variável para controlar o estado do switch
+  const etapa = document.querySelector('.status-etapa');
+  const subPedido = document.querySelector('.sub-pedido');
 
-  // Limpar event listeners antigos antes de adicionar um novo
-  const newSwitchElement = switchElement.cloneNode(true);
-  switchElement.replaceWith(newSwitchElement);
 
-  // Adicionar event listener ao novo elemento
-  newSwitchElement.addEventListener('click', async function () {
-    const etapa = document.querySelector('.status-etapa');
-    const subPedido = document.querySelector('.sub-pedido');
-    const totalPedidos = document.querySelector('.total-pedidos');
+  // Configurar o conteúdo para "Em Andamento"
+  etapa.innerHTML = 'EM ANDAMENTO';
+  etapa.style.marginRight = '9%';
+  subPedido.style.marginLeft = '6%';
+  containerPessoa.classList.remove('zero');
+}
 
-    if (isActive) {
-      // Se o switch está ativo, busca os cancelados
-      const cancelados = await buscarInativo(usuarioId, etapaId);
+async function mudarSwitch(){
+  var containerPessoa = document.querySelector('#container-pessoa-comum');
+  
+  const usuarioId = sessionStorage.getItem("id")
+  const etapaId = sessionStorage.getItem("idEtapa")
 
-      if (cancelados && cancelados.length > 0) {
-        containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
-        containerPessoa.innerHTML = cancelados.map(cancelado => {
-          return `<div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
+  const cancelados = await buscarInativo(usuarioId, etapaId);
+  const etapa = document.querySelector('.status-etapa');
+  const subPedido = document.querySelector('.sub-pedido');
+  const totalPedidos = document.querySelector('.total-pedidos');
+
+  clique = clique === 0 ? 1 : 0;
+  const switchElement = document.querySelector('.custom-switch');
+
+  
+  if (clique==1) {
+    switchElement.style.backgroundColor = '#dc3545';
+    switchElement.style.borderColor = '#dc3545';
+
+
+    // Se o switch está ativo, busca os cancelados
+    if (cancelados && cancelados.length > 0) {
+      containerPessoa.innerHTML = ''; // Limpa o conteúdo anterior
+      containerPessoa.innerHTML = cancelados.map(cancelado => {
+        return `<div class="card-pessoa cancelado d-flex align-items-start justify-content-evenly flex-column mt-3">
                         <div class="texto-card">
                           <div class="nome-pessoa">${cancelado.cliente.nome} ${cancelado.cliente.sobrenome}</div>
                           <span class="dthora">${formatarData(cancelado.dataInicio)} - ${formatarHorario(cancelado.dataFim)}</span> 
                         </div>
                       </div>`;
-        }).join('');
-        totalPedidos.innerHTML = cancelados.length;
-      } else {
-        totalPedidos.innerHTML = '0';
-        containerPessoa.innerHTML = `<img src="./assets/not-found.svg">
+      }).join('');
+      totalPedidos.innerHTML = cancelados.length; // Atualiza o número de pedidos
+    } else {
+      // Não há pedidos cancelados
+      totalPedidos.innerHTML = '0';
+      containerPessoa.innerHTML = `<img src="./assets/not-found.svg">
                     <div>Você não possui pedidos cancelados</div>`;
-        containerPessoa.classList.add('zero');
-        etapa.innerHTML = '';
-      }
-
-      subPedido.style.marginLeft = '8%';
-      etapa.style.marginRight = '15%';
-      etapa.innerHTML = '<div style="color: red">CANCELADOS</div>';
-
-    } else {
-      // Se o switch não está ativo, mostra os pedidos em andamento
-      containerPessoa.innerHTML = ''; // Limpa o conteúdo antes de adicionar novos itens
-      etapa.innerHTML = 'EM ANDAMENTO';
-      totalPedidos.innerHTML = totalOriginal;
-      containerPessoa.innerHTML = cardPessoa;
-      containerPessoa.classList.remove('zero');
-      etapa.style.marginRight = '9%';
-      subPedido.style.marginLeft = '6%';
+      containerPessoa.classList.add('zero');
+      etapa.innerHTML = '';
     }
 
-    // Alterna o estado do switch
-    isActive = !isActive; // Inverte o estado
+    subPedido.style.marginLeft = '8%';
+    etapa.style.marginRight = '15%';
+    etapa.innerHTML = '<div style="color: red">CANCELADOS</div>';
 
-    // Atualiza a aparência do switch para refletir o estado
-    if (isActive) {
-      newSwitchElement.classList.add('active'); // Indica que está ativo
-    } else {
-      newSwitchElement.classList.remove('active'); // Indica que está inativo
-    }
-  });
+  } else {
+    switchElement.style.backgroundColor = '#007bff';
+    switchElement.style.borderColor = '#007bff';
+    // Se o switch está desativado, mostra os pedidos em andamento
+    const cardsAtivos = await buscarAtivo(usuarioId, etapaId);
+  const totalOriginal = cardsAtivos.length;
+
+  var cardPessoa = cardsAtivos.map(agenda => {
+    return `<div class="card-pessoa d-flex align-items-start justify-content-evenly flex-column mt-3">
+          <div class="texto-card">
+            <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
+            <span class="dthora">${formatarData(agenda.dataInicio)} ${formatarHorario(agenda.dataInicio)} - ${formatarHorario(agenda.dataFim)}</span> 
+          </div>
+        </div>`;
+  }).join('');
+
+    containerPessoa.innerHTML = ''; // Limpa o conteúdo anterior
+    etapa.innerHTML = 'EM ANDAMENTO';
+    totalPedidos.innerHTML = totalOriginal;
+    containerPessoa.innerHTML = cardPessoa; // Restaura os pedidos em andamento
+    containerPessoa.classList.remove('zero');
+    etapa.style.marginRight = '9%';
+    subPedido.style.marginLeft = '6%';
+    clique=0
+  }
 }
-
 
 function deletarModal() {
   document.querySelector('#container-pessoa-finalizado').innerHTML = "";
-    document.querySelector('#container-pessoa-comum').innerHTML = "";
+  document.querySelector('#container-pessoa-comum').innerHTML = "";
 }
 
 function formatarData(data) {
@@ -376,6 +321,8 @@ async function listarEtapas() {
       const usuarioId = sessionStorage.getItem("id");
       const nomeEtapa = card.getAttribute('value');
       const etapaId = card.getAttribute('id');
+      sessionStorage.setItem("idEtapa", etapaId)
+
 
       await criarModal(usuarioId, etapaId, nomeEtapa);
 
@@ -385,3 +332,48 @@ async function listarEtapas() {
 
 
 }
+
+
+
+function buscaAvancada(input){
+  var txtInput= input.value
+  var listaFiltrada = lista.filter(agenda => agenda.cliente.nome.toLowerCase().includes(txtInput.toLowerCase()));
+
+  var containerPessoa = document.querySelector('#container-pessoa-comum');
+
+  containerPessoa.innerHTML=''
+  if(input.value.length > 2){
+    listaFiltrada.forEach(agenda => {
+      containerPessoa.innerHTML += `
+      <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
+              <div class="texto-card">
+                <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
+                <span class="dthora">${formatarData(agenda.dataInicio)} ${formatarHorario(agenda.dataInicio)} - ${formatarHorario(agenda.dataFim)}</span> 
+              </div>
+            </div>
+      `
+  })
+  }
+ }
+
+ async function buscaAvancada(input){
+  var txtInput= input.value
+  const usuarioId = sessionStorage.getItem('id')
+  try{
+    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}`, {
+      method: "GET"
+    });
+
+    const dados = await response.json()
+    console.log(dados)
+
+    criarPedidos(dados)
+
+  } catch(error){
+    console.log(`Houve um erro: ${error.message}`)
+  }
+}
+
+
+
+
