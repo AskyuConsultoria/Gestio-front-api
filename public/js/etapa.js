@@ -1,5 +1,4 @@
-var cardsCriados = false;
-var clique=0
+var cardsCriados = false
 var lista= []
 
 async function buscarAtivo(usuarioId, etapaId) {
@@ -74,13 +73,14 @@ async function criarModal(usuarioId, etapaId, nomeEtapa) {
       }
     });
 
-    document.getElementById('fechar').addEventListener('click', function () {
+    document.getElementById('fechar2').addEventListener('click', function () {
       if (!modal.classList.contains('descer')) {
         modal.classList.remove('subir');
         modal.classList.add('descer');
         console.log("modal descendo");
         deletarModal()
       }
+      
     });
     criarFinalizado(nomeUpper, nomeEtapa, cardsConcluidos);
   }
@@ -90,6 +90,7 @@ async function criarModal(usuarioId, etapaId, nomeEtapa) {
     var modal = document.querySelector('.comum');
 
     document.getElementById(etapaId).addEventListener('click', function () {
+      mudarEstiloSwitch()
       if (!modal.classList.contains('subir')) {
         modal.classList.remove('descer');
         modal.classList.add('subir');
@@ -166,11 +167,10 @@ async function mudarSwitch(){
   const subPedido = document.querySelector('.sub-pedido');
   const totalPedidos = document.querySelector('.total-pedidos');
 
-  clique = clique === 0 ? 1 : 0;
+
   const switchElement = document.querySelector('.custom-switch');
 
-  
-  if (clique==1) {
+  if (!switchElement.checked) {
     switchElement.style.backgroundColor = '#dc3545';
     switchElement.style.borderColor = '#dc3545';
 
@@ -205,7 +205,7 @@ async function mudarSwitch(){
     switchElement.style.borderColor = '#007bff';
     // Se o switch está desativado, mostra os pedidos em andamento
     const cardsAtivos = await buscarAtivo(usuarioId, etapaId);
-  const totalOriginal = cardsAtivos.length;
+    const totalOriginal = cardsAtivos.length;
 
   var cardPessoa = cardsAtivos.map(agenda => {
     return `<div class="card-pessoa d-flex align-items-start justify-content-evenly flex-column mt-3">
@@ -230,6 +230,7 @@ async function mudarSwitch(){
 function deletarModal() {
   document.querySelector('#container-pessoa-finalizado').innerHTML = "";
   document.querySelector('#container-pessoa-comum').innerHTML = "";
+ 
 }
 
 function formatarData(data) {
@@ -356,24 +357,72 @@ function buscaAvancada(input){
   }
  }
 
- async function buscaAvancada(input){
-  var txtInput= input.value
+async function buscaAvancada(input){
+  var nomeCliente = input.value
+  var valorSwitch = document.querySelector('.custom-switch').checked
   const usuarioId = sessionStorage.getItem('id')
+
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
       method: "GET"
     });
 
     const dados = await response.json()
     console.log(dados)
 
-    criarPedidos(dados)
+    criarPedidos(dados, input)
 
   } catch(error){
     console.log(`Houve um erro: ${error.message}`)
   }
 }
 
+async function criarPedidos(pedidos, input){
+  var containerPessoa = document.querySelector('#container-pessoa-comum');
+  containerPessoa.innerHTML = ''
 
+  if(input.value.length > 2){
+    pedidos.forEach(pedido => {
+      containerPessoa.innerHTML += `
+      <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
+              <div class="texto-card">
+                <div class="nome-pessoa">${pedido.cliente.nome} ${pedido.cliente.sobrenome}</div>
+                <span class="dthora">${formatarData(pedido.dataInicio)} ${formatarHorario(pedido.dataInicio)} - ${formatarHorario(pedido.dataFim)}</span> 
+              </div>
+            </div>
+      `
+  })
+
+  return
+  }
+
+  if(input.value.length == 0){
+    var pedidos = await buscarAtivo(
+      sessionStorage.getItem('id'),
+      sessionStorage.getItem('idEtapa')
+    )
+
+    pedidos.forEach(pedido => {
+      containerPessoa.innerHTML += `
+      <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
+              <div class="texto-card">
+                <div class="nome-pessoa">${pedido.cliente.nome} ${pedido.cliente.sobrenome}</div>
+                <span class="dthora">${formatarData(pedido.dataInicio)} ${formatarHorario(pedido.dataInicio)} - ${formatarHorario(pedido.dataFim)}</span> 
+              </div>
+            </div>
+      `
+    })
+
+    return
+  }
+
+}
+
+function mudarEstiloSwitch(){
+ var elSwitch = document.querySelector('.custom-switch')
+ elSwitch.checked = true
+ elSwitch.style.backgroundColor = '#007bff';
+ elSwitch.style.borderColor = '#007bff';
+}
 
 
