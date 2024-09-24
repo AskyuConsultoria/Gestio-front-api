@@ -22,14 +22,14 @@
     <div class="container d-flex justify-content-between align-items-center">
       <a href="">
         <img
-          src="./assets/botao-voltar 4.svg"
+          src="../assets/botao-voltar 4.svg"
           alt="botao-voltar"
           class="mx-3"
           onclick="window.history.back()"
       /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img
-          src="./assets/burger-bar 1 (1).svg"
+          src="../assets/burger-bar 1 (1).svg"
           alt="menu-lateral"
           class="navbar-toggler-icon mx-3"/>
       </button>
@@ -37,10 +37,10 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="../home.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pedidos</a>
+              <a class="nav-link" href="../pedido.html">Pedidos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Contatos</a>
@@ -61,4 +61,63 @@
       </div>
     </div>
   </header>
+  <div class="py-3 w-100 px-0">
+    <div class="d-flex container flex-row px-3">
+      <div class="d-flex col-2 align-items-left justify-content-left">
+        <div class="avatar-usuario rounded-circle">
+          <img src="../assets/JO.svg" class="h-100 w-100 rounded-circle" alt="">
+        </div>
+      </div>
+      <div class="d-flex col-8 align-items-center justify-content-left">
+        <span id="nome-usuario" class="fs-3" style="font-weight: 500;">
+          Olá, <span id="nomeUser">Usuário indefinido</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mx-4 mt-3 shadow rounded-lg" style="background-color: #012171;">
+    <div class="card-body d-flex gap-4 align-items-center">
+      <blockquote class="blockquote mb-0 col-9 ">
+        <p style="color: white; font-weight: 350;">Acompanhe os resultados do seu ateliê!</p>
+      </blockquote>
+      <img src="../assets/crescimento 1.svg" class="col-3" style="width: 15%;"/>
+    </div>
+  </div>
+
+  <div class="mt-5 mb-3 text-center" style="color: #696969; font-size: 1.2rem;">Escolha o que deseja acompanhar primeiro:</div>
+
+  <div class="d-flex flex-column gap-2">
+  <div class="card mx-4 mt-3 shadow rounded-lg" style="background-color: white; height: 100px;" onclick="irParaDash('dashPedido.html')">
+    <div class="card-body d-flex gap-4 align-items-center">
+      <blockquote class="blockquote mb-0 col-9">
+        <p style="color: #012171; font-weight: 350;">Meus Pedidos</p>
+      </blockquote>
+      <img src="../assets/iconePedidoDash.svg" class="col-3" style="width: 15%;"/>
+    </div>
+  </div>
+  <div class="card mx-4 mt-3 shadow rounded-lg" style="background-color: white; height: 100px;" onclick="irParaDash('dashCliente.html')">
+    <div class="card-body d-flex gap-4 align-items-center">
+      <blockquote class="blockquote mb-0 col-9">
+        <p style="color: #012171; font-weight: 350;">Meus Clientes</p>
+      </blockquote>
+      <img src="../assets/profileClienteIconDash.svg" class="col-3" style="width: 15%;"/>
+    </div>
+  </div>
+  <div class="card mx-4 mt-3 shadow rounded-lg" style="background-color: white; height: 100px;" onclick="irParaDash('dashTecido.html')">
+    <div class="card-body d-flex gap-4 align-items-center">
+      <blockquote class="blockquote mb-0 col-9">
+        <p style="color: #012171; font-weight: 350;">Meus Tecidos</p>
+      </blockquote>
+      <img src="../assets/tecidoDash.svg" class="col-3" style="width: 15%;"/>
+    </div>
+  </div>
+</div>
 </body>
+<script>
+  function irParaDash(local){
+    setTimeout(() => {
+      window.location = `${local}`
+    },200)
+  }
+</script>
