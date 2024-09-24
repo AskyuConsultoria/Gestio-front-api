@@ -9,7 +9,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/home.css">
   <script defer src="js/peca_editar.js"></script>
@@ -238,7 +237,7 @@
   <div class="d-flex container px-3 my-3 flex-row">
 
     <div class="d-flex col-4" type="button" id="evento" data-bs-toggle="modal" 
-    data-bs-target="#modal">
+    data-bs-target="#modal" onclick="">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?><svg fill="#FFFFFF" class="icone-ancora" height="48" viewBox="0 0 48 48" width="48"
@@ -254,7 +253,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center">
+    <div class="d-flex col-4 justify-content-center" onclick="irParaLocal('#')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -274,7 +273,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end">
+    <div class="d-flex col-4 justify-content-end" onclick="irParaLocal('fichas/Lista_fichas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -307,7 +306,7 @@
 
   <div class="d-flex container px-3 my-3 flex-row">
 
-    <div class="d-flex col-4">
+    <div class="d-flex col-4" onclick="irParaLocal('Lista-peca.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?><svg class="icone-ancora" fill="#FFFFFF" viewBox="0 0 512 512"
@@ -330,7 +329,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center">
+    <div class="d-flex col-4 justify-content-center" onclick="irParaLocal('Lista-tecido.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <svg class="icone-ancora" width="51" height="51" viewBox="0 0 51 51" fill="#FFFFFF"
@@ -350,7 +349,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end">
+    <div class="d-flex col-4 justify-content-end" onclick="irParaLocal('fichas/adicionar_fichas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -419,62 +418,7 @@
 
   <!-- Ínicio dos Pedidos -->
    <div class="pb-3" id="pedidos-conteudo">
-    <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="d-flex flex-row w-100 bg-body rounded">
-        <div class="d-flex bg-warning h-100 w-15 rounded rounded-end-0" style="width: 2rem;"></div>
-  
-        <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
-  
-          <div class="d-flex w-100 h-75 align-items-center ps-3">
-            John Doe
-          </div>
-  
-          <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
-            01/01/2021 das 00h - 01h
-          </div>
-  
-        </div>
-  
-      </div>
-     </div>
 
-     <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="d-flex flex-row w-100 bg-body rounded">
-        <div class="d-flex bg-warning h-100 w-15 rounded rounded-end-0" style="width: 2rem;"></div>
-  
-        <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
-  
-          <div class="d-flex w-100 h-75 align-items-center ps-3">
-            John Doe
-          </div>
-  
-          <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
-            01/01/2021 das 00h - 01h
-          </div>
-  
-        </div>
-  
-      </div>
-     </div>
-  
-     <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-      <div class="d-flex flex-row w-100 bg-body rounded">
-        <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
-  
-        <div class="d-flex flex-column h-100 bg-body align-items-center justify-content-center" style="width: 85%;">
-  
-          <div class="d-flex w-100 h-75 align-items-center ps-3">
-            John Doe
-          </div>
-  
-          <div class="d-flex w-100 h-25 align-items-center ps-3 pt-1 pb-4">
-            01/01/2021 das 00h - 01h
-          </div>
-  
-        </div>
-  
-      </div>
-     </div>
    </div>
   
 
@@ -674,4 +618,10 @@ function renderizarModal(){
   
 if(exibicaoModal) renderizarModal()
 
+
+function irParaLocal(local){
+    setTimeout(() => {
+      window.location = `${local}`
+    }, 100)
+}
 </script>
