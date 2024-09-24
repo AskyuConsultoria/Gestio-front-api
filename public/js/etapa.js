@@ -73,7 +73,7 @@ async function criarModal(usuarioId, etapaId, nomeEtapa) {
       }
     });
 
-    document.getElementById('fechar2').addEventListener('click', function () {
+    document.getElementById('fechar').addEventListener('click', function () {
       if (!modal.classList.contains('descer')) {
         modal.classList.remove('subir');
         modal.classList.add('descer');
@@ -225,12 +225,6 @@ async function mudarSwitch(){
     subPedido.style.marginLeft = '6%';
     clique=0
   }
-}
-
-function deletarModal() {
-  document.querySelector('#container-pessoa-finalizado').innerHTML = "";
-  document.querySelector('#container-pessoa-comum').innerHTML = "";
- 
 }
 
 function formatarData(data) {
