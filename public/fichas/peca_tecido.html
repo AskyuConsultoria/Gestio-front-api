@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Fichas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/Style.css">
+    <link rel="stylesheet" href="../css/fichas.css">
+    <script defer src="../js/ficha.js"></script>
+</head>
+
+<body
+    style="display: flex; flex-direction: column; background: #EEEEEE;"
+    onload="buscarDadosCliente(); listarTecido(); listarPeca()">
+    <nav class="navegacao">
+        <div class="group" style="display: flex; align-items: space-around;">
+            <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar" style="width:4vh"></a>
+            <p class="h2"style="color:aliceblue">Ficha de<b> Medidas</b></p>
+            <a href="Lista_fichas.html"><img src="../assets/imgs/icon_close.png" alt="menu"  style="width:4vh"></a>
+        </div>
+        <img src="../assets/imgs/pontinhos2.png" alt="" class="pontinhos" style="width:10%;">
+        <div id="clienteInfo" class="d-flex flex-column center mb-4 mt-3" style="align-items: center;">
+            <h5 style="padding-top: 10%;" id="nomeCliente"><b></b></h5>
+        </div>
+        <div style="width: 95%; align-self: center;">
+        </div>
+    </nav>
+    <main class="mt-4"
+        style="display:flex; flex-direction: column; justify-content: space-between; width: 90%; align-self: center; background-color: white; overflow-y: scroll; overflow-x: hidden; min-height: 37rem;">
+        <div>
+            <!-- aba de peças -->
+            <div class="conteudo" style="margin-bottom:1.2rem;">
+                <div class="custom-select open w-100">
+                    <!-- existe uma seta para baixo para exibir as peças -->
+                    <div class="select-box rounded dropdown-toggle" onclick="aparecerPecas()">
+                        <input class="form-control tag_input" name="tags" hidden>
+                        <!-- as peças que foram escolhidas pelo usuário -->
+                        <div class="selected-pecas" id="selected-pecas" style="overflow-x: scroll;">
+                        </div>
+                    </div>
+                    <!-- lista de peças que existem no sistema -->
+                    <div class="TecidoOptions rounded" id="pecaOptions" style="margin-top:1rem; display:none;">
+                        <div class="option-search-tags ">
+                            <input type="text" class="form-control search-tags rounded" oninput="buscaAvançadaPecas(this.value)" placeholder="Pesquise Peças"
+                                style="font-size:1.2rem;">
+                        </div>
+                        <span id="pecas"></span>
+                        <!-- opções de tecidos que foram cadastrados -->
+
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- aba de tecidos -->
+            <div class="conteudo">
+                <div class="custom-select open w-100">
+                    <!-- existe uma seta para baixo que serve para aparecer um dropdown (bootstrap) -->
+                    <div class="select-box rounded dropdown-toggle" onclick="aparecerTecidos()">
+                        <input class="form-control tag_input" name="tags" hidden>
+                        <!-- os tecidos que foram escolhidos pelo usuário -->
+                        <div id="selected-tecidos" class="selected-options" style="overflow-x: scroll;" >
+                            <!-- span = tecido, button -> X para tirar da lista escolhida -->
+                        </div>
+                    </div>
+
+                    <!-- aparece as opções de tecidos -->
+                    <div class="TecidosOptions rounded" id="tecidoOptions" style="margin-top:1rem; display:none;">
+                        <div class="option-search-tags ">
+                            <input type="text" class="form-control search-tags rounded" oninput="buscaAvançadaTecido(this.value)" placeholder="Pesquise tecido"
+                                style="font-size:1.2rem;">
+                        </div>
+                        <span id="tecidos"></span>
+                        <!-- opções de tecidos que foram cadastrados -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <button onclick="salvarPecaTecido()" class="salvar shadow-sm p-2 pt-3 pb-3">Próximo</button>
+    </main>
+
+</body>
+
+</html>
+<script>
+    var listaTecido = []
+    var listinhaTecido = []
+    var listaPecas = []
+    // Tecidos
+
+    async function listarPeca(){
+        const idUsuario = sessionStorage.getItem('id')
+        const data = await fetch(`http://localhost:8080/pecas/${idUsuario}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+    }
+    const dataFormated = await data.json()
+    listaPecas = dataFormated
+    console.log("Resposta: ", dataFormated)
+    
+    dataFormated.forEach( peca => {
+        document.getElementById('pecas').innerHTML += `<div class="option" data-value="${peca.id}" onclick="adicionarPeca('${peca.nome}', ${peca.id})" id="${peca.id}">${peca.nome}</div>`
+    })
+    }
+
+    async function listarTecido(){
+        const idUsuario = sessionStorage.getItem('id')
+        const data = await fetch(`http://localhost:8080/tecidos/${idUsuario}`);
+        if (!data.ok) {
+        throw new Error('Erro ' + data.statusText);
+    }
+    const dataFormated = await data.json()
+    console.log("Resposta: ", dataFormated)
+    listaTecido = dataFormated
+    listinhaTecido = listaTecido
+    listaTecido.forEach( tecido => {
+        document.getElementById('tecidos').innerHTML += `<div class="option" data-value="${tecido.id}" onclick="adicionarTecido('${tecido.nome}', ${tecido.id})" id="${tecido.id}">${tecido.nome}</div>`
+    })
+    }
+
+    function aparecerTecidos() {
+        var lista = document.getElementById("tecidoOptions")
+        if (lista.style.display == "none") {
+            lista.style.display = "block"
+        } else {
+            lista.style.display = "none"
+        }
+    }
+
+    function aparecerPecas() {
+        var lista = document.getElementById("pecaOptions")
+        if (lista.style.display == "none") {
+            lista.style.display = "block"
+        } else {
+            lista.style.display = "none"
+        }
+    }
+
+    function adicionarTecido(novoTecido, idTecido){   
+        document.getElementById("selected-tecidos").innerHTML += `<span class="tag" id="${idTecido}" >${novoTecido}<button type="button" class="btn-close" aria-label="Close" onclick="removerTecido('${novoTecido}', ${idTecido})"></button></span>`
+        console.log(listinhaTecido) 
+        listinhaTecido = listinhaTecido.filter(tecido => !(tecido.nome.toLowerCase() == (novoTecido.toLowerCase())));
+        console.log(listinhaTecido) 
+        tecidoSelectConfiguration()
+    }
+
+    function adicionarPeca(peca, idPeca){
+        document.getElementById("selected-pecas").innerHTML = ""
+        document.getElementById("selected-pecas").innerHTML += `<span class="tag" id="${idPeca}" >${peca}<button type="button" class="btn-close" aria-label="Close" onclick="removerPeca('${idPeca}')"></button></span>`
+    }
+
+
+    
+    function removerTecido(aVoltar, aVoltarId) {
+        document.getElementById(`${aVoltarId}`).remove()
+        var voltarLista = listaTecido.filter(tecido => tecido.nome.toLowerCase() == (aVoltar.toLowerCase()))
+        listinhaTecido.push(voltarLista[0])
+        listinhaTecido.sort((a, b) => a.id - b.id);
+        tecidoSelectConfiguration()
+    }
+
+    function removerPeca(peca) {
+        document.getElementById(`${peca}`).remove()
+    }
+    
+    function tecidoSelectConfiguration(){
+        document.getElementById('tecidos').innerHTML = ``
+        listinhaTecido.forEach( tecido => {
+        document.getElementById('tecidos').innerHTML += `<div class="option" data-value="${tecido.id}" onclick="adicionarTecido('${tecido.nome}', ${tecido.id})" id="${tecido.id}">${tecido.nome}</div>`
+    })
+    }
+
+    function buscaAvançadaTecido(texto){
+    var listaFiltrada = listinhaTecido.filter(ficha => ficha.nome.toLowerCase().includes(texto.toLowerCase()));
+    document.getElementById('tecidos').innerHTML = ``
+    listaFiltrada.forEach( tecido => {
+        document.getElementById('tecidos').innerHTML += `<div class="option" data-value="${tecido.id}" onclick="adicionarTecido('${tecido.nome}', ${tecido.id})" id="${tecido.id}">${tecido.nome}</div>`
+})}
+
+function buscaAvançadaPecas(texto){
+    var listaFiltrada = listaPecas.filter(peca => peca.nome.toLowerCase().includes(texto.toLowerCase()));
+    document.getElementById('pecas').innerHTML = ``
+    listaFiltrada.forEach( peca => {
+        document.getElementById('pecas').innerHTML += `<div class="option" data-value="${peca.id}" onclick="adicionarPeca('${peca.nome}', ${peca.id})" id="${peca.id}">${peca.nome}</div>`
+})}
+
+function salvarPecaTecido(){
+
+    const selectedTecidos = document.getElementById('selected-tecidos');
+    const tecidos = selectedTecidos.querySelectorAll('span.tag');
+    const tecidosId = Array.from(tecidos).map(tecido => tecido.id);
+
+    const selectedPecas = document.getElementById('selected-pecas')
+    const peca = selectedPecas.querySelectorAll('span.tag');
+    const pecaId = Array.from(peca).map(peca => peca.id);
+
+    if (pecaId.length === 0 || tecidosId.length === 0) {
+        alert('Selecione pelo menos uma peça e um tecido antes de prosseguir.');
+        return;
+    }
+
+    sessionStorage.setItem('peca', pecaId)
+    sessionStorage.setItem('tecidos', JSON.stringify(tecidosId))
+
+
+    setTimeout(function() {
+        window.location = 'vincular_medidas.html'
+    }, 1000)
+}
+</script>
