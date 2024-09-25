@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Clientes </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/home.css">
+  <script defer src="../js/peca_editar.js"></script>
+  <link rel="stylesheet" href="../css/calendar.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+</head>
+
+<body onload="getTopCliente();clientesRegistradosKPI()">
+  <header class="header py-4 bg-light px-0">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="">
+        <img
+          src="../assets/botao-voltar 4.svg"
+          alt="botao-voltar"
+          class="mx-3"
+          onclick="window.history.back()"
+      /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <img
+          src="../assets/burger-bar 1 (1).svg"
+          alt="menu-lateral"
+          class="navbar-toggler-icon mx-3"/>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #012171; color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../pedido.html">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contatos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../fichas/Lista_fichas.html">Fichas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../Lista-peca.html">Produtos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../Lista-tecido.html">Tecidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashHome.html">Monitoramento</a>
+            </li>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <div style="border-radius: 0% 0% 0% 50%; background-color: #012171; width: 100%; height: 12rem;" class="mb-5 shadow">
+        <div class="d-flex justify-content-around align-items-center pt-4">
+            <div class="col-8">
+                <h5 class="card-title fs-1" style="color: white; font-weight: 400;">Meus Clientes</h5>
+                <i class="card-subtitle mb-2" style="color: white; font-size: small;">Dados atualizados <span id="anoAtual"></span></i>
+            </div>
+            <img class="image col-4" style="width: 15%;" src="../assets/clienteIconDash.svg"/>
+        </div>
+        <div style="position: relative; top: 20%; left: 25%;">
+            <div class="card shadow rounded-4" style="width: 50%;">
+                <div class="card-body shadow rounded-4">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="text-center">
+                            <p style="color: #696969; font-size: 0.8rem;">Novos clientes registrados</p>
+                            <h3 id="clientesRegistrados" style="text-shadow: 0px 2px 3px black; font-size: 2rem; font-weight: 450;"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-4 mx-4 mb-3">
+        <p style="color: #696969;">Aqui estão os <b>clientes que mais marcaram presença na sua agenda</b></p>
+        <select class="form-select" id="mes">
+            <option selected>Qual mês deseja consultar</option>
+            <!-- Meses? -->
+          </select>
+    </div>
+
+    <div id="clientes" class="d-flex flex-column gap-3">
+        <!-- Clientes -->
+
+
+    </div>
+</body>
+<script>
+    const currentYear = new Date().getFullYear();
+    document.getElementById("anoAtual").innerHTML = currentYear;
+
+    function clientesRegistradosKPI(){
+        var id = sessionStorage.getItem("id")
+
+        var FormatedData = 2
+
+        document.getElementById("clientesRegistrados").innerHTML = FormatedData
+    }
+
+    function getTopCliente(){
+        var id = sessionStorage.getItem("id")
+
+        var FormatedData = [
+            {
+                "nome": "John",
+                "sobrenome": "doe",
+                "countPedidos": 2
+            },
+            {
+                "nome": "Jane",
+                "sobrenome": "doe",
+                "countPedidos": 4
+            },
+            {
+                "nome": "Carlos",
+                "sobrenome": "Alberto",
+                "countPedidos": 3
+            }
+        ]
+
+        FormatedData.sort((a, b) => b.countPedidos - a.countPedidos);
+
+        FormatedData.forEach(cliente =>{
+            document.getElementById("clientes").innerHTML += `
+            <div class="card mx-4 mt-3 shadow rounded-4 py-1" style="background-color: #012171;">
+            <div class="card-body d-flex gap-4 align-items-center">
+              <img src="../assets/estrela (1) 2.svg" class="col-1"/>
+              <blockquote class="blockquote mb-0 col-8 ">
+                <p style="color: white; font-weight: 350;">${cliente.nome} ${cliente.sobrenome}</p>
+              </blockquote>
+              <div class="col-3 fs-2" style="color: white;">
+              ${cliente.countPedidos}
+              </div>
+            </div>
+          </div>`
+        })
+
+    }
+</script>
