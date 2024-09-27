@@ -15,7 +15,9 @@
     <script defer src="../js/ficha.js"></script>
 </head>
 
-<body style="display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);" onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente()">
+<body
+    style="display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);"
+    onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente()">
     <nav style="display: flex;flex-direction: column;padding-top:10%;color:white;align-items: center;">
         <div class="group" style="display: flex; align-items: space-around;">
             <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"
@@ -39,14 +41,17 @@
         align-self: center;padding:20px;">
 
         <!-- informações -->
-        <div class="border rounded p-1" style="color:#696969 ;border-color:#696969;display:flex; justify-content:space-between;" onclick="verInformacoes()">
+        <div class="border rounded p-1"
+            style="color:#696969 ;border-color:#696969;display:flex; justify-content:space-between;"
+            onclick="verInformacoes()">
             <p class="h5 pt-3 p-2">Ver mais informações</p>
             <button class="dropdown-toggle " style="background-color: transparent;font-size:1.5rem"></button>
         </div>
         <div class="p-1 " style="display:none;" id="verInfo">
             <p id="pecaInfo" class="border rounded px-3 p-2 " style="color:#696969 ;border-color:#696969">Peça:</p>
             <p id="tecidoInfo" class="border rounded px-3 p-2" style="color:#696969 ;border-color:#696969">Tecidos:</p>
-            <input id="observacoesInput" type="text"style="color:#696969 ;border-color:#696969" class="border rounded p-2 px-2 w-100 " placeholder="Observações" >
+            <input id="observacoesInput" type="text" style="color:#696969 ;border-color:#696969"
+                class="border rounded p-2 px-2 w-100 " placeholder="Observações">
         </div>
 
         <div class="container">
@@ -58,12 +63,12 @@
         <button onclick="salvar()" class="salvar shadow-sm p-2 pt-3 pb-3">Salvar</button>
     </div>
 
- 
+
 </body>
 
 </html>
 <script>
-    function verInformacoes(){
+    function verInformacoes() {
         var info = document.getElementById("verInfo")
         if (info.style.display == "none") {
             info.style.display = "block"
@@ -72,29 +77,29 @@
         }
     }
 
-    async function adicionarInformacoes(){
+    async function adicionarInformacoes() {
         var usuarioNome = sessionStorage.getItem("usuario")
         var peca = sessionStorage.getItem("peca")
         var idFicha = sessionStorage.getItem("idFicha")
         var idCliente = sessionStorage.getItem("idCliente")
         var idUsuario = sessionStorage.getItem("id")
         var tecidos = JSON.parse(sessionStorage.getItem("tecidos"))
-        
+
         document.getElementById("pecaInfo").innerHTML += ` ${peca}`
 
         tecidos.map(tecido => {
 
             getTecido(tecido)
         })
-        
+
 
     }
 
-    async function getTecido(tecido){
+    async function getTecido(tecido) {
         var idUsuario = sessionStorage.getItem("id")
-        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`); 
+        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`);
         if (!data.ok) {
-        throw new Error('Erro ' + data.statusText);
+            throw new Error('Erro ' + data.statusText);
         }
         var formatedData = await data.json()
         console.log(formatedData)
@@ -104,27 +109,39 @@
 
     var medidasTotais = null
 
-    async function getmedidasPeca(){
+    async function getmedidasPeca() {
         var idUsuario = sessionStorage.getItem("id")
         var peca = sessionStorage.getItem("peca")
-        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`); 
+        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`);
         if (!data.ok) {
-        throw new Error('Erro ' + data.statusText);
+            throw new Error('Erro ' + data.statusText);
         }
         var formatedData = await data.json()
         console.log(formatedData)
         medidasTotais = formatedData
-        formatedData.forEach(medida => {
+
+      
+        for(var i = 0; i < formatedData.length; i++) {
             document.getElementById('medidas').innerHTML += `
-            <div class="col border-bottom border-4 rounded shadow  p-2 " style="margin:1%;padding-right:50%;border-bottom:2px solid #004A97">
-                    <p class="text-uppercase font-weight-normal d-flex justify-content-center" id="${medida.id}">${medida.nome}</p>
-                    <input id="inputmedida${medida.id}" type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
-                </div>
-                `
-        });
+             <div class="d-flex w-100 justify-space-between">
+            <div class="col mb-3 border-bottom border-4 rounded shadow  p-2 " style="margin:1%;padding-right:50%;border-bottom:2px solid #004A97; height: 120px">
+                    <p class="text-uppercase font-weight-normal d-flex justify-content-center" id="${formatedData[i].id}">${formatedData[i].nome}</p>
+                    <input id="inputmedida1" type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
+            </div>
+                
+            
+        </div>`
     }
+
+       
+
+    }
+
+
+
+
     var idItemPedido = null
-    async function salvar(){
+    async function salvar() {
         var observacoesInput = document.getElementById("observacoesInput").value
         var idCliente = sessionStorage.getItem("idCliente")
         var idUsuario = sessionStorage.getItem("id")
@@ -142,12 +159,12 @@
             }
         }
         itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
-            method: "POST" ,
+            method: "POST",
             body: JSON.stringify(itemPedidoBody),
-            headers: {"Content-type": "application/json; charset=UTF-8"},
+            headers: { "Content-type": "application/json; charset=UTF-8" },
         })
         if (!itemPedido.ok) {
-        throw new Error('Erro ' + itemPedido.statusText);
+            throw new Error('Erro ' + itemPedido.statusText);
         }
         var itemPedidoFormatado = await itemPedido.json()
         console.log(itemPedidoFormatado)
@@ -171,7 +188,7 @@
         vincularMedidas()
     }
 
-    async function vincularMedidas(){
+    async function vincularMedidas() {
         // const selectedMedidas = document.getElementById('medidas');
         // const medidas = selectedMedidas.querySelectorAll('inputMedida.class');
         // const medidasId = Array.from(medidas).map(medida => ({
@@ -189,26 +206,27 @@
         })
         setTimeout(() => {
             window.location = "Lista_fichas.html"
-        }, 2000);  
+        }, 2000);
     }
 
     async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
         const medidaBody = {
             "valor": Number(medidaValue),
-            "nomeMedida": {"id": idMedida},
-            "itemPedido": {"id": idItemPedido},
-            "cliente": {"id": idCliente},
-            "usuario": {"id": idUsuario},
-            "peca": {"id": idPeca}
+            "nomeMedida": { "id": idMedida },
+            "itemPedido": { "id": idItemPedido },
+            "cliente": { "id": idCliente },
+            "usuario": { "id": idUsuario },
+            "peca": { "id": idPeca }
         }
         var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
-            method: "POST" ,
+            method: "POST",
             body: JSON.stringify(medidaBody),
-            headers: {"Content-type": "application/json; charset=UTF-8"},
+            headers: { "Content-type": "application/json; charset=UTF-8" },
         })
         if (!valorMedida.ok) {
             throw new Error('Erro ' + valorMedida.statusText);
         }
-        console.log("Vinculado Medida "+ idMedida)
+        console.log("Vinculado Medida " + idMedida)
     }
-</script></script>
+</script>
+</script>
