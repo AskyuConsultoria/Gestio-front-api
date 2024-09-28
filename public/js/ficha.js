@@ -103,7 +103,7 @@ lista.forEach(itemPedido => {
             <a onclick="irPara(${itemPedido.id})">
             <div class="row g-0">
                 <div class="col-md-8">
-                    <div class="card-body">
+                    <div class="card-body" id="${itemPedido.id}" onclick="IrVisualizarFicha(this)">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
                                 <span class="medidas card-title mt-2 fs-5"> ${itemPedido.peca.nome} ♢ ${itemPedido.cliente.nome} ${itemPedido.cliente.sobrenome}</span>
@@ -162,7 +162,7 @@ function buscaAvançadaCliente(texto){
             <a onclick="irParaPecaTecido(${cliente.id})">
             <div class="row g-0">
                 <div class="col-md-8">
-                    <div class="card-body">
+                    <div class="card-body" onclick="IrVisualizarFicha()">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div id="textoDoCliente${cliente.id}" class="d-flex" style="display: flex; flex-direction: column">
                                 <span class="medidas card-title mt-2" style=" width:100%">${cliente.nome} ${cliente.sobrenome}</span>
@@ -185,9 +185,11 @@ function buscaAvançadaCliente(texto){
 async function listarClientes(){
     
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`);
+    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`, {
+        method: 'GET'
+    });
         if (!data.ok) {
-        throw new Error('Erro ' + data.statusText);
+        throw new Error('Erro ' + data.statusText, data.message);
         }
 
 const formatedData = await data.json()
@@ -256,5 +258,10 @@ async function buscarDadosCliente(){
     if(cliente.responsavel != null){
         document.getElementById("clienteInfo").innerHTML += `<h6 style="padding: none; font-weight:200">Dependente de <span>${cliente.responsavel.nome}</span></h6>`
     }
+}
+
+function IrVisualizarFicha(elFicha){
+    sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
+    location.assign("http://localhost:3333/fichas/vincular_medidas.html")
 }
 
