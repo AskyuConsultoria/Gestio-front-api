@@ -17,7 +17,7 @@
 
 <body
     style="display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(1,33,113,1) 0%, rgba(2,63,215,1) 100%);"
-    onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente()">
+    onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente(); validarOrigem()">
     <nav style="display: flex;flex-direction: column;padding-top:10%;color:white;align-items: center;">
         <div class="group" style="display: flex; align-items: space-around;">
             <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"
@@ -120,16 +120,15 @@
         console.log(formatedData)
         medidasTotais = formatedData
 
+        validarOrigem()
       
         for(var i = 0; i < formatedData.length; i++) {
             document.getElementById('medidas').innerHTML += `
              <div class="d-flex w-100 justify-space-between">
             <div class="col mb-3 border-bottom border-4 rounded shadow  p-2 " style="margin:1%;padding-right:50%;border-bottom:2px solid #004A97; height: 120px">
-                    <p class="text-uppercase font-weight-normal d-flex justify-content-center" id="${formatedData[i].id}">${formatedData[i].nome}</p>
-                    <input id="inputmedida1" type="text" class="form-control w-25 d-flex justify-content-center" style="border:none; background-color:none">
+                    <p class="text-uppercase font-weight-normal d-flex justify-content-center label" id="${formatedData[i].id}">${formatedData[i].nome}</p>
+                    <input id="" type="text" class="form-control w-25 d-flex justify-content-center input-valor-medida" style="border:none; background-color:none">
             </div>
-                
-            
         </div>`
     }
 
@@ -196,17 +195,23 @@
         //     "medida": medida.value
         // }));
         // console.log(medidasId)
+
+        console.log(medidasTotais)
         var idCliente = sessionStorage.getItem("idCliente")
         var idUsuario = sessionStorage.getItem("id")
         var idPeca = sessionStorage.getItem("peca")
-
-        medidasTotais.forEach(medida => {
-            var valorMedida = document.getElementById(`inputmedida${medida.id}`).value
-            cadastrarMedida(medida.id, valorMedida, idUsuario, idCliente, idPeca, idItemPedido)
-        })
-        setTimeout(() => {
-            window.location = "Lista_fichas.html"
-        }, 2000);
+        
+            var labels = document.querySelectorAll('.label')
+            var inputs = document.querySelectorAll('.input-valor-medida')
+            console.log(inputs)
+            for(var i = 0; i < inputs.length; i++){
+                cadastrarMedida(labels[i].id, inputs[i].value, idUsuario, idCliente, idPeca, idItemPedido)
+            }
+            
+        
+        // setTimeout(() => {
+        //     window.location = "Lista_fichas.html"
+        // }, 2000);
     }
 
     async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
@@ -228,5 +233,43 @@
         }
         console.log("Vinculado Medida " + idMedida)
     }
+
+    async function buscarValoresMedida(){
+        var idUsuario = sessionStorage.getItem("id")
+        var idFicha = sessionStorage.getItem("idFicha") 
+    
+
+        try{
+          const response =  await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idFicha}`, {
+            method: "GET"
+          })
+
+          const dados = await response.json()
+          console.log(dados)
+          preencherDadosValorMedida(dados)
+
+        } catch(error){
+            console.log(`Ocorreu um erro: ${error.message}`)
+        }
+    }
+
+    async function preencherDadosValorMedida(valoresMedidas){
+        const inputs = document.querySelectorAll('.input-valor-medida')
+        for(var i = 0; i < valoresMedidas.length; i++){
+            inputs[i].value = valoresMedidas[i].valor
+            inputs[i].id = valoresMedidas[i].id
+        }
+    }
+
+    function validarOrigem(){
+        if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
+            buscarValoresMedida()
+        }
+
+        var botaoSalvar = document.querySelector('.salvar')
+        botaoSalvar.onclick = ""
+        botaoSalvar.innerText = "Atualizar"
+    }
+    
 </script>
 </script>
