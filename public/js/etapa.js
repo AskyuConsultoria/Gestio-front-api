@@ -330,26 +330,26 @@ async function listarEtapas() {
 
 
 
-function buscaAvancada(input){
-  var txtInput= input.value
-  var listaFiltrada = lista.filter(agenda => agenda.cliente.nome.toLowerCase().includes(txtInput.toLowerCase()));
+// function buscaAvancada(input){
+//   var txtInput= input.value
+//   var listaFiltrada = lista.filter(agenda => agenda.cliente.nome.toLowerCase().includes(txtInput.toLowerCase()));
 
-  var containerPessoa = document.querySelector('#container-pessoa-comum');
+//   var containerPessoa = document.querySelector('#container-pessoa-comum');
 
-  containerPessoa.innerHTML=''
-  if(input.value.length > 2){
-    listaFiltrada.forEach(agenda => {
-      containerPessoa.innerHTML += `
-      <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
-              <div class="texto-card">
-                <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
-                <span class="dthora">${formatarData(agenda.dataInicio)} ${formatarHorario(agenda.dataInicio)} - ${formatarHorario(agenda.dataFim)}</span> 
-              </div>
-            </div>
-      `
-  })
-  }
- }
+//   containerPessoa.innerHTML=''
+//   if(input.value.length > 2){
+//     listaFiltrada.forEach(agenda => {
+//       containerPessoa.innerHTML += `
+//       <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
+//               <div class="texto-card">
+//                 <div class="nome-pessoa">${agenda.cliente.nome} ${agenda.cliente.sobrenome}</div>
+//                 <span class="dthora">${formatarData(agenda.dataInicio)} ${formatarHorario(agenda.dataInicio)} - ${formatarHorario(agenda.dataFim)}</span> 
+//               </div>
+//             </div>
+//       `
+//   })
+//   }
+//  }
 
 async function buscaAvancada(input){
   var nomeCliente = input.value
@@ -357,8 +357,9 @@ async function buscaAvancada(input){
   const usuarioId = sessionStorage.getItem('id')
 
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/etapa-filtro-nome/${usuarioId}/${etapaId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
       method: "GET"
+      //http://localhost:8080/agendamento/etapa-filtro-nome/${usuarioId}/${etapaId}?nome=${nomeCliente}&ativo=${ativo}
     });
 
     const dados = await response.json()
@@ -377,7 +378,7 @@ async function criarPedidos(pedidos, input){
 
   if(input.value.length > 2){
     pedidos.forEach(pedido => {
-      containerPessoa.innerHTML += `
+      return containerPessoa.innerHTML += `
       <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
               <div class="texto-card">
                 <div class="nome-pessoa">${pedido.cliente.nome} ${pedido.cliente.sobrenome}</div>
@@ -387,7 +388,7 @@ async function criarPedidos(pedidos, input){
       `
   })
 
-  return
+   
   }
 
   if(input.value.length == 0){
@@ -397,7 +398,7 @@ async function criarPedidos(pedidos, input){
     )
 
     pedidos.forEach(pedido => {
-      containerPessoa.innerHTML += `
+      return containerPessoa.innerHTML += `
       <div class="card-pessoa d-flex align-itens-start justify-content-evenly flex-column mt-3">
               <div class="texto-card">
                 <div class="nome-pessoa">${pedido.cliente.nome} ${pedido.cliente.sobrenome}</div>
@@ -406,8 +407,7 @@ async function criarPedidos(pedidos, input){
             </div>
       `
     })
-
-    return
+    
   }
 
 }
