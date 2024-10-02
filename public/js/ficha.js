@@ -42,7 +42,7 @@ function botaoTecido() {
 //Integrar com o backend
 async function listarBotaoPeca() {
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/pecas/${idUsuario}`);
+    const data = await fetch(`http://10.18.34.59:8080/pecas/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -86,7 +86,7 @@ function mudarTecido(texto2) {
 // Conectar com o backEnd
 async function listarFichas(){
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}`);
+    const data = await fetch(`http://10.18.34.59:8080/itens-pedidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -185,9 +185,7 @@ function buscaAvançadaCliente(texto){
 async function listarClientes(){
     
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`, {
-        method: 'GET'
-    });
+    const data = await fetch(`http://10.18.34.59:8080/clientes/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText, data.message);
         }
@@ -247,7 +245,7 @@ function irParaFinal(peca, tecido){
 async function buscarDadosCliente(){
     var idCliente = sessionStorage.getItem("idCliente")
 
-    const data = await fetch( `http://localhost:8080/clientes/${idCliente}/buscarUm`);
+    const data = await fetch( `http://10.18.34.59:8080/clientes/${idCliente}/buscarUm`);
     if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }

@@ -1,6 +1,6 @@
 async function buscarRelatorioCliente(usuarioId) {
     try {
-        const resposta = await fetch(`http://localhost:8080/clientes/${usuarioId}/relatorio-kpi`, {
+        const resposta = await fetch(`http://10.18.34.59:8080/clientes/${usuarioId}/relatorio-kpi`, {
             method: "GET"
         });
 
@@ -46,7 +46,7 @@ function adicionarSvgSetaCliente(qtdClienteAtual, qtdClientePassado){
 
 async function buscarRelatorioPedido(usuarioId) {
     try {
-        const resposta = await fetch(`http://localhost:8080/pedido/${usuarioId}/relatorio-kpi`, {
+        const resposta = await fetch(`http://10.18.34.59:8080/pedido/${usuarioId}/relatorio-kpi`, {
             method: "GET"
         });
 

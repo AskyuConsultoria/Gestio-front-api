@@ -97,7 +97,7 @@
 
     async function getTecido(tecido) {
         var idUsuario = sessionStorage.getItem("id")
-        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`);
+        var data = await fetch(`http://10.18.34.59:8080/tecidos/${idUsuario}/${tecido}`); 
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -112,7 +112,7 @@
     async function getmedidasPeca() {
         var idUsuario = sessionStorage.getItem("id")
         var peca = sessionStorage.getItem("peca")
-        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`);
+        var data = await fetch(`http://10.18.34.59:8080/nomes-medidas/${idUsuario}/${peca}`); 
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -157,8 +157,8 @@
                 "id": idPeca
             }
         }
-        itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
-            method: "POST",
+        itemPedido = await fetch(`http://10.18.34.59:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
+            method: "POST" ,
             body: JSON.stringify(itemPedidoBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
         })
@@ -176,7 +176,7 @@
             "etapa": 1,
             "cliente": idCliente
         }
-        // var pedidoFetch = await fetch(`http://localhost:8080/pedido`, {
+        // var pedidoFetch = await fetch(`http://10.18.34.59:8080/pedido`, {
         //     method: "POST" ,
         //     body: JSON.stringify(pedidoBody),
         //     headers: {"Content-type": "application/json; charset=UTF-8"},
@@ -223,8 +223,8 @@
             "usuario": { "id": idUsuario },
             "peca": { "id": idPeca }
         }
-        var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
-            method: "POST",
+        var valorMedida = await fetch(`http://10.18.34.59:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
+            method: "POST" ,
             body: JSON.stringify(medidaBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
         })

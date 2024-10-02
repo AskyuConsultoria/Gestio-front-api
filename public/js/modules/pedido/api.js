@@ -17,7 +17,7 @@ async function buscarAgendamento() {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 
@@ -43,7 +43,7 @@ async function buscarAgendamento() {
 
 async function buscarClienteView(clienteId) {
     try {
-        const response = await fetch(`http://localhost:8080/cliente-view/${clienteId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/cliente-view/${clienteId}`, {
             method: "GET"
         });
 
@@ -67,7 +67,7 @@ async function buscarClientePorId(novoClienteId) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://localhost:8080/clientes/${novoClienteId}/buscarUm`, {
+        const response = await fetch(`http://10.18.34.59:8080/clientes/${novoClienteId}/buscarUm`, {
             method: "GET"
         });
 
@@ -95,7 +95,7 @@ async function buscarEnderecoPorId() {
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
             method: "GET"
         });
 
@@ -122,7 +122,7 @@ async function buscarTelefonePorId() {
     var enderecoId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/telefone/buscar-um/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/telefone/buscar-um/${usuarioId}/${enderecoId}`, {
             method: "GET"
         });
 
@@ -149,7 +149,7 @@ async function buscarEnderecoPorClienteId(nomeModal) {
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/enderecos/${usuarioId}/${clienteId}`, {
             method: "GET"
         });
 
@@ -176,7 +176,7 @@ async function buscarTelefonePorClienteId(nomeModal) {
     var clienteId = sessionStorage.getItem("CLIENTE-ID")    
 
     try {
-        const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${clienteId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/telefone/${usuarioId}/${clienteId}`, {
             method: "GET"
         });
 
@@ -204,7 +204,7 @@ async function buscarClientesPorNome(clienteNome) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://localhost:8080/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
+        const response = await fetch(`http://10.18.34.59:8080/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
             method: "GET"
         });
 
@@ -234,7 +234,7 @@ async function atualizarDadosCliente(clienteId) {
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/clientes/${clienteId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/clientes/${clienteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -266,7 +266,7 @@ async function atualizarDadosPedido(agendamentoId) {
 
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -310,7 +310,7 @@ async function atualizarEnderecoAgendamento(enderecoId) {
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
             method: "PATCH"
         });
 
@@ -333,7 +333,7 @@ async function atualizarTelefoneAgendamento(telefoneId) {
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento/atualizar-telefone/${usuarioId}/${agendamentoId}/${telefoneId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento/atualizar-telefone/${usuarioId}/${agendamentoId}/${telefoneId}`, {
             method: "PATCH"
         });
 
@@ -357,7 +357,7 @@ async function atualizarEndereco(){
     var telefoneId = parseInt(sessionStorage.getItem(""))
 
     try {
-        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/enderecos/${usuarioId}/${enderecoId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -396,7 +396,7 @@ async function criarPedido() {
     
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -436,7 +436,7 @@ async function buscarEtapas() {
     try {
         const usuarioId = parseInt(sessionStorage.getItem('id'))
 
-        const response = await fetch(`http://localhost:8080/etapas/${usuarioId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/etapas/${usuarioId}`, {
             method: "GET"
         });
 
@@ -463,7 +463,7 @@ async function buscarStatusAgendamento(){
         const usuarioId = parseInt(sessionStorage.getItem('id'))
         const agendamentoId = parseInt(sessionStorage.getItem('AGENDAMENTO-ID'))
     
-        const response = await fetch(`http://localhost:8080/agendamento-log/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.18.34.59:8080/agendamento-log/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 

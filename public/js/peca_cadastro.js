@@ -12,7 +12,7 @@ async function cadastrarPeca(){
 
     console.log(dados)
 
-    const respostaCadastro = await fetch(`http://localhost:8080/pecas/${usuario}`, {
+    const respostaCadastro = await fetch(`http://10.18.34.59:8080/pecas/${usuario}`, {
     method: "POST" ,
     body: JSON.stringify(dados),
     headers: {"Content-type": "application/json; charset=UTF-8"},
