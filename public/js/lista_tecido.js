@@ -1,7 +1,7 @@
 async function listarTecidos(){
     const usuario = sessionStorage.getItem("id")
 
-    const data = await fetch(`http://localhost:8080/tecidos/${usuario}`);
+    const data = await fetch(`http://192.168.15.3:8080/tecidos/${usuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -38,7 +38,7 @@ async function deletarTecido(idTecido){
     const usuario = sessionStorage.getItem("id")
 
 
-    const respostaMedida = await fetch(`http://localhost:8080/tecidos/${usuario}/${idTecido}`, {
+    const respostaMedida = await fetch(`http://192.168.15.3:8080/tecidos/${usuario}/${idTecido}`, {
     method: "DELETE",
     headers: {"Content-type": "application/json; charset=UTF-8"}
 })

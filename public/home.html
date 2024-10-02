@@ -520,7 +520,7 @@ async function buscarPedidosComBaseNoDia(dataDiaSelecionado){
   var idUsuario = 1   
 
   try {
-    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
+    const response = await fetch(`http://192.168.15.3:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
       method: "GET"
     });
 
