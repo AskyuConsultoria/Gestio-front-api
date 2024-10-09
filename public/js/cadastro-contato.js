@@ -6,7 +6,7 @@ async function cadastrarContato() {
 
 
     try {
-        const response = await fetch(`http://localhost:8080/clientes/${usuario}`, {
+        const response = await fetch(`http://localhost:8080/clientes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
