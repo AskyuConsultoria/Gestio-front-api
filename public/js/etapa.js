@@ -139,7 +139,8 @@ async function criarComum(nomeUpper, cardPessoa, totalOriginal) {
 
   var containerPessoa = document.querySelector('#container-pessoa-comum');
   containerPessoa.innerHTML = cardPessoa;
-  containerPessoa.style.marginRight = '22%';
+  // containerPessoa.style.marginRight = '22%';
+  
 
   var totalPedidos = document.querySelector('.total-pedidos');
   totalPedidos.innerHTML = totalOriginal;
@@ -151,8 +152,8 @@ async function criarComum(nomeUpper, cardPessoa, totalOriginal) {
 
   // Configurar o conteúdo para "Em Andamento"
   etapa.innerHTML = 'EM ANDAMENTO';
-  etapa.style.marginRight = '9%';
-  subPedido.style.marginLeft = '6%';
+  // etapa.style.marginRight = '9%';
+  // subPedido.classList.add('margem-ajustada')
   containerPessoa.classList.remove('zero');
 }
 
@@ -196,9 +197,10 @@ async function mudarSwitch(){
       etapa.innerHTML = '';
     }
 
-    subPedido.style.marginLeft = '8%';
-    etapa.style.marginRight = '15%';
-    etapa.innerHTML = '<div style="color: red">CANCELADOS</div>';
+    subPedido.classList.add('margem-ajustada');
+    // etapa.style.marginRight = '15%';
+    etapa.innerHTML = '<div>CANCELADOS</div>';
+    etapa.classList.add('status-cancelado')
 
   } else {
     switchElement.style.backgroundColor = '#007bff';
@@ -221,8 +223,9 @@ async function mudarSwitch(){
     totalPedidos.innerHTML = totalOriginal;
     containerPessoa.innerHTML = cardPessoa; // Restaura os pedidos em andamento
     containerPessoa.classList.remove('zero');
-    etapa.style.marginRight = '9%';
-    subPedido.style.marginLeft = '6%';
+    etapa.classList.remove('status-cancelado')
+    // etapa.style.marginRight = '9%';
+    subPedido.classList.add('largura-cancelado')
     clique=0
   }
 }

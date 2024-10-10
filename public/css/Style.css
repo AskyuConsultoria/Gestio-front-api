@@ -367,6 +367,15 @@ header {
     transform: translateY(100%);
 }
 
+.status-cancelado{
+    color: red !important;
+    margin-right: 3%;
+}
+
+.largura-cancelado{
+    width: 67%;
+}
+
 .comum {
     transition: transform 1s ease-in-out;
 }
@@ -469,6 +478,10 @@ header {
     flex-grow: 1;
 }
 
+.container-pessoa{
+    margin-right: 22%;
+}
+
 
 /* RESPONSIVIDADE TABLET */
 @media (min-width: 768px) and (max-width: 991px) {
@@ -478,32 +491,50 @@ header {
         }
     }
 
+    .margem-ajustada{
+        margin-left: 23%;
+    }
+
     .form-switch {
-        width: 24%;
+        width: 40%;
     }
 
     .sub-pedido {
-        margin-left: 23%;
+        margin-left: 24%;
         font-size: 17px;
-        width: 53%;
+        width: 57%;
     }
 
+    .titulo-status{
+        width: 80%;
+    }
 
     .modal-etapa-title {
         font-size: 36px;
     }
 
     .modal-etapa-header {
-        width: 51rem;
+        width: 48rem;
     }
 
     .header-off {
         width: 86%;
     }
 
+    .container-pessoa{
+        margin-right: 2%;
+    }
+    
+    .modal-etapa-body {
+        .pedido-etapa {
+            margin-right: 0%;
+        }
+    }
+
     .header-container {
-        width: 100%;
-        max-width: 100%;
+        width: 100%; /* Garante que o header ocupe 100% da largura */
+        padding: 0; /* Remove qualquer padding que possa estar desproporcional */
+        margin: 0;  /* Remove margens que possam estar reduzindo o espaço */
     }
 
     .card {
@@ -530,7 +561,7 @@ header {
             font-size: 18px;
         }
 
-        max-width: 100%;
+        width: 149%;
     }
 
     .barra-busca {
@@ -551,7 +582,7 @@ header {
     }
 
     .cont-etapa {
-        margin-left: 10%;
+       width: 80%;
     }
 
     .etapa-card {
