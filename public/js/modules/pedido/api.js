@@ -391,6 +391,29 @@ async function atualizarEndereco(){
     }
 }
 
+
+async function atualizarTelefone(){
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
+    var numero = document.querySelector("#input-numero-celular").value
+
+    try {
+        const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
+            method: "PATCH",
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarTelefonePorId()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     
@@ -503,6 +526,7 @@ export {
     atualizarDadosCliente,
     atualizarDadosPedido,
     atualizarEndereco,
+    atualizarTelefone,
     atualizarEnderecoAgendamento,
     atualizarTelefoneAgendamento,
     criarPedido,

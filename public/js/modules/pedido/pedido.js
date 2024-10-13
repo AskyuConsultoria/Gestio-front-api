@@ -10,6 +10,7 @@ window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeCon
 window.construirModalGenerico = construirModalGenerico
 window.validarAtualizacaoEndereco = validarAtualizacaoEndereco
 window.reexbirValoresDaConsulta = reexbirValoresDaConsulta
+window.realizarCadastroModal = realizarCadastroModal
 
 
 window.clienteId = sessionStorage.getItem('CLIENTE-ID')
@@ -382,7 +383,7 @@ export function construirModalGenerico(elementoId, status) {
   if (elementoId == "botao-salvar") {
     elementoFooter.innerHTML = `
 
-    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="validarConteudosNulosEEspecificos()"  style="background-color: #012171;">
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="validarConteudosNulosEEspecificos(agregarConteudosEEnviarParaValidar(), 1, 3)"  style="background-color: #012171;">
         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
     </button>
 
@@ -397,7 +398,7 @@ export function construirModalGenerico(elementoId, status) {
 
   if (elementoId == "closeButton") {
     elementoFooter.innerHTML = `
-   <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="validarConteudosNulosEEspecificos()"  style="background-color: #012171;">
+   <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="validarConteudosNulosEEspecificos(agregarConteudosEEnviarParaValidar(), 1, 3)"  style="background-color: #012171;">
         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
     </button>
 
@@ -449,6 +450,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   <div class="form-check">
     <input class="form-check-input" type="radio" name="flexRadioDefault" id="${lista[i].id}">
     <span id="span-multivalorado-${i}">${lista[i].cliente.nome} ${lista[i].cliente.sobrenome}</span>
+    <span class="ms-5 fw-medium" style="color: #012171">Editar</span>
   </div>
   </div>
    <div class="d-flex pt-1 pb-1 text-secondary" style="padding-left: 2.5rem; width: 85%">
@@ -462,11 +464,16 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   if(lista[i].id == id && i != 0 && lista.length > 1) exibirEnderecoSalvoPrimeiro(lista[i], i)
   }
 
-  conteudoModal.innerHTML += `<div class="d-flex justify-content-end px-3">
-                        <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal-multivalorado" style="border-color: #eeeaea;">Cancelar</button>
-                        <button type="button" class="btn text-white" style="background-color: #012171;" onclick="validarAtualizacaoEndereco(
-                        document.querySelector('.form-check-input:checked').id, '${nomeModal}')">Confirmar</button>
-                    </div>`
+  conteudoModal.innerHTML += `
+  <div class="d-flex px-3 mb-5">
+    <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal-multivalorado" onclick="realizarCadastroModal()" style="border-color: #eeeaea;">+ Adicionar ${nomeModal} do Cliente</button>
+  </div>
+
+  <div class="d-flex justify-content-end px-3">
+    <button type="button" class="btn text-secondary me-2" data-bs-dismiss="modal-multivalorado" style="border-color: #eeeaea;">Cancelar</button>
+    <button type="button" class="btn text-white" style="background-color: #012171;" onclick="validarAtualizacaoEndereco(
+    document.querySelector('.form-check-input:checked').id, '${nomeModal}')">Confirmar</button>
+  </div>`
 
   modalMultivalorado.show()
   document.getElementById(`${parseInt(id)}`).checked = true 
@@ -500,6 +507,63 @@ export function exibirEnderecoSalvoPrimeiro(endereco, iterador){
   spanMultivalorado.innerText = textoPrimeiroSpan
   corpoMultivalorado.innerText = textoPrimeiroCorpo
   inputCheck.id = textoPrimeiraInputId
+}
+
+
+export function realizarCadastroModal(){
+  const conteudoModal = document.querySelector('#conteudo-modal-multivalorado')
+  conteudoModal.innerHTML = `
+  <div class="px-3">
+    <div class="d-flex flex-row w-100 justify-content-between">
+       <div class="form-floating mb-3" style="width: 45%">
+  <input type="" class="form-control" id="input-modal-cep" placeholder="">
+  <label for="input-modal-cep">CEP</label>
+  <div class="invalid-feedback">
+    Por favor insira o CEP do cliente.
+  </div>
+</div>
+   <div class="form-floating mb-3" style="width: 45%">
+  <input type="" class="form-control" id="input-modal-numero" placeholder="">
+  <label for="input-modal-numero">Número</label>
+  <div class="invalid-feedback">
+    Por favor insira o número do endereço cliente.
+  </div>
+</div>
+    </div>
+    
+       <div class="form-floating mb-3">
+  <input type="" class="form-control" id="input-modal-rua" placeholder="">
+  <label for="input-modal-rua">Rua</label>
+  <div class="invalid-feedback">
+    Por favor insira a Rua do cliente.
+  </div>
+</div>
+   <div class="form-floating mb-3">
+  <input type="" class="form-control" id="input-modal-bairro" placeholder="">
+  <label for="input-modal-bairro">Bairro</label>
+   <div class="invalid-feedback">
+    Por favor insira o Bairro do cliente.
+  </div>
+</div>
+
+    <div class="d-flex flex-row w-100 justify-content-between">
+       <div class="form-floating mb-3" style="width: 45%">
+  <input type="" class="form-control" id="input-modal-cidade" placeholder="">
+  <label for="input-modal-cidade">Cidade</label>
+  <div class="invalid-feedback">
+    Por favor insira a Cidade do cliente.
+  </div>
+</div>
+   <div class="form-floating mb-3" style="width: 45%">
+  <input class="form-control" id="input-modal-uf" placeholder="">
+  <label for="input-modal-uf">UF</label>
+  <div class="invalid-feedback">
+    Por favor insira o UF do cliente.
+  </div>
+</div>
+    </div>
+</div>
+  `
 }
 
 export function validarAtualizacaoEndereco(id, nomeModal){
@@ -545,11 +609,11 @@ export async function salvarModificacao() {
     listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
   }
   
-  if (atualizarTelefone){
+  if (atualizarTelefone && agendamentoId != null){
     listaDeResponse.push(await api.atualizarTelefoneAgendamento(telefoneId))
   } 
 
-  if (atualizarEndereco){ 
+  if (atualizarEndereco && agendamentoId != null){ 
     listaDeResponse.push(await api.atualizarEnderecoAgendamento(enderecoId))
   }
 

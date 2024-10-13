@@ -2,6 +2,7 @@
 import * as pedido from "./pedido.js"
 
 window.validarConteudosNulosEEspecificos = validarConteudosNulosEEspecificos
+window.agregarConteudosEEnviarParaValidar = agregarConteudosEEnviarParaValidar
 
 function agregarConteudosEEnviarParaValidar(){
     var conteudoNome = document.querySelector('#content-nome')
@@ -25,13 +26,12 @@ function agregarConteudosEEnviarParaValidar(){
     return listaDeConteudo
   }
   
-  function validarConteudosNulosEEspecificos(){
-    var listaDeConteudo = agregarConteudosEEnviarParaValidar()
+  function validarConteudosNulosEEspecificos(listaDeConteudo, indiceInput, indiceDivContent){
     var formularioValido = true
   
     for(var i = 0; i < listaDeConteudo.length; i++){
-      var elInput = listaDeConteudo[i].childNodes[1]
-      var elDivContent = listaDeConteudo[i].childNodes[3]
+      var elInput = listaDeConteudo[i].childNodes[indiceInput]
+      var elDivContent = listaDeConteudo[i].childNodes[indiceDivContent]
   
       if(elInput.value == ''){
         estilizarCamposDoFormulario(false, elInput, elDivContent) 
@@ -62,7 +62,7 @@ function agregarConteudosEEnviarParaValidar(){
       var digitos = camposJson[i].digitos
       var mensagem = camposJson[i].mensagem
       var elInput = document.querySelector(`#input-${nomeCampo}`)
-      var elDivContent = document.querySelector(`#content-${nomeCampo}`).childNodes[3]
+      var elDivContent = document.querySelector(`#content-${nomeCampo}`).childNodes[indiceDivContent]
   
       if(verificarSeCampoAtendeValidacao(nomeCampo, validacao, digitos)){
         estilizarCamposDoFormulario(true, elInput, elDivContent, null)

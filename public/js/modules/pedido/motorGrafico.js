@@ -65,10 +65,10 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
             listaComponenteOcultado.shift()
             listaComponenteExibido.push(listaComponente[1])
             exibirCardEndereco()
-            renderizar("130%", "Novo Pedido")
+            renderizar("158%", "Novo Pedido")
             return
         }
-        renderizar("150%", "Novo Pedido")
+        renderizar("158%", "Novo Pedido")
     }
 
     if (paginaEscolhida == "consultar-pedido") {
@@ -96,6 +96,13 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 
 function fecharJanela() {
     var paginaParaIr = document.querySelector('.botao-confirmacao').id
+
+    if(paginaParaIr == "adicionar-pedido"){
+        escolherRenderizacao(false, paginaParaIr)
+        return
+    }
+
+
     if (pedido.houveMudancaDeDados()) {
         pedido.construirModalGenerico("closeButton")
         return
