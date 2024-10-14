@@ -93,6 +93,7 @@ async function buscarClientePorId(novoClienteId) {
 async function buscarEnderecoPorId() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
+    if(sessionStorage.getItem("ENDERECO-MODAL-ID") != null) enderecoId = sessionStorage.getItem("ENDERECO-MODAL-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
@@ -119,10 +120,11 @@ async function buscarEnderecoPorId() {
 
 async function buscarTelefonePorId() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
-    var enderecoId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
+    var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
+    if(sessionStorage.getItem("TELEFONE-MODAL-ID") != null) telefoneId = sessionStorage.getItem("TELEFONE-MODAL-ID")
 
     try {
-        const response = await fetch(`http://localhost:8080/telefone/buscar-um/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://localhost:8080/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
             method: "GET"
         });
 
@@ -354,7 +356,6 @@ async function atualizarEndereco(){
     var usuarioId = parseInt(sessionStorage.getItem("id")) 
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
-    var telefoneId = parseInt(sessionStorage.getItem(""))
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
@@ -414,6 +415,69 @@ async function atualizarTelefone(){
     }
 }
 
+async function atualizarEnderecoModal(){
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+    var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-MODAL-ID"))
+
+    try {
+        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: enderecoId,
+                cep: document.querySelector('#input-modal-cep').value,
+                logradouro: document.querySelector('#input-modal-rua').value,
+                bairro: document.querySelector('#input-modal-bairro').value,
+                uf: document.querySelector('#input-modal-uf').value,
+                usuario: {
+                    id: usuarioId
+                },
+                cliente: {
+                    id: clienteId
+                },
+                cidade: document.querySelector('#input-modal-cidade').value,
+                numero: document.querySelector('#input-modal-numero').value,
+            })
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarEnderecoPorId()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+
+async function atualizarTelefoneModal(){
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-MODAL-ID"))
+    var numero = document.querySelector("#input-modal-numero-celular").value
+
+    try {
+        const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
+            method: "PATCH",
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarTelefonePorId()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     
@@ -453,6 +517,86 @@ async function criarPedido() {
     }
 
 }
+
+
+
+
+
+async function cadastrarEnderecoModal(){
+    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+    
+    try {
+        const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                cep: document.querySelector('#input-modal-cep').value,
+                logradouro: document.querySelector('#input-modal-rua').value,
+                bairro: document.querySelector('#input-modal-bairro').value,
+                uf: document.querySelector('#input-modal-uf').value,
+                usuario: {
+                    id: usuarioId
+                },
+                cliente: {
+                    id: clienteId
+                },
+                cidade: document.querySelector('#input-modal-cidade').value,
+                numero: document.querySelector('#input-modal-numero').value,
+            })
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        buscarEnderecoPorId()
+        return response.status
+       
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+async function cadastrarTelefoneModal() {
+    const usuarioId = sessionStorage.getItem('id')
+    const clienteId = sessionStorage.getItem("CLIENTE-ID")
+
+    try {
+        const response = await fetch(`http://localhost:8080/telefone`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                usuario: {
+                    id: usuarioId
+                },
+                tipoTelefone: {
+                    id: 1
+                },
+                cliente: {
+                    id: clienteId
+                },
+                numero: document.querySelector(`#input-modal-numero-celular`).value
+            })
+        })
+        
+        var dados = await response.json()
+        console.log(dados) 
+
+        buscarTelefonePorId()
+        return response.status
+
+    } catch (error) {
+    console.log(`Houve um erro: ${error}`)
+    }
+
+}
+
+
 
 async function buscarEtapas() {
 
@@ -527,9 +671,13 @@ export {
     atualizarDadosPedido,
     atualizarEndereco,
     atualizarTelefone,
+    atualizarEnderecoModal,
+    atualizarTelefoneModal,
     atualizarEnderecoAgendamento,
     atualizarTelefoneAgendamento,
     criarPedido,
+    cadastrarEnderecoModal,
+    cadastrarTelefoneModal,
     buscarEtapas,
     buscarStatusAgendamento
 }

@@ -1,8 +1,10 @@
 
+import { cadastrarEnderecoModal } from "./api.js"
 import * as pedido from "./pedido.js"
 
 window.validarConteudosNulosEEspecificos = validarConteudosNulosEEspecificos
 window.agregarConteudosEEnviarParaValidar = agregarConteudosEEnviarParaValidar
+window.agregarERetornarConteudosModal = agregarERetornarConteudosModal
 
 function agregarConteudosEEnviarParaValidar(){
     var conteudoNome = document.querySelector('#content-nome')
@@ -13,20 +15,42 @@ function agregarConteudosEEnviarParaValidar(){
     var conteudoDataFim = document.querySelector('#content-data-fim')
     var conteudoEtapa = document.querySelector('#content-etapa')
     var conteudoCep = document.querySelector('#content-cep')
+    var conteudoNumero = document.querySelector('#content-numero')
     var conteudoRua = document.querySelector('#content-rua')
     var conteudoBairro = document.querySelector('#content-bairro')
     var conteudoCidade = document.querySelector('#content-cidade')
     var conteudoUf = document.querySelector('#content-uf')
   
     var listaDeConteudo = [
-      conteudoNome, conteudoSobrenome, conteudoEmail, conteudoTelefone, conteudoDataInicio, conteudoDataFim, conteudoEtapa, conteudoCep, conteudoRua,
+      conteudoNome, conteudoSobrenome, conteudoEmail, conteudoTelefone, conteudoDataInicio, conteudoDataFim, conteudoEtapa, conteudoCep, conteudoRua, conteudoNumero,
       conteudoBairro, conteudoCidade, conteudoUf
     ]
   
     return listaDeConteudo
   }
+
+function agregarERetornarConteudosModal(tipoConteudo){
+  var listaDeConteudo = []
+
+  if(tipoConteudo == "endereco"){
+    var conteudoCep = document.querySelector('#content-modal-cep')
+    var conteudoNumero = document.querySelector('#content-modal-numero')
+    var conteudoRua = document.querySelector('#content-modal-rua')
+    var conteudoBairro = document.querySelector('#content-modal-bairro')
+    var conteudoCidade = document.querySelector('#content-modal-cidade')
+    var conteudoUf = document.querySelector('#content-modal-uf')
+
+    listaDeConteudo.push(conteudoCep, conteudoNumero, conteudoRua, conteudoBairro, conteudoCidade, conteudoUf)
+  }
+
+  if(tipoConteudo == "telefone"){
+    listaDeConteudo.push(document.querySelector("#content-modal-numero-celular"))
+  }
+
+  return listaDeConteudo
+}
   
-  function validarConteudosNulosEEspecificos(listaDeConteudo, indiceInput, indiceDivContent){
+  function validarConteudosNulosEEspecificos(listaDeConteudo, indiceInput, indiceDivContent, tipoFormulario){
     var formularioValido = true
   
     for(var i = 0; i < listaDeConteudo.length; i++){
@@ -40,20 +64,47 @@ function agregarConteudosEEnviarParaValidar(){
       else estilizarCamposDoFormulario(true, elInput, elDivContent)
     }
   
-    var camposJson = [
-      {
-        nome: 'cep',
-        validacao: 'diferente',
-        digitos: 8,
-        mensagem: "Número de digitos do Cep inválido."
-      },
-      {
-        nome: 'numero-celular',
-        validacao: 'diferente',
-        digitos: 11,
-        mensagem: "Número de digitos do telefone inválido"
-      },
-    ]
+
+    if(tipoFormulario == 'pedido'){
+      var camposJson = [
+        {
+          nome: 'cep',
+          validacao: 'igual',
+          digitos: 8,
+          mensagem: "Número de digitos do Cep inválido."
+        },
+        {
+          nome: 'numero-celular',
+          validacao: 'igual',
+          digitos: 11,
+          mensagem: "Número de digitos do telefone inválido"
+        }
+      ]
+    }
+
+    if(tipoFormulario == 'telefone'){
+      var camposJson = [
+        {
+          nome: 'modal-numero-celular',
+          validacao: 'igual',
+          digitos: 11,
+          mensagem: "Número de digitos do telefone inválido"
+        }
+      ]
+    }
+
+    if(tipoFormulario == 'endereco'){
+      var camposJson = [
+
+        {
+          nome: 'modal-cep',
+          validacao: 'igual',
+          digitos: 8,
+          mensagem: "Número de digitos do Cep inválido."
+        },
+      ]
+    }
+    
       
   
     for(var i = 0; i < camposJson.length; i++){
@@ -62,20 +113,28 @@ function agregarConteudosEEnviarParaValidar(){
       var digitos = camposJson[i].digitos
       var mensagem = camposJson[i].mensagem
       var elInput = document.querySelector(`#input-${nomeCampo}`)
-      var elDivContent = document.querySelector(`#content-${nomeCampo}`).childNodes[indiceDivContent]
+      var elDivContent = document.querySelector(`#content-${nomeCampo}`)
   
-      if(verificarSeCampoAtendeValidacao(nomeCampo, validacao, digitos)){
-        estilizarCamposDoFormulario(true, elInput, elDivContent, null)
-      } 
-      else {
-        estilizarCamposDoFormulario(false, elInput, elDivContent, mensagem)
-        formularioValido = false
-      } 
+
+      if(elInput != null && elDivContent != null){
+
+        if(verificarSeCampoAtendeValidacao(nomeCampo, validacao, digitos)){
+          estilizarCamposDoFormulario(true, elInput, elDivContent, null)
+        } 
+        else {
+          estilizarCamposDoFormulario(false, elInput, elDivContent, mensagem)
+          formularioValido = false
+        }
+
+      }
+      
   
     }
   
-    if(formularioValido) pedido.salvarModificacao()
-    else modalGenerico.hide()
+    if(formularioValido){
+      if(tipoFormulario == "pedido") pedido.salvarModificacao()
+      if(tipoFormulario == "telefone" || "endereco") pedido.salvarModificacaoModal()  
+    } 
   }
   
   function estilizarCamposDoFormulario(valido, elInput, elDivContent, mensagem){
@@ -83,14 +142,23 @@ function agregarConteudosEEnviarParaValidar(){
     if(valido){
       if(elInput.classList.contains('is-invalid')) elInput.classList.remove('is-invalid')
       if(!elInput.classList.contains('is-valid'))  elInput.classList.add('is-valid')  
-      elDivContent.classList.remove('d-block')
-      if(!elDivContent.classList.contains('d-none')) elDivContent.classList.add('d-none')
+      for(var i = 0; i < elDivContent.children.length; i++){
+        if(elDivContent.children[i].classList.contains('invalid-feedback')){
+          if(elDivContent.children[i].classList.contains('d-block')) elDivContent.children[i].classList.remove('d-block')
+            if(!elDivContent.children[i].classList.contains('d-none')) elDivContent.children[i].classList.add('d-none')
+        }
+    }
     } else {
       if(elInput.classList.contains('is-valid')) elInput.classList.remove('is-valid')
       if(!elInput.classList.contains('is-invalid'))  elInput.classList.add('is-invalid')  
-      if(mensagem != undefined) elDivContent.innerHTML = mensagem
-      elDivContent.classList.remove('d-none')
-      if(!elDivContent.classList.contains('d-block')) elDivContent.classList.add('d-block')
+        for(var i = 0; i < elDivContent.children.length; i++){
+          if(elDivContent.children[i].classList.contains('invalid-feedback')){
+            if(mensagem != undefined)   elDivContent.children[i].innerText = mensagem
+            if(elDivContent.children[i].classList.contains('d-none')) elDivContent.children[i].classList.remove('d-none')
+              if(!elDivContent.children[i].classList.contains('d-block')) elDivContent.children[i].classList.add('d-block')
+          }
+        }
+
     }
   
   }
@@ -105,12 +173,12 @@ function agregarConteudosEEnviarParaValidar(){
   function verificarSeCampoAtendeValidacao(nomeCampo, tipoValidacao, digitos){
     var valorCampo = document.querySelector(`#input-${nomeCampo}`).value
   
-    if(tipoValidacao == 'diferente'){
+    if(tipoValidacao == 'igual'){
   
-      if(valorCampo.length != digitos){
-        return false
-      } else{
+      if(valorCampo.length == digitos){
         return true
+      } else{
+        return false
       }
   
     } 
