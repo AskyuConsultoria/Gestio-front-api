@@ -1,9 +1,8 @@
+import * as contato from "./modules/cliente/contato.js"
 
 async function cadastrarContato() {
 
     const usuario = sessionStorage.getItem('id')
-    const outroTelefone = document.getElementById('outroCelular')
-
 
     try {
         const response = await fetch(`http://localhost:8080/clientes`, {
@@ -12,9 +11,9 @@ async function cadastrarContato() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                nome: document.getElementById("usuario").value,
-                sobrenome: document.getElementById("sobrenome").value,
-                email: document.getElementById("email").value,
+                nome: document.getElementById("input-nome").value,
+                sobrenome: document.getElementById("input-sobrenome").value,
+                email: document.getElementById("input-email").value,
                 usuario: usuario
             })
         });
@@ -22,9 +21,7 @@ async function cadastrarContato() {
         const dados = await response.json()
         console.log(dados)
 
-        cadastrarTelefone(dados.id, 'celular')
-        if (outroTelefone != null) cadastrarTelefone(dados.id, 'outroCelular')
-
+        buscarClientePorId(dados.id)
         return response.status
 
     } catch (error) {
@@ -34,8 +31,9 @@ async function cadastrarContato() {
 }
 
 
-async function cadastrarTelefone(clienteId, tipoTelefone) {
+async function cadastrarTelefone(tipoTelefone) {
     const usuarioId = sessionStorage.getItem('id')
+    const clienteId = sessionStorage.getItem('CLIENTE-ID')
 
     try {
         const response = await fetch(`http://localhost:8080/telefone`, {
@@ -60,8 +58,46 @@ async function cadastrarTelefone(clienteId, tipoTelefone) {
         var dados = await response.json()
         console.log(dados) 
 
+       
+
     } catch (error) {
     console.log(`Houve um erro: ${error}`)
     }
 
+}
+
+
+async function buscarClientePorId(novoClienteId) {
+    var usuarioId = sessionStorage.getItem("id")
+
+    try {
+        const response = await fetch(`http://localhost:8080/clientes/${novoClienteId}/buscarUm`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+
+        contato.preencherDadosCliente(dados)
+        
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+
+}
+
+
+export {
+    cadastrarContato,
+    buscarClientePorId
 }
