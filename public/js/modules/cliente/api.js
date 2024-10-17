@@ -1,4 +1,4 @@
-import * as contato from "./modules/cliente/contato.js"
+import * as contato from "./contato.js"
 
 async function cadastrarContato() {
 
@@ -96,8 +96,38 @@ async function buscarClientePorId(novoClienteId) {
 
 }
 
+async function buscarClientesPorNome(clienteNome) {
+    var usuarioId = sessionStorage.getItem("id")
+
+    try {
+        const response = await fetch(`http://localhost:8080/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            document.querySelector('#conteudo-cliente').innerHTML = `<span class="d-flex text-secondary py-3 px-3 h-100">Não existem clientes com o nome procurado.<span>`
+            return []
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        
+        return dados 
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+
+}
+
 
 export {
     cadastrarContato,
-    buscarClientePorId
+    buscarClientePorId,
+    buscarClientesPorNome
 }

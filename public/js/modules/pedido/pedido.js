@@ -386,9 +386,12 @@ export function verificarDadosEExibirBotaoDeConfirmacao(idInput, dadoAntigo) {
 }
 
 
-const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
+if(document.querySelector('#modal-generico')){
+  const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
 
-window.modalGenerico = modalGenerico
+  window.modalGenerico = modalGenerico
+}
+
 
 export function construirModalGenerico(elementoId, status) {
   var textoModal = ""
@@ -471,8 +474,11 @@ function reexbirValoresDaConsulta() {
   formulario.removerEstilizacaoDoFormulario()
 }
 
-export const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
-window.modalMultivalorado = modalMultivalorado
+if(document.querySelector('#modal-multivalorado')){
+  const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
+  window.modalMultivalorado = modalMultivalorado
+}
+
 
 export async function escolherModalMultivalorado(nomeModal, lista) {
   const enderecoId = sessionStorage.getItem('ENDERECO-ID')

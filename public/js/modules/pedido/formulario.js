@@ -37,11 +37,11 @@ function agregarERetornarConteudosCliente(){
   var conteudoSobrenome = document.querySelector('#content-sobrenome')
   var conteudoEmail = document.querySelector('#content-email')
 
-  var listaDeConteutdo = {
+  var listaDeConteudo = [
     conteudoNome, conteudoSobrenome, conteudoEmail
-  }
+  ]
 
-  return listaDeConteutdo
+  return listaDeConteudo
 }
 
 function agregarERetornarConteudosModal(tipoConteudo){

@@ -1,6 +1,6 @@
 import * as motorGraficoForm from "../pedido/motorGrafico.js"
 import * as apiForm from "../pedido/api.js"
-import * as apiContato from "../../cadastro-contato.js"
+import * as apiContato from "./api.js"
 
 window.escolherRenderizacao = escolherRenderizacao
 
@@ -25,8 +25,8 @@ function escolherRenderizacao(){
         motorGraficoForm.esconderInputsNumero()
 
         exibirBotoesAssociacao()
-        renderizarTextoBotoesCriacaoEndereco()
-        renderizarTextoBotoesCriacaoTelefone()
+        renderizarTextoConsultaEndereco()
+        renderizarTextoConsultaTelefone()
 
         if(enderecoId != null){
             motorGraficoForm.exibirInputsEndereco()
@@ -90,16 +90,15 @@ function renderizarTextoBotoesCriacaoEndereco(){
 
 function renderizarTextoConsultaTelefone(){
     var botoesAssociacao = document.querySelectorAll(".botao-associar")
-    botoesAssociacao[0].innerText = "Modificar Telefone"
+    botoesAssociacao[0].innerText = "Visualizar Telefones"
 }
 
 
 function renderizarTextoConsultaEndereco(){
     var botoesAssociacao = document.querySelectorAll(".botao-associar")
-    botoesAssociacao[1].innerText = "Modificar Endereço"
+    botoesAssociacao[1].innerText = "Visualizar Endereços"
 }
 
-escolherRenderizacao()
 
 export {
     escolherRenderizacao
