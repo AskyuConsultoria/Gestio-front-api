@@ -149,6 +149,7 @@ async function criarComum(nomeUpper, cardPessoa, totalOriginal) {
   const etapa = document.querySelector('.status-etapa');
   const subPedido = document.querySelector('.sub-pedido');
 
+  etapa.classList.remove('status-cancelado')
 
   // Configurar o conteúdo para "Em Andamento"
   etapa.innerHTML = 'EM ANDAMENTO';
@@ -172,6 +173,7 @@ async function mudarSwitch(){
   const switchElement = document.querySelector('.custom-switch');
 
   if (!switchElement.checked) {
+    etapa.style.color= '#012171'
     switchElement.style.backgroundColor = '#dc3545';
     switchElement.style.borderColor = '#dc3545';
 
@@ -189,6 +191,7 @@ async function mudarSwitch(){
       }).join('');
       totalPedidos.innerHTML = cancelados.length; // Atualiza o número de pedidos
     } else {
+      subPedido.classList.add('cancel')
       // Não há pedidos cancelados
       totalPedidos.innerHTML = '0';
       containerPessoa.innerHTML = `<img src="./assets/not-found.svg">
@@ -196,9 +199,8 @@ async function mudarSwitch(){
       containerPessoa.classList.add('zero');
       etapa.innerHTML = '';
     }
-
+    
     subPedido.classList.add('margem-ajustada');
-    // etapa.style.marginRight = '15%';
     etapa.innerHTML = '<div>CANCELADOS</div>';
     etapa.classList.add('status-cancelado')
 
@@ -219,6 +221,7 @@ async function mudarSwitch(){
   }).join('');
 
     containerPessoa.innerHTML = ''; // Limpa o conteúdo anterior
+    etapa.classList.remove('status-cancelado')
     etapa.innerHTML = 'EM ANDAMENTO';
     totalPedidos.innerHTML = totalOriginal;
     containerPessoa.innerHTML = cardPessoa; // Restaura os pedidos em andamento

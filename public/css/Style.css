@@ -181,7 +181,7 @@ header {
 
 .finalizados {
     border-left: 30px solid var(--azul) !important;
-    margin-left: 7%;
+    margin-left: 10%;
 }
 
 .card-pessoa {
@@ -194,7 +194,7 @@ header {
     background-color: white;
 
     .texto-card {
-        margin-left: 10%;
+        margin-left: 7%;
 
         div {
             font-weight: 400;
@@ -355,6 +355,13 @@ header {
     }
 }
 
+.etapa-title-final {
+    text-align: center;
+    color: black;
+    font-weight: 700;
+    width: 80%;
+}
+
 .finalizado {
     transition: transform 1s ease-in-out;
 }
@@ -491,6 +498,26 @@ header {
         }
     }
 
+    .sub-pedido .cancel {
+        margin-left: 26%;
+        font-size: 17px;
+        width: 54%;
+    }
+
+    .zero{
+        img{
+            height: 44vh;
+        }
+    }
+
+    .etapa-title {
+        font-size: 22px;
+    }
+
+    .text-switch{
+        font-size: 16px;
+    }
+
     .margem-ajustada{
         margin-left: 23%;
     }
@@ -529,6 +556,23 @@ header {
         .pedido-etapa {
             margin-right: 0%;
         }
+
+        .final{
+            margin-left: 25%;
+            font-size: 18px;
+        }
+    }
+
+    .nome-pessoa{
+        font-size: 19px;
+    }
+
+    .dtHora{
+        font-size: 15px;
+    }
+
+    .finalizados{
+        margin-left: 22%;
     }
 
     .header-container {
@@ -629,6 +673,10 @@ header {
 
     img {
         height: 5vh;
+    }
+
+    .etapa-title-final{
+        width: 100%;
     }
 
 }
