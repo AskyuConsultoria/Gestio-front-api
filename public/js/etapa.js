@@ -153,8 +153,6 @@ async function criarComum(nomeUpper, cardPessoa, totalOriginal) {
 
   // Configurar o conteúdo para "Em Andamento"
   etapa.innerHTML = 'EM ANDAMENTO';
-  // etapa.style.marginRight = '9%';
-  // subPedido.classList.add('margem-ajustada')
   containerPessoa.classList.remove('zero');
 }
 
@@ -361,6 +359,7 @@ async function buscaAvancada(input){
   var nomeCliente = input.value
   var valorSwitch = document.querySelector('.custom-switch').checked
   const usuarioId = sessionStorage.getItem('id')
+  const etapaId = sessionStorage.getItem('idEtapa')
 
   try{
     const response = await fetch(`http://localhost:8080/agendamento/etapa-filtro-nome/${usuarioId}/${etapaId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
