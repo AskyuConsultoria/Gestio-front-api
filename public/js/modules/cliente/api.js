@@ -3,6 +3,7 @@ import * as contato from "./contato.js"
 async function cadastrarContato() {
 
     const usuario = sessionStorage.getItem('id')
+    const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/clientes`, {
@@ -14,7 +15,8 @@ async function cadastrarContato() {
                 nome: document.getElementById("input-nome").value,
                 sobrenome: document.getElementById("input-sobrenome").value,
                 email: document.getElementById("input-email").value,
-                usuario: usuario
+                usuario: usuario,
+                responsavel: responsavelId
             })
         });
 
@@ -22,6 +24,7 @@ async function cadastrarContato() {
         console.log(dados)
 
         buscarClientePorId(dados.id)
+        sessionStorage.setItem("CLIENTE-ID", dados.id)
         return response.status
 
     } catch (error) {
@@ -29,6 +32,7 @@ async function cadastrarContato() {
         console.log(`Houve um erro: ${error}`)
     }
 }
+
 
 
 async function cadastrarTelefone(tipoTelefone) {
@@ -95,6 +99,8 @@ async function buscarClientePorId(novoClienteId) {
     }
 
 }
+
+
 
 async function buscarClientesPorNome(clienteNome) {
     var usuarioId = sessionStorage.getItem("id")

@@ -10,16 +10,16 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39WmHQsspRc+rYqFONFxm+TzbtMQzfgnGfN6A"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/adicionar-dependente.css">
-
+    <script type="module" src="./js/modules/cliente/contato.js"></script>
     <title>Adicionar Dependente</title>
 </head>
 
 <body class="background2">
-    <header class="header py-4 w-100 px-0">
+    <header class="header w-100 px-0">
         <div class="container text-center">
-            <div class="icon-wrapper d-flex justify-content-end">
+            <div class="icon-wrapper d-flex justify-content-end" onclick="window.history.go(-1)">
                 <img src="./assets/x-circle (1).svg" alt="botão-sair" id="close-btn"
-                    onclick="document.getElementById('modal-descartar').style.display = 'none'"
+                    onclick="window.history.go(-1)"
                     class="ms-auto icon-lg ">
             </div>
         </div>
@@ -34,23 +34,31 @@
                     <span class="input-group-text" style="display: flex; width: 40px;">
                         <img src="assets/search.svg" alt="" width="16" height="16" style="margin: auto;">
                     </span>
-                    <input class="form-control" type="search" placeholder="Pesquise Clientes" aria-label="Search">
+                    <input class="form-control" id="input-pesquisa-cliente" type="search" onchange="validarNumeroDeCaracteresEBuscarClientes(this.value)" placeholder="Pesquise Clientes" aria-label="Search">
                 </div>
             </form>
             <div class="mt-5"></div>
         </div>
     </div>
 
-    <div class="card mt-4" style="border-radius: 10px; position: relative;">
-        <div class="card-content" style="padding-left: 20px; position: relative;">
-            <div class="blue-stripe"
-                style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
-            </div>
-            <div class="card-body mb-20">
-                <span class="card-title">John Doe</span>
+    
+    <div class="container-md p-3">
+    <div class="d-flex flex-column w-100" id="conteudo-cliente">
+        <div class="card mt-4" style="border-radius: 10px; position: relative;">
+            <div class="card-content" style="padding-left: 20px; position: relative;">
+                <div class="blue-stripe"
+                    style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
+                </div>
+                <div class="card-body mb-20">
+                    <span class="card-title">John Doe</span>
+                </div>
             </div>
         </div>
     </div>
+    </div>
+        
+
+   
 </body>
 
 </html>

@@ -62,6 +62,12 @@ function agregarERetornarConteudosModal(tipoConteudo){
     listaDeConteudo.push(document.querySelector("#content-modal-numero-celular"))
   }
 
+  if(tipoConteudo == "cliente"){
+    listaDeConteudo.push(document.querySelector("#content-modal-nome"), 
+    document.querySelector("#content-modal-sobrenome"), 
+    document.querySelector("#content-modal-email"))
+  }
+
   return listaDeConteudo
 }
   
@@ -121,6 +127,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
     }
 
     if(tipoFormulario == 'cliente') var camposJson = []
+    if(tipoFormulario == 'cliente-modal') var camposJson = []
     
       
   
@@ -150,7 +157,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
   
     if(formularioValido){
       if(tipoFormulario == "pedido") pedido.salvarModificacao()
-      if(tipoFormulario == "telefone" || tipoFormulario == "endereco") pedido.salvarModificacaoModal()  
+      if(tipoFormulario == "telefone" || tipoFormulario == "endereco" || tipoFormulario == "cliente-modal" ) pedido.salvarModificacaoModal()  
       if(tipoFormulario == "cliente") cliente.salvarContato()
     } 
   }

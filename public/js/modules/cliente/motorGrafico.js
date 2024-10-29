@@ -16,6 +16,7 @@ function escolherRenderizacao(){
         motorGraficoForm.esconderBotoesEdicao()
         motorGraficoForm.esconderCardEndereco()
         esconderBotoesAssociacao()
+        exibirComponenteDependente()
     }
 
     if(paginaRenderizada == 'consultar-contato'){
@@ -25,6 +26,7 @@ function escolherRenderizacao(){
         motorGraficoForm.esconderInputsNumero()
 
         exibirBotoesAssociacao()
+        exibirComponenteDependente()
         renderizarTextoConsultaEndereco()
         renderizarTextoConsultaTelefone()
 
@@ -73,6 +75,23 @@ function exibirBotoesAssociacao(){
        if(botoesAssociacao[i].classList.contains('d-none')){
          botoesAssociacao[i].classList.remove('d-none')
        }
+    }
+ }
+
+
+function exibirComponenteDependente(){
+    const responsavelExiste = sessionStorage.getItem("RESPONSAVEL-ID") != null
+    const clienteExiste = sessionStorage.getItem("CLIENTE-ID") != null
+    const componenteDependentes = document.querySelector("#componente-dependentes")
+    if(responsavelExiste && clienteExiste){
+        if(componenteDependentes.classList.contains('d-none')){
+            componenteDependentes.classList.remove('d-none')
+        }
+    } else {
+        if(componenteDependentes.classList.contains('d-flex')){
+            componenteDependentes.classList.remove('d-flex')
+        }
+        componenteDependentes.classList.add('d-none')
     }
  }
  

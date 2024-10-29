@@ -5,10 +5,13 @@ import { escolherRenderizacao } from "../cliente/motorGrafico.js"
 
 
 window.preencherCardsDeCliente = preencherCardsDeCliente
+window.preencherCardsDeClienteResponsavel = preencherCardsDeClienteResponsavel
 window.validarNumeroDeCaracteresEBuscarClientes = validarNumeroDeCaracteresEBuscarClientes
 window.transferirParaPagina = transferirParaPagina
 window.limparCache = limparCache
 window.validarSeEResponsavelDependente = validarSeEResponsavelDependente
+window.associarResponsavel = associarResponsavel
+window.removerClienteId = removerClienteId
 
 async function salvarContato(){
     var listaDeResponse = []
@@ -68,8 +71,40 @@ async function preencherCardsDeCliente() {
     }
   }
 
+  async function preencherCardsDeClienteResponsavel() {
+    var nomeCliente = document.querySelector("#input-pesquisa-cliente").value
+    var listaCliente = await apiContato.buscarClientesPorNome(nomeCliente)
+
+    var boxCliente = document.querySelector("#conteudo-cliente")
+    boxCliente.innerHTML = ""
+
+    for (var i = 0; i < listaCliente.length; i++) {
+      boxCliente.innerHTML +=
+        `
+          <div class="card ms-0 mb-3 mt-4 w-100"  id="${listaCliente[i].id}"  data-responsavel-id="${validarSePossuiResponsavelERetornarId(listaCliente[i])}" style="border-radius: 10px; position: relative;" 
+          onclick="limparCache(); removerClienteId(); associarResponsavel(this.id); transferirParaPagina('Cadastro-contato.html',['PAGINA-CONTATO'], ['criar-contato'])">
+                <div class="blue-stripe"
+                    style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
+                </div>
+                <div class="card-content" style="padding-left: 20px;">
+                    <div class="card-body mb-20">
+                        <span class="card-title">${listaCliente[i].nome} ${listaCliente[i].sobrenome}</span>
+                        ${validarPossuiResponsavelERetornarElementoString(listaCliente[i])}
+                    </div>
+                </div>
+            </div>
+          `
+    }
+  }
+
+
+  function associarResponsavel(idResponsavel){
+    sessionStorage.setItem("RESPONSAVEL-ID", idResponsavel)
+  }
+
   function validarNumeroDeCaracteresEBuscarClientes(nome){
-    if(nome.length > 3) preencherCardsDeCliente()
+    if(nome.length > 3 && window.location.pathname == "/Contato.html") preencherCardsDeCliente()
+    else if(window.location.pathname == "/Adicionar-dependente.html") preencherCardsDeClienteResponsavel()
     if(nome.length == 0) document.querySelector("#conteudo-cliente").innerHTML = ""
   }
 
@@ -87,7 +122,7 @@ async function preencherCardsDeCliente() {
   }
 
   function validarSeEResponsavelDependente(idResponsavel){
-    if(idResponsavel != null){
+    if(idResponsavel != null && idResponsavel != ""){
         sessionStorage.setItem("RESPONSAVEL", false)
         sessionStorage.setItem("RESPONSAVEL-ID", idResponsavel)
         return
@@ -95,13 +130,17 @@ async function preencherCardsDeCliente() {
         sessionStorage.setItem("RESPONSAVEL", true)
   }
 
+
   function transferirParaPagina(enderecoPagina, listaChaveSessionStorage, listaValorSessionStorage){
 
-    if(listaChaveSessionStorage.length != listaChaveSessionStorage.length){
-        console.log("Configuração de Session storage equivocada. Corrigir parametrização no HTML")
-    }
 
     if(listaChaveSessionStorage != undefined && listaValorSessionStorage != undefined){
+
+        if(listaChaveSessionStorage.length != listaChaveSessionStorage.length){
+            throw("Configuração de Session storage equivocada. Corrigir parametrização no HTML")
+            return
+        }
+
         for(var i = 0; i < listaChaveSessionStorage.length; i++)
         sessionStorage[`${listaChaveSessionStorage[i]}`] = listaValorSessionStorage[i]
     }
@@ -110,7 +149,15 @@ async function preencherCardsDeCliente() {
     
   }
 
+
+  function removerClienteId(){
+    if(sessionStorage.getItem("CLIENTE-ID") != null){
+        sessionStorage.removeItem("CLIENTE-ID")
+    }
+  }
+
   function limparCache(){
+
     if(sessionStorage.getItem("TELEFONE-ID") != null){
         sessionStorage.removeItem("TELEFONE-ID")
     }
