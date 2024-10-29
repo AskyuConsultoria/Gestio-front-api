@@ -495,8 +495,8 @@ async function criarPedido() {
                 usuario: sessionStorage.getItem('id'),
                 cliente: sessionStorage.getItem('CLIENTE-ID'),
                 etapa: 1,
-                endereco: sessionStorage.getItem('ENDERECO-ID'),
-                telefone: sessionStorage.getItem('TELEFONE-ID')
+                endereco: sessionStorage.getItem('ENDERECO-MODAL-ID'),
+                telefone: sessionStorage.getItem('TELEFONE-MODAL-ID')
 
             })
         });
