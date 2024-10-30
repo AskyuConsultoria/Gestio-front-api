@@ -205,13 +205,13 @@
             var inputs = document.querySelectorAll('.input-valor-medida')
             console.log(inputs)
             for(var i = 0; i < inputs.length; i++){
-                cadastrarMedida(labels[i].id, inputs[i].value, idUsuario, idCliente, idPeca, idItemPedido)
+               await cadastrarMedida(labels[i].id, inputs[i].value, idUsuario, idCliente, idPeca, idItemPedido)
             }
             
         
-        // setTimeout(() => {
-        //     window.location = "Lista_fichas.html"
-        // }, 2000);
+        setTimeout(() => {
+            window.location = "Lista_fichas.html"
+        }, 2000);
     }
 
     async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
@@ -233,6 +233,9 @@
         }
         console.log("Vinculado Medida " + idMedida)
     }
+
+
+    // async function atualizarMedida
 
     async function buscarValoresMedida(){
         var idUsuario = sessionStorage.getItem("id")
@@ -261,15 +264,47 @@
         }
     }
 
-    function validarOrigem(){
+    async function validarOrigem(){
+        var botaoSalvar = document.querySelector('.salvar')
+
         if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
-            buscarValoresMedida()
+           await buscarValoresMedida()
+           botaoSalvar.onclick = atualizarFicha
+           botaoSalvar.innerText = "Atualizar"
+        } else {
+           botaoSalvar.onclick = salvar
+           botaoSalvar.innerText = "Salvar"
         }
 
-        var botaoSalvar = document.querySelector('.salvar')
-        botaoSalvar.onclick = ""
-        botaoSalvar.innerText = "Atualizar"
+        
     }
+
+    async function atualizarFicha() {
+    var listaInput = document.querySelectorAll(".input-valor-medida")
+    for(var i = 0; i < listaInput.length; i++){
+        atualizarValorMedida(listaInput[i].id, listaInput[i].value)
+    }
+}
+
+async function atualizarValorMedida(valorMedidaId, valor) {
+    const usuarioId = sessionStorage.getItem('id')
+
+    try{
+        var response = await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
+            method: "PUT"
+        })
+
+        var dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error) {
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+}
+
+
     
 </script>
 </script>
