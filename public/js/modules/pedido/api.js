@@ -29,6 +29,7 @@ async function buscarAgendamento() {
             return []
         }
 
+        await criarCardPipe(dados)
         const dados = await response.json()
         console.log(dados)
         pedido.preencherDadosDePedidoCompleto(dados)
@@ -504,6 +505,7 @@ async function criarPedido() {
         const dados = await response.json()
         console.log(dados)
 
+        // await criarCardPipe(dados)
         await pedido.exibirStatusDaRespostaAPI(response.status)
         sessionStorage.setItem("AGENDAMENTO-ID", dados.id)
         sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
@@ -519,7 +521,28 @@ async function criarPedido() {
 }
 
 
+async function criarCardPipe(agendamento) {
+    console.log("agendamento:", agendamento)
+    const phone= buscarTelefonePorClienteId()
 
+    const dados = {
+        "nome": agendamento.cliente.nome + " " + agendamento.cliente.sobrenome,
+        "email": agendamento.email,
+        "phone": phone.numero,
+        "resumo": agendamento.nome,
+        "data": agendamento.dataInicio
+    }
+
+    console.log(dados)
+
+
+    await fetch(`https://hook.us1.make.com/7uc2ai9y5vrw9lkpp6kvaff21o548d93`, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+
+}
 
 
 async function cadastrarEnderecoModal(){
