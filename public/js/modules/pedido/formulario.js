@@ -1,10 +1,14 @@
 
 import { cadastrarEnderecoModal } from "./api.js"
 import * as pedido from "./pedido.js"
+import * as cliente from "./../cliente/contato.js"
 
 window.validarConteudosNulosEEspecificos = validarConteudosNulosEEspecificos
 window.agregarConteudosEEnviarParaValidar = agregarConteudosEEnviarParaValidar
+window.agregarERetornarConteudosCliente = agregarERetornarConteudosCliente
 window.agregarERetornarConteudosModal = agregarERetornarConteudosModal
+
+
 
 function agregarConteudosEEnviarParaValidar(){
     var conteudoNome = document.querySelector('#content-nome')
@@ -29,6 +33,19 @@ function agregarConteudosEEnviarParaValidar(){
     return listaDeConteudo
   }
 
+
+function agregarERetornarConteudosCliente(){
+  var conteudoNome = document.querySelector('#content-nome')
+  var conteudoSobrenome = document.querySelector('#content-sobrenome')
+  var conteudoEmail = document.querySelector('#content-email')
+
+  var listaDeConteudo = [
+    conteudoNome, conteudoSobrenome, conteudoEmail
+  ]
+
+  return listaDeConteudo
+}
+
 function agregarERetornarConteudosModal(tipoConteudo){
   var listaDeConteudo = []
 
@@ -45,6 +62,12 @@ function agregarERetornarConteudosModal(tipoConteudo){
 
   if(tipoConteudo == "telefone"){
     listaDeConteudo.push(document.querySelector("#content-modal-numero-celular"))
+  }
+
+  if(tipoConteudo == "cliente"){
+    listaDeConteudo.push(document.querySelector("#content-modal-nome"), 
+    document.querySelector("#content-modal-sobrenome"), 
+    document.querySelector("#content-modal-email"))
   }
 
   return listaDeConteudo
@@ -104,6 +127,11 @@ function agregarERetornarConteudosModal(tipoConteudo){
         },
       ]
     }
+
+
+    if(tipoFormulario == 'cliente') var camposJson = []
+    if(tipoFormulario == 'cliente-modal') var camposJson = []
+
     
       
   
@@ -133,7 +161,8 @@ function agregarERetornarConteudosModal(tipoConteudo){
   
     if(formularioValido){
       if(tipoFormulario == "pedido") pedido.salvarModificacao()
-      if(tipoFormulario == "telefone" || "endereco") pedido.salvarModificacaoModal()  
+      if(tipoFormulario == "telefone" || tipoFormulario == "endereco" || tipoFormulario == "cliente-modal" ) pedido.salvarModificacaoModal()  
+      if(tipoFormulario == "cliente") cliente.salvarContato()
     } 
   }
   
@@ -188,6 +217,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
 
 export {
     agregarConteudosEEnviarParaValidar,
+    agregarERetornarConteudosCliente,
     validarConteudosNulosEEspecificos,
     estilizarCamposDoFormulario,
     removerEstilizacaoDoFormulario,

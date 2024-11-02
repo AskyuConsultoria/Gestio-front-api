@@ -8,6 +8,7 @@ window.buscarAgendamento = buscarAgendamento
 window.buscarClienteView = buscarClienteView
 window.buscarEnderecoPorClienteId = buscarEnderecoPorClienteId
 window.buscarTelefonePorClienteId = buscarTelefonePorClienteId
+window.buscarClientesPorResponsavelId = buscarClientesPorResponsavelId
 window.atualizarEnderecoAgendamento = atualizarEnderecoAgendamento
 
 
@@ -148,8 +149,16 @@ async function buscarTelefonePorId() {
 }
 
 async function buscarEnderecoPorClienteId(nomeModal) {
+    var usuarioId = sessionStorage.getItem("id")
+    var clienteId = sessionStorage.getItem("CLIENTE-ID")
+
+    if(clienteId == null){
+        pedido.escolherModalMultivalorado(nomeModal, [])
+        return
+    }
+  
     var usuarioId = parseInt(sessionStorage.getItem("id"))
-    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
@@ -161,6 +170,7 @@ async function buscarEnderecoPorClienteId(nomeModal) {
         }
 
         if (response.status == 204) {
+            pedido.escolherModalMultivalorado(nomeModal, [])
             return []
         }
 
@@ -177,6 +187,12 @@ async function buscarEnderecoPorClienteId(nomeModal) {
 async function buscarTelefonePorClienteId(nomeModal) {
     var usuarioId = sessionStorage.getItem("id")
     var clienteId = sessionStorage.getItem("CLIENTE-ID")    
+    
+    if(clienteId == null){
+        pedido.escolherModalMultivalorado(nomeModal, [])
+        return
+    }
+
 
     try {
         const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${clienteId}`, {
@@ -188,7 +204,40 @@ async function buscarTelefonePorClienteId(nomeModal) {
         }
 
         if (response.status == 204) {
-            return []
+            pedido.escolherModalMultivalorado(nomeModal, [])
+        }
+
+        const dados = await response.json()
+        console.log(dados)
+        pedido.escolherModalMultivalorado(nomeModal, dados)
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+async function buscarClientesPorResponsavelId(nomeModal) {
+    var usuarioId = sessionStorage.getItem("id")
+    var clienteId = sessionStorage.getItem("CLIENTE-ID")
+    var responsavelId = sessionStorage.getItem("RESPONSAVEL-ID") 
+    var isResponsavel = sessionStorage.getItem("RESPONSAVEL") == "true"   
+
+    if(isResponsavel == true) responsavelId = clienteId
+       
+
+    try {
+        const response = await fetch(`http://localhost:8080/clientes/por-responsavel/${usuarioId}/${responsavelId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            pedido.escolherModalMultivalorado(nomeModal, [])
+            return
         }
 
         const dados = await response.json()
@@ -246,7 +295,7 @@ async function atualizarDadosCliente(clienteId) {
                 id: clienteId,
                 nome: document.querySelector('#input-nome').value,
                 sobrenome: document.querySelector('#input-sobrenome').value,
-                email: document.querySelector('#input-sobrenome').value
+                email: document.querySelector('#input-email').value
             })
         });
 
@@ -479,6 +528,73 @@ async function atualizarTelefoneModal(){
     }
 }
 
+async function atualizarClienteModal() {
+    const usuario = sessionStorage.getItem('id')
+    const clienteId = sessionStorage.getItem("CLIENTE-ID")
+    const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
+
+    try {
+        const response = await fetch(`http://localhost:8080/clientes/${clienteId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: document.getElementById("input-modal-nome").value,
+                sobrenome: document.getElementById("input-modal-sobrenome").value,
+                email: document.getElementById("input-modal-email").value,
+                usuario: usuario,
+                responsavel: responsavelId
+            })
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+
+        buscarClientePorId(dados.id)
+        return response.status
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+
+async function cadastrarClienteModal() {
+
+    const usuario = sessionStorage.getItem('id')
+    const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
+
+    try {
+        const response = await fetch(`http://localhost:8080/clientes`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: document.getElementById("input-modal-nome").value,
+                sobrenome: document.getElementById("input-modal-sobrenome").value,
+                email: document.getElementById("input-modal-email").value,
+                usuario: usuario,
+                responsavel: responsavelId
+            })
+        });
+
+        const dados = await response.json()
+        console.log(dados)
+
+        buscarClientePorId(dados.id)
+        sessionStorage.setItem("CLIENTE-ID", dados.id)
+        return response.status
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
+}
+
+
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     
@@ -498,14 +614,12 @@ async function criarPedido() {
                 etapa: 1,
                 endereco: sessionStorage.getItem('ENDERECO-MODAL-ID'),
                 telefone: sessionStorage.getItem('TELEFONE-MODAL-ID')
-
             })
         });
 
         const dados = await response.json()
         console.log(dados)
 
-        // await criarCardPipe(dados)
         await pedido.exibirStatusDaRespostaAPI(response.status)
         sessionStorage.setItem("AGENDAMENTO-ID", dados.id)
         sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
@@ -688,6 +802,7 @@ export {
     buscarClientesPorNome,
     buscarEnderecoPorClienteId,
     buscarTelefonePorClienteId,
+    buscarClientesPorResponsavelId,
     buscarEnderecoPorId,
     buscarTelefonePorId,
     atualizarDadosCliente,
@@ -695,12 +810,14 @@ export {
     atualizarEndereco,
     atualizarTelefone,
     atualizarEnderecoModal,
-    atualizarTelefoneModal,
+    atualizarTelefoneModal
+    atualizarClienteModal,
     atualizarEnderecoAgendamento,
     atualizarTelefoneAgendamento,
     criarPedido,
     cadastrarEnderecoModal,
     cadastrarTelefoneModal,
+    cadastrarClienteModal,
     buscarEtapas,
     buscarStatusAgendamento
 }

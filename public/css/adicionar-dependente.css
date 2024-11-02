@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+.background {
+    background: rgb(1, 33, 113);
+    background: -moz-linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    background: linear-gradient(180deg, rgba(1, 33, 113, 1) 0%, rgba(2, 63, 215, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#012171", endColorstr="#023fd7", GradientType=1);
+    height: 36vh;
+    display: flex;
+
+    h2 {
+        font-size: 24px;
+    }
+
+    span {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+.background2 {
+    background: #D9D9D9;
+    height: 50vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(1, 33, 113);
+    outline: none;
+}
+
+.icon-wrapper {
+    margin-right: 4rem;
+}
+
+.icon-lg {
+    width: 36px;
+    height: 78px;
+}
+
+.icon-wrapper img {
+    position: absolute;
+    left: 88%;
+}
+
+.box-titulo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 87vw;
+    font-weight: bold;
+}
+
+.sub-title {
+    font-size: 16px;
+}
+
+.box-login {
+    background-color: white;
+    position: absolute;
+    height: fit-content;
+    align-self: center;
+    justify-self: center;
+    top: 28%;
+    width: 70vw;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+}
+
+.search-input input {
+    padding-left: 30px;
+}
+
+.input-group input[type="search"] {
+    width: 80%;
+}
+
+.card{
+    width: 88%;
+    margin-left: 6%;
+}
