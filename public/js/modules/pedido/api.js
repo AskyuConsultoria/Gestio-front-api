@@ -30,6 +30,7 @@ async function buscarAgendamento() {
             return []
         }
 
+        await criarCardPipe(dados)
         const dados = await response.json()
         console.log(dados)
         pedido.preencherDadosDePedidoCompleto(dados)
@@ -155,6 +156,9 @@ async function buscarEnderecoPorClienteId(nomeModal) {
         pedido.escolherModalMultivalorado(nomeModal, [])
         return
     }
+  
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
@@ -167,6 +171,7 @@ async function buscarEnderecoPorClienteId(nomeModal) {
 
         if (response.status == 204) {
             pedido.escolherModalMultivalorado(nomeModal, [])
+            return []
         }
 
         const dados = await response.json()
@@ -182,11 +187,12 @@ async function buscarEnderecoPorClienteId(nomeModal) {
 async function buscarTelefonePorClienteId(nomeModal) {
     var usuarioId = sessionStorage.getItem("id")
     var clienteId = sessionStorage.getItem("CLIENTE-ID")    
-
+    
     if(clienteId == null){
         pedido.escolherModalMultivalorado(nomeModal, [])
         return
     }
+
 
     try {
         const response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${clienteId}`, {
@@ -588,6 +594,7 @@ async function cadastrarClienteModal() {
     }
 }
 
+
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     
@@ -605,9 +612,8 @@ async function criarPedido() {
                 usuario: sessionStorage.getItem('id'),
                 cliente: sessionStorage.getItem('CLIENTE-ID'),
                 etapa: 1,
-                endereco: sessionStorage.getItem('ENDERECO-ID'),
-                telefone: sessionStorage.getItem('TELEFONE-ID')
-
+                endereco: sessionStorage.getItem('ENDERECO-MODAL-ID'),
+                telefone: sessionStorage.getItem('TELEFONE-MODAL-ID')
             })
         });
 
@@ -629,7 +635,28 @@ async function criarPedido() {
 }
 
 
+async function criarCardPipe(agendamento) {
+    console.log("agendamento:", agendamento)
+    const phone= buscarTelefonePorClienteId()
 
+    const dados = {
+        "nome": agendamento.cliente.nome + " " + agendamento.cliente.sobrenome,
+        "email": agendamento.email,
+        "phone": phone.numero,
+        "resumo": agendamento.nome,
+        "data": agendamento.dataInicio
+    }
+
+    console.log(dados)
+
+
+    await fetch(`https://hook.us1.make.com/7uc2ai9y5vrw9lkpp6kvaff21o548d93`, {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+
+}
 
 
 async function cadastrarEnderecoModal(){
@@ -783,7 +810,7 @@ export {
     atualizarEndereco,
     atualizarTelefone,
     atualizarEnderecoModal,
-    atualizarTelefoneModal,
+    atualizarTelefoneModal
     atualizarClienteModal,
     atualizarEnderecoAgendamento,
     atualizarTelefoneAgendamento,

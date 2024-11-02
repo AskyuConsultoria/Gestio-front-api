@@ -15,7 +15,6 @@ window.preencherFormulario = preencherFormulario
 window.cliqueExpandidoWrapper = cliqueExpandidoWrapper
 
 
-
 window.clienteId = sessionStorage.getItem('CLIENTE-ID')
 window.inputClienteId = clienteId;
 window.inputTelefoneId = telefoneId;
@@ -94,10 +93,12 @@ export var salvarCliente = false
 export var salvarPedido = false
 export var salvarEndereco = false
 export var salvarTelefone = false
+
 export var salvarClienteModal = false
 export var atualizarEndereco = false
 export var atualizarTelefone = false
 export var atualizarClienteModal = false
+
 export var atualizarEnderecoModal = false
 export var atualizarTelefoneModal = false
 export var salvarEnderecoModal = false
@@ -138,6 +139,7 @@ export async function preencherDadosDePedidoCompleto(agendamento) {
 
 export function preencherDadosCliente(cliente) {
   const elModalMultivalorado = document.querySelector('#modal-multivalorado')
+
   sessionStorage.setItem('CLIENTE-ID', cliente.id)
 
   document.querySelector('#input-nome').value = cliente.nome
@@ -149,7 +151,7 @@ export function preencherDadosCliente(cliente) {
     document.querySelector('#input-modal-').value = cliente.sobrenome
     document.querySelector('#input-email').value = cliente.email
   }
-
+  
   inputAntigoNome = cliente.nome
   inputAntigoSobrenome = cliente.sobrenome
   inputAntigoEmail = cliente.email
@@ -172,7 +174,7 @@ export function preencherDadosEndereco(endereco) {
   document.querySelector('#input-cidade').value = endereco.cidade
   document.querySelector('#input-uf').value = endereco.uf
 
-  if (elModalMultivalorado.classList.contains('show')) {
+  if(elModalMultivalorado.classList.contains('show')){
     document.querySelector("#input-modal-cep").value = endereco.cep
     document.querySelector("#input-modal-numero").value = endereco.numero
     document.querySelector("#input-modal-rua").value = endereco.logradouro
@@ -192,7 +194,7 @@ export function preencherDadosTelefone(telefone) {
 
   document.querySelector('#input-numero-celular').value = telefone.numero
 
-  if (elModalMultivalorado.classList.contains('show')) {
+  if(elModalMultivalorado.classList.contains('show')){
     document.querySelector("#input-modal-numero-celular").value = telefone.numero
   }
 
@@ -372,8 +374,9 @@ function formatarHorario(data) {
 }
 
 export function associarClienteACriacaoDePedido(novoClienteId, cliente) {
+  
   const elModalMultivalorado = document.querySelector('#modal-multivalorado')
-  clienteId = novoClienteId
+  
   document.querySelector('#input-nome').value = cliente.nome
   document.querySelector('#input-sobrenome').value = cliente.sobrenome
   document.querySelector('#input-email').value = cliente.email
@@ -412,6 +415,14 @@ if (document.querySelector('#modal-generico')) {
   window.modalGenerico = modalGenerico
 }
 
+  if (inputElemento.classList.contains("salvar-telefone")) salvarTelefoneModal = true
+  if (inputElemento.classList.contains("salvar-endereco")) salvarEnderecoModal = true
+}
+
+
+const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
+
+window.modalGenerico = modalGenerico
 
 export function construirModalGenerico(elementoId, status) {
   var textoModal = ""
@@ -488,11 +499,21 @@ function reexbirValoresDaConsulta() {
   if (elModalMultivalorado.classList.contains('show')) {
     formulario.removerEstilizacaoDoFormulario()
     return
+}
+
+function reexbirValoresDaConsulta() {
+  setTimeout(modalGenerico.hide(), 1000)
+  const elModalMultivalorado = document.querySelector('#modal-multivalorado')
+  if(elModalMultivalorado.classList.contains('show')){
+    formulario.removerEstilizacaoDoFormulario()
+    return 
+
   }
 
   motorGrafico.escolherRenderizacao(false, "consultar-pedido")
   formulario.removerEstilizacaoDoFormulario()
 }
+
 
 if (document.querySelector('#modal-multivalorado')) {
   const modalMultivalorado = new bootstrap.Modal(document.querySelector('#modal-multivalorado'))
@@ -522,6 +543,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     tituloModal.innerText = "Telefone do Cliente"
     corpo = "lista[i].numero"
     id = telefoneId
+
   } else if (nomeModal == "cliente") {
     tituloModal.innerText = "Informações do Dependente"
     corpo = "exibirClienteCompleto(lista[i])"
@@ -573,17 +595,18 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     <button type="button" class="btn btn-lg text-white" style="background-color: #012171; width: 48%" onclick="validarAtualizacaoEndereco('${nomeModal}')">Confirmar</button>
   </div>`
 
+
   const elModalMultivalorado = document.querySelector('#modal-multivalorado')
-  if (!elModalMultivalorado.classList.contains('show')) modalMultivalorado.show()
+  if(!elModalMultivalorado.classList.contains('show')) modalMultivalorado.show()
   var corpoMultivalorado = document.querySelector(`#conteudo-modal-multivalorado`)
   corpoMultivalorado.children[0].children[0].children[0].checked = true
 }
 
-export function cliqueExpandidoWrapper(wrapper) {
+export function cliqueExpandidoWrapper(wrapper){
   wrapper.children[0].children[0].checked = true
 }
 
-export function ativarInput(id) {
+export function ativarInput(id){
   document.querySelector(`#wrapper-${id}`).children[0].children[0].checked = true
 }
 
@@ -755,6 +778,10 @@ export async function preencherFormulario(tipoFormulario, verbo, idAtualizacao) 
   }
 
   }
+
+
+  }
+
 
 
 
@@ -937,5 +964,162 @@ export function validarEventoKeyboard(evento) {
     api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
   }
 }
+
+   var id = document.querySelector('.form-check-input:checked').id.split('-').pop()
+   var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+
+
+    if (id == sessionStorage.getItem(`${nomeModal.toUpperCase()}-MODAL-ID`) && agendamentoId != null) {
+      esconderModalMultivalorado()
+      return
+    }
+    else {
+      sessionStorage.setItem(`${nomeModal.toUpperCase()}-MODAL-ID`, id)
+
+      if (nomeModal == 'endereco') {
+        atualizarEndereco = true
+        if(agendamentoId != null) await api.atualizarEnderecoAgendamento(id) 
+        await api.buscarEnderecoPorId()
+        motorGrafico.exibirInputsEndereco()
+      }
+
+      if (nomeModal == 'telefone') {
+        atualizarTelefone = true
+        if(agendamentoId != null)  await api.atualizarTelefoneAgendamento(id)
+        await api.buscarTelefonePorId()
+        motorGrafico.exibirInputsNumero()
+      }
+
+      esconderModalMultivalorado()
+    }
+
+
+ }
+
+
+
+  export async function salvarModificacao() {
+    const clienteId = sessionStorage.getItem("CLIENTE-ID")
+    const enderecoId = sessionStorage.getItem("ENDERECO-ID")
+    const telefoneId = sessionStorage.getItem("TELEFONE-ID")
+    const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+
+
+    const listaDeResponse = []
+
+    if (salvarCliente) {
+      listaDeResponse.push(await api.atualizarDadosCliente(clienteId))
+    }
+
+    if (atualizarTelefone && agendamentoId != null) {
+      listaDeResponse.push(await api.atualizarTelefoneAgendamento(telefoneId))
+    }
+
+    if (atualizarEndereco && agendamentoId != null) {
+      listaDeResponse.push(await api.atualizarEnderecoAgendamento(enderecoId))
+    }
+
+    if (salvarEndereco) {
+      listaDeResponse.push(await api.atualizarEndereco())
+    }
+
+    if (salvarTelefone) {
+      listaDeResponse.push(await api.atualizarTelefone())
+    }
+
+    if (salvarPedido && agendamentoId == null) {
+      api.criarPedido(agendamentoId)
+    } else if (salvarPedido) {
+      listaDeResponse.push(await api.atualizarDadosPedido(agendamentoId))
+    }
+
+    if (listaDeResponse.length == 0 && salvarPedido == false) {
+      construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
+      return
+    }
+    validarRetornoEExibirModalDeStatus(listaDeResponse)
+  }
+
+
+  export async function salvarModificacaoModal() {
+    var listaDeResponse = []
+
+    if (salvarEnderecoModal) {
+      listaDeResponse.push(await api.cadastrarEnderecoModal())
+    }
+
+    if (salvarTelefoneModal) {
+      listaDeResponse.push(await api.cadastrarTelefoneModal())
+    }
+
+    if (atualizarEnderecoModal) {
+      listaDeResponse.push(await api.atualizarEnderecoModal())
+      sessionStorage.removeItem("ENDERECO-MODAL-ID")
+    }
+
+    if (atualizarTelefoneModal) {
+      listaDeResponse.push(await api.atualizarTelefoneModal())
+      sessionStorage.removeItem("TELEFONE-MODAL-ID")
+    }
+
+    if (listaDeResponse.length == 0) {
+      construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
+      return
+    }
+
+    validarRetornoEExibirModalDeStatus(listaDeResponse)
+    if(salvarEnderecoModal || atualizarEnderecoModal) await api.buscarEnderecoPorClienteId('endereco')
+    if(salvarTelefoneModal || atualizarTelefoneModal) await api.buscarTelefonePorClienteId('telefone')
+    
+    salvarEnderecoModal = false
+    salvarTelefoneModal = false
+    atualizarEnderecoModal = false
+    atualizarTelefoneModal = false
+  }
+
+  export function esconderModalMultivalorado() {
+    modalMultivalorado.hide()
+  }
+
+  export function houveMudancaDeDados() {
+    if (salvarPedido || salvarCliente || salvarEndereco || salvarTelefone || atualizarEndereco || atualizarTelefone) return true
+    else return false
+  }
+
+  export function dadosForamAtualizados() {
+    salvarCliente = false
+    salvarPedido = false
+    salvarEndereco = false
+    salvarTelefone = false
+    atualizarEndereco = false
+    atualizarTelefone = false
+  }
+
+  function validarRetornoEExibirModalDeStatus(listaResponse) {
+    var responseInvalida = 404 || 400 || 501 || 500
+    for (var i = 0; i < listaResponse.length; i++) {
+      if (listaResponse[i] == responseInvalida) {
+        exibirStatusDaRespostaAPI(listaResponse[i])
+        return
+      }
+    }
+
+    exibirStatusDaRespostaAPI(listaResponse[0])
+  }
+
+  export function exibirStatusDaRespostaAPI(response) {
+    var status = "Alterações salvas com sucesso"
+    if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
+    dadosForamAtualizados()
+    construirModalGenerico("statusButton", status)
+  }
+
+
+  export function validarEventoKeyboard(evento) {
+    if (evento.key == "Enter") {
+      api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
+    }
+  }
+
 
 

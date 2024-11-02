@@ -1,0 +1,105 @@
+body{
+    background-color: #EEEEEE;
+    overflow-y: auto;
+}
+
+.avatar-usuario {
+    width: 47px;
+    height: 47px;
+}
+
+.icone-notificacao {
+    width: 47px;
+    height: 47px;
+}
+
+.icone-lupa{
+    width: 20px;
+    height: 20px;   
+}
+
+.icone-filtro{
+    width: 20px;
+    height: 20px;
+}
+
+
+.icone-ancora{
+    width: 50px;
+    height: 50px;
+}
+
+.icone-ancora-peca{
+    width: 50px;
+    height: 30px;
+}
+
+.calendar-container{
+    background-color: #FFF;
+    width: 450px;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.calendar-container header{
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+.header, .calendar-navigation{
+    display: flex;
+}
+
+header .calendar-navigation span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    user-select: none;
+    color: #aeabab;
+    font-size: 1.9rem;
+}
+
+.calendar-navigation span:last-child {
+    margin-right: 10px;
+}
+
+header .calendar-navigation span:hover{
+    background-color: #f2f2f2;
+}
+
+.calendar-body{
+    padding: 20px;
+}
+
+.calendar-body ul {
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+    text-align: center;
+}
+
+.calendar-body .calendar-dates{
+    margin-bottom: 20px;
+}
+
+.calendar-body li {
+    width: calc(100%/7);
+    font-size: 1.07rem;
+    color: #414141
+}
+
+.calendar-body .calendar-weekdays li {
+    cursor: default;
+    font-weight: 500;
+}
+
+.calendar-dates li.inactive{
+    color: #aaa;
+}
+

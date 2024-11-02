@@ -9,6 +9,7 @@ window.agregarERetornarConteudosCliente = agregarERetornarConteudosCliente
 window.agregarERetornarConteudosModal = agregarERetornarConteudosModal
 
 
+
 function agregarConteudosEEnviarParaValidar(){
     var conteudoNome = document.querySelector('#content-nome')
     var conteudoSobrenome = document.querySelector('#content-sobrenome')
@@ -31,6 +32,7 @@ function agregarConteudosEEnviarParaValidar(){
   
     return listaDeConteudo
   }
+
 
 function agregarERetornarConteudosCliente(){
   var conteudoNome = document.querySelector('#content-nome')
@@ -126,8 +128,10 @@ function agregarERetornarConteudosModal(tipoConteudo){
       ]
     }
 
+
     if(tipoFormulario == 'cliente') var camposJson = []
     if(tipoFormulario == 'cliente-modal') var camposJson = []
+
     
       
   

@@ -42,29 +42,13 @@ async function listarPecas(){
             </a>
         </div>
         `
+
+        document.getElementById("peca").innerHTML += `<option value="${peca.id}">${peca.nome}</option>`
         
     });
 
-}
-
-async function listarPecasEditar(){
-        const id = sessionStorage.getItem("id")
-
-    const data = await fetch(`http://localhost:8080/pecas/${id}`);
-        if (!data.ok) {
-        throw new Error('Erro ' + data.statusText);
-        }
-
-    const FormatedData = await data.json()
-
-    console.log("Resposta: ", FormatedData)
-
-    FormatedData.forEach(peca => {
-        document.getElementById("peca").innerHTML += `<option value="${peca.id}">${peca.nome}</option>`
-    });
-
     descEditar()
-    
+
 }
 
 async function listarMedidas(){
@@ -138,7 +122,10 @@ async function editarPeca(){
 
     const usuario = sessionStorage.getItem("id")
     const descricao = document.getElementById("desc-default").value
-    const idPeca = document.getElementById("peca").value
+    const select = document.getElementById("peca")
+    var indice = select.selectedIndex;
+    const nome = select.options[indice].text;
+    const idPeca = select.value
 
     const dados = {
         "nome": nome,
