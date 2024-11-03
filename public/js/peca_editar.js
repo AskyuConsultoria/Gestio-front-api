@@ -103,7 +103,7 @@ async function descEditar(){
     var id = document.getElementById("peca").value
 
     const usuario = sessionStorage.getItem("id")
-    const idPeca = sessionStorage.getItem("idPeca")
+    const idPeca = sessionStorage.getItem("PECA-ID")
 
     const data = await fetch(`http://localhost:8080/pecas/${usuario}/${id}`);
         if (!data.ok) {
@@ -148,13 +148,13 @@ async function editarPeca(){
 }
 
 function irPara(id){
-    sessionStorage.setItem("idPeca", id)
+    sessionStorage.setItem("PECA-ID", id)
     window.location.href="./Lista-medida.html"
 }
 
 async function deletarPeca(){
 
-    const idPeca = sessionStorage.getItem("idPeca")
+    const idPeca = sessionStorage.getItem("PECA-ID")
     const usuario = sessionStorage.getItem("id")
 
 
@@ -172,7 +172,7 @@ async function deletarPeca(){
 
 async function deletarMedida(idMedida){
 
-    const idPeca = sessionStorage.getItem("idPeca")
+    const idPeca = sessionStorage.getItem("PECA-ID")
     const usuario = sessionStorage.getItem("id")
 
 

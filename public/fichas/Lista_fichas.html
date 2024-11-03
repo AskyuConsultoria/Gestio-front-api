@@ -15,12 +15,11 @@
 <body onload="listarFichas()" style="background-color:#EEEEEE">
   <header class="header py-4 bg-light px-0">
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="">
+      <a onclick="window.history.go(-1)">
         <img
           src="../assets/botao-voltar 4.svg"
           alt="botao-voltar"
           class="mx-3"
-          onclick="window.history.back()"
       /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img
@@ -64,7 +63,7 @@
         </div>
         <div class="input-grupo">
           <button><img src="../assets/imgs/button_lupa_pesquisar.png" alt=""></button>
-          <input oninput="buscaAvançada(this.value)" type="text" placeholder="Pesquise Pedidos" class="w-75 rounded">
+          <input oninput="buscaAvançada(this.value)" type="text" placeholder="Pesquise Fichas" class="w-75 rounded">
           <button><img src="../assets/imgs/filtro.png" alt=""></button>
       </div>
         <div class="mt-2 py-2">
@@ -84,6 +83,6 @@
 <script>
   function assinarEstadoCadastro(){
     sessionStorage.removeItem("E-VISUALIZACAO-FICHA")
-    location.assign("vincular_medidas.html")
+    location.assign("adicionar_fichas.html")
 }
 </script>
