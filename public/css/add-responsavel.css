@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --azul: #012171;
+    --sombra: rgba(0, 0, 14, 0.163);
+}
+
+body {
+    background-color: #012171 !important;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icon-wrapper {
+    margin-right: 4rem;
+}
+
+.icon-lg {
+    width: 36px;
+    height: 77px;
+}
+
+.box-titulo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60vw;
+    font-weight: bold;
+}
+
+.titulo {
+    font-size: 24px;
+}
+
+.box-contato {
+    background-color: white;
+    margin: 0 auto;
+    width: 90vw;
+    margin-bottom: 40px;
+
+}
+
+
+.conjunto-contato {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .form-check {
+        display: flex;
+    }
+
+    .checkmark {
+        width: 30px;
+        height: 30px;
+        color: #012171;
+    }
+
+    .form-check-input:checked {
+        background-color: #012171;
+        border-color: #012171;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .box-contato {
+        width: 60vw;
+    }
+}
+
+.form-check {
+    label {
+        font-size: 16px;
+    }
+
+    a {
+        font-size: 16px;
+    }
+}
+
+.background2 {
+    h2 {
+        font-size: 48px;
+    }
+
+    .sub-title {
+        font-size: 22px;
+    }
+}

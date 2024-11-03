@@ -120,9 +120,112 @@ lista.forEach(itemPedido => {
         </div>`
 });
 
+}
 
+async function criarPedido(){
+    const novoitemPedido = await buscarItemPedido()
+    const agendamentoConsultado = await buscarAgendamento()
+
+    try{
+        const response = await fetch("http://localhost:8080/pedido", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                itemPedido: novoitemPedido.id,
+                agendamento: agendamentoConsultado.id,
+                usuario: novoitemPedido.usuario.id,
+                etapa: agendamentoConsultado.etapa.id,
+                cliente: agendamentoConsultado.cliente.id,
+            })
+        })
+
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+    
+}
+
+async function buscarItemPedido(){
+    const usuarioId = sessionStorage.getItem("id")
+    const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
+
+    try{
+        const response =  await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+            method: "GET"
+        })
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro:")
+        console.log(error)
+    }
+}
+
+async function buscarAgendamento() {
+
+    var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+    var usuarioId = sessionStorage.getItem("id")
+
+    try {
+        const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro de servidor, status: ${response.status}`);
+        }
+
+        if (response.status == 204) {
+            return []
+        }
+
+        
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch (error) {
+
+        console.log(`Houve um erro: ${error}`)
+    }
 
 }
+
+
+async function validarAssociacaoPedido(itemPedidoId) {
+    if(!sessionStorage.getItem("CADASTRO-PEDIDO")) return
+    sessionStorage.setItem("ITEM-PEDIDO-ID", itemPedidoId)
+    var pedido = await criarPedido()
+    sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
+    console.log(pedido)
+    location.assign("http://localhost:3333/associar-ficha.html")
+}
+
+
+async function IrVisualizarFicha(elFicha){
+    if(sessionStorage.getItem("CADASTRO-PEDIDO")){
+        validarAssociacaoPedido(elFicha.id)
+    } else {
+        sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
+        await associarValoresFicha(elFicha.id)
+        location.assign("http://localhost:3333/fichas/vincular_medidas.html")
+    }
+    
+}
+
+
+
 
 function buscaAvançada(texto){
     var listaFiltrada = lista.filter(ficha => ficha.cliente.nome.toLowerCase().includes((texto).toLowerCase()));
@@ -185,7 +288,9 @@ function buscaAvançadaCliente(texto){
 async function listarClientes(){
     
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`);
+    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`, {
+        method: 'GET'
+    });
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText, data.message);
         }
@@ -223,14 +328,14 @@ cliente.forEach(cliente => {
     });
 }
 
-function irParaPecaTecido(idCliente){
-    sessionStorage.setItem("idCliente", idCliente);
+function irParaPecaTecido(clienteId){
+    sessionStorage.setItem("CLIENTE-ID", clienteId);
     window.location.href="../fichas/peca_tecido.html"
 }
 
 // redirecionamento
-function irPara(idFicha){
-    sessionStorage.setItem("idFicha", idFicha)
+function irPara(fichaId){
+    sessionStorage.setItem("FICHA-ID", fichaId)
     window.location.href="#"
 }
 
@@ -243,7 +348,7 @@ function irParaFinal(peca, tecido){
 
 // configurar o obter dados do cliente
 async function buscarDadosCliente(){
-    var idCliente = sessionStorage.getItem("idCliente")
+    var idCliente = sessionStorage.getItem("CLIENTE-ID")
 
     const data = await fetch( `http://localhost:8080/clientes/${idCliente}/buscarUm`);
     if (!data.ok) {
@@ -256,6 +361,36 @@ async function buscarDadosCliente(){
     if(cliente.responsavel != null){
         document.getElementById("clienteInfo").innerHTML += `<h6 style="padding: none; font-weight:200">Dependente de <span>${cliente.responsavel.nome}</span></h6>`
     }
+
+}
+
+
+
+
+
+async function associarValoresFicha(itemPedidoId){
+  var itemPedido = await buscarDadosFicha(itemPedidoId)
+  sessionStorage.setItem('PECA-ID', itemPedido.peca.id)
+  sessionStorage.setItem('CLIENTE-ID', itemPedido.cliente.id)
+}
+
+async function buscarDadosFicha(itemPedidoId){
+    const usuarioId = sessionStorage.getItem('id')
+
+    try{
+        var response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+            method: "GET"
+        })
+
+        var dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error) {
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+    
 }
 
 function IrVisualizarFicha(elFicha){

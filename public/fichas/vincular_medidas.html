@@ -21,10 +21,10 @@
     onload="adicionarInformacoes();getmedidasPeca();buscarDadosCliente(); validarOrigem()">
     <nav style="display: flex;flex-direction: column;padding-top:10%;color:white;align-items: center;">
         <div class="group" style="display: flex; align-items: space-around;">
-            <a href="Lista_fichas.html"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"
+            <a onclick="window.history.go(-1)"><img src="../assets/imgs/botao-voltar (1) 4.png" alt="voltar"
                     style="width:4vh"></a>
             <p class="h2" style="color:aliceblue">Ficha de<b> Medidas</b></p>
-            <a href="Lista_fichas.html"><img src="../assets/imgs/icon_close.png" alt="Fechar" style="width:4vh"></a>
+            <a onclick="window.history.go(-1)"><img src="../assets/imgs/icon_close.png" alt="Fechar" style="width:4vh"></a>
         </div>
         <img src="../assets/imgs/pontinhos3.png" alt="" class="pontinhos" style="width:10%;">
 
@@ -80,9 +80,9 @@
 
     async function adicionarInformacoes() {
         var usuarioNome = sessionStorage.getItem("usuario")
-        var peca = sessionStorage.getItem("peca")
-        var idFicha = sessionStorage.getItem("idFicha")
-        var idCliente = sessionStorage.getItem("idCliente")
+        var peca = sessionStorage.getItem("PECA-ID")
+        var idFicha = sessionStorage.getItem("FICHA-ID")
+        var idCliente = sessionStorage.getItem("CLIENTE-ID")
         var idUsuario = sessionStorage.getItem("id")
         var tecidos = JSON.parse(sessionStorage.getItem("tecidos"))
 
@@ -98,7 +98,7 @@
 
     async function getTecido(tecido) {
         var idUsuario = sessionStorage.getItem("id")
-        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`); 
+        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -112,8 +112,8 @@
 
     async function getmedidasPeca() {
         var idUsuario = sessionStorage.getItem("id")
-        var peca = sessionStorage.getItem("peca")
-        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`); 
+        var peca = sessionStorage.getItem("PECA-ID")
+        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -143,9 +143,9 @@
     var idItemPedido = null
     async function salvar() {
         var observacoesInput = document.getElementById("observacoesInput").value
-        var idCliente = sessionStorage.getItem("idCliente")
+        var idCliente = sessionStorage.getItem("CLIENTE-ID")
         var idUsuario = sessionStorage.getItem("id")
-        var idPeca = sessionStorage.getItem("peca")
+        var idPeca = sessionStorage.getItem("PECA-ID")
         const itemPedidoBody = {
             "observacao": observacoesInput,
             "cliente": {
@@ -159,7 +159,7 @@
             }
         }
         itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
-            method: "POST" ,
+            method: "POST",
             body: JSON.stringify(itemPedidoBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
         })
@@ -177,14 +177,8 @@
             "etapa": 1,
             "cliente": idCliente
         }
-        // var pedidoFetch = await fetch(`http://localhost:8080/pedido`, {
-        //     method: "POST" ,
-        //     body: JSON.stringify(pedidoBody),
-        //     headers: {"Content-type": "application/json; charset=UTF-8"},
-        // })
-        // if (!pedidoFetch.ok) {
-        //     throw new Error('Erro ' + pedidoFetch.statusText);
-        // }
+        
+        validarCriacaoPedido(idItemPedido)
         vincularMedidas()
     }
 
@@ -198,21 +192,21 @@
         // console.log(medidasId)
 
         console.log(medidasTotais)
-        var idCliente = sessionStorage.getItem("idCliente")
+        var idCliente = sessionStorage.getItem("CLIENTE-ID")
         var idUsuario = sessionStorage.getItem("id")
-        var idPeca = sessionStorage.getItem("peca")
+        var idPeca = sessionStorage.getItem("PECA-ID")
         
             var labels = document.querySelectorAll('.label')
             var inputs = document.querySelectorAll('.input-valor-medida')
             console.log(inputs)
             for(var i = 0; i < inputs.length; i++){
-                cadastrarMedida(labels[i].id, inputs[i].value, idUsuario, idCliente, idPeca, idItemPedido)
+               await cadastrarMedida(labels[i].id, inputs[i].value, idUsuario, idCliente, idPeca, idItemPedido)
             }
             
         
-        // setTimeout(() => {
-        //     window.location = "Lista_fichas.html"
-        // }, 2000);
+        setTimeout(() => {
+            window.location = "Lista_fichas.html"
+        }, 2000);
     }
 
     async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
@@ -225,7 +219,7 @@
             "peca": { "id": idPeca }
         }
         var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
-            method: "POST" ,
+            method: "POST",
             body: JSON.stringify(medidaBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
         })
@@ -235,9 +229,12 @@
         console.log("Vinculado Medida " + idMedida)
     }
 
+
+    // async function atualizarMedida
+
     async function buscarValoresMedida(){
         var idUsuario = sessionStorage.getItem("id")
-        var idFicha = sessionStorage.getItem("idFicha") 
+        var idFicha = sessionStorage.getItem("FICHA-ID") 
     
 
         try{
@@ -262,15 +259,134 @@
         }
     }
 
-    function validarOrigem(){
+    async function validarOrigem(){
+        var botaoSalvar = document.querySelector('.salvar')
+
         if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
-            buscarValoresMedida()
+           await buscarValoresMedida()
+           botaoSalvar.onclick = atualizarFicha
+           botaoSalvar.innerText = "Atualizar"
+        } else {
+           botaoSalvar.onclick = salvar
+           botaoSalvar.innerText = "Salvar"
         }
 
-        var botaoSalvar = document.querySelector('.salvar')
-        botaoSalvar.onclick = ""
-        botaoSalvar.innerText = "Atualizar"
+        
     }
+
+    async function atualizarFicha() {
+    var listaInput = document.querySelectorAll(".input-valor-medida")
+    for(var i = 0; i < listaInput.length; i++){
+        atualizarValorMedida(listaInput[i].id, listaInput[i].value)
+    }
+}
+
+async function atualizarValorMedida(valorMedidaId, valor) {
+    const usuarioId = sessionStorage.getItem('id')
+
+    try{
+        var response = await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
+            method: "PUT"
+        })
+
+        var dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error) {
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+}
+
+async function criarPedido(){
+    const novoitemPedido = buscarItemPedido()
+    const agendamentoConsultado = await buscarAgendamento()
+
+    try{
+        const response = await fetch("http://localhost:8080/pedido", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                itemPedido: novoitemPedido.id,
+                agendamento: agendamentoConsultado.id,
+                usuario: novoitemPedido.usuario.id,
+                etapa: agendamentoConsultado.etapa.id,
+                cliente: agendamentoConsultado.cliente.id,
+            })
+        })
+
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+    
+}
+
+async function buscarItemPedido(){
+    const usuarioId = sessionStorage.getItem("id")
+    const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
+
+    try{
+        const response =  await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+            method: "GET"
+        })
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro:")
+        console.log(error)
+    }
+}
+
+async function buscarAgendamento() {
+
+var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+var usuarioId = sessionStorage.getItem("id")
+
+try {
+    const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+        method: "GET"
+    });
+
+    if (!response.ok) {
+        throw new Error(`Erro de servidor, status: ${response.status}`);
+    }
+
+    if (response.status == 204) {
+        return []
+    }
+
+    
+    const dados = await response.json()
+    console.log(dados)
+    return dados
+
+} catch (error) {
+
+    console.log(`Houve um erro: ${error}`)
+}
+
+}
+
+async function validarCriacaoPedido(itemPedidoId) {
+    if(!sessionStorage.getItem("CADASTRO-PEDIDO")) return
+    sessionStorage.setItem("ITEM-PEDIDO-ID", itemPedidoId)
+    var pedido = await criarPedido()
+    sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
+    location.assign("http://localhost:3333/associar_fichas.html")
+}
+
     
 </script>
 </script>

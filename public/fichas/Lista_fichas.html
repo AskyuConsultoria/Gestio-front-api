@@ -65,13 +65,13 @@
         </div>
         <div class="input-grupo">
           <button><img src="../assets/imgs/button_lupa_pesquisar.png" alt=""></button>
-          <input oninput="buscaAvançada(this.value)" type="text" placeholder="Pesquise Pedidos" class="w-75 rounded">
+          <input oninput="buscaAvançada(this.value)" type="text" placeholder="Pesquise Fichas" class="w-75 rounded">
           <button><img src="../assets/imgs/filtro.png" alt=""></button>
       </div>
         <div class="mt-2 py-2">
             <div class="d-flex justify-content-between align-items-center mx-3">
                 <span class="nome-peça bold-title fs-5" style="color: gray;" id="titulo">Adicionar <b>nova ficha</b></span>
-                <a href="adicionar_fichas.html"> <img src="../assets/Adicionar Botão.svg" alt="adicionar-tecido" class="btn"
+                <a onclick="assinarEstadoCadastro()" > <img src="../assets/Adicionar Botão.svg" alt="adicionar-tecido" class="btn"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Para adicionar um tecido clique aqui"></a>
             </div>
         </div>
@@ -82,3 +82,9 @@
 </body>
 
 </html>
+<script>
+  function assinarEstadoCadastro(){
+    sessionStorage.removeItem("E-VISUALIZACAO-FICHA")
+    location.assign("adicionar_fichas.html")
+}
+</script>
