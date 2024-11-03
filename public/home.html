@@ -15,6 +15,7 @@
   <link rel="stylesheet" href=".//css/calendar.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
 <body class="mt-3">
@@ -236,8 +237,7 @@
   <!-- Ínicio das Âncoras -->
   <div class="d-flex container px-3 my-3 flex-row">
 
-    <div class="d-flex col-4" type="button" id="evento" data-bs-toggle="modal" 
-    data-bs-target="#modal" onclick="">
+    <div class="d-flex col-4" type="button" onclick="irPara('dashboard/dashHome.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?><svg fill="#FFFFFF" class="icone-ancora" height="48" viewBox="0 0 48 48" width="48"
@@ -248,12 +248,12 @@
           </svg>
         </div>
         <div class="d-flex align-items-center justify-content-center pt-1 pb-3">
-          <span class="text-white">Ver pedidos</span>
+          <span class="text-white">Ver Dashboard</span>
         </div>
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center" onclick="irParaLocal('#')">
+    <div class="d-flex col-4 justify-content-center" onclick="irPara('#')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -273,7 +273,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end" onclick="irParaLocal('fichas/Lista_fichas.html')">
+    <div class="d-flex col-4 justify-content-end" onclick="irPara('fichas/Lista_fichas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -306,7 +306,7 @@
 
   <div class="d-flex container px-3 my-3 flex-row">
 
-    <div class="d-flex col-4" onclick="irParaLocal('Lista-peca.html')">
+    <div class="d-flex col-4" onclick="irPara('Lista-peca.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?><svg class="icone-ancora" fill="#FFFFFF" viewBox="0 0 512 512"
@@ -329,7 +329,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center" onclick="irParaLocal('Lista-tecido.html')">
+    <div class="d-flex col-4 justify-content-center" onclick="irPara('Lista-tecido.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <svg class="icone-ancora" width="51" height="51" viewBox="0 0 51 51" fill="#FFFFFF"
@@ -349,7 +349,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end" onclick="irParaLocal('fichas/adicionar_fichas.html')">
+    <div class="d-flex col-4 justify-content-end" onclick="irPara('fichas/adicionar_fichas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -520,7 +520,7 @@ async function buscarPedidosComBaseNoDia(dataDiaSelecionado){
   var idUsuario = 1   
 
   try {
-    const response = await fetch(`http://10.18.34.59:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
       method: "GET"
     });
 
@@ -617,11 +617,4 @@ function renderizarModal(){
 }
   
 if(exibicaoModal) renderizarModal()
-
-
-function irParaLocal(local){
-    setTimeout(() => {
-      window.location = `${local}`
-    }, 100)
-}
 </script>

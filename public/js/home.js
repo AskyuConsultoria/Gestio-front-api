@@ -3,7 +3,7 @@
 async function buscarUltimos7Pedidos(idUsuario) {
 
   try {
-    const response = await fetch(`http://10.18.34.59:8080/agendamento/${idUsuario}/ultimos`, {
+    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/ultimos`, {
       method: "GET"
     });
 

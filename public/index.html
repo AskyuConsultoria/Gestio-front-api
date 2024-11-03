@@ -14,6 +14,7 @@
             // Se precisa de importar algum script, copie essa tag e só coloque o link no src igual o anterior a esse comentário
         -->
         <link rel="stylesheet" href="css/css_login.css">
+        <script type="module" src="../js/navegar.js"></script>
       </head>
 <body class="background2">
     <div class="d-flex background text-white justify-content-center" >
@@ -38,7 +39,7 @@
                         <a href="#" class="float-right" style="color:#012171"><b>Esqueceu a senha?</b></a>
                     </div>
                 </div>
-                    <button onclick="login()" class="btn btn-primary btn-block mt-4 rounded-4" 
+                    <button onclick="login();irHome()" class="btn btn-primary btn-block mt-4 rounded-4" 
                     style="background-color: #012171; border-color: #012171; height: 4rem; font-size: 1.5rem; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);">
                     Entrar</button>
                 </div>
@@ -52,3 +53,10 @@
     </div>
 </body>
 </html>
+<script>
+    function irHome(){
+        setTimeout( () => {
+            irPara("home.html")
+        }, 1000)
+    }
+</script>

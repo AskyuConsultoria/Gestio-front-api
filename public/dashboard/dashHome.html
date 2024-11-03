@@ -15,17 +15,18 @@
   <link rel="stylesheet" href="../css/calendar.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
-<body onload="nomearUser()">
+<body>
   <header class="header py-4 bg-light px-0 mt-3">
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="">
+      <a href="javascript:void(0);">
         <img
           src="../assets/botao-voltar 4.svg"
           alt="botao-voltar"
           class="mx-3"
-          onclick="window.history.back()"
+          onclick="voltar()"
       /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img
@@ -37,25 +38,25 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="../home.html">Home</a>
+              <a class="nav-link active" aria-current="page" onclick="irPara('../home.html')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pedido.html">Pedidos</a>
+              <a class="nav-link" onclick="irPara('../pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contatos</a>
+              <a class="nav-link" onclick="irPara('#')">Contatos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../fichas/Lista_fichas.html">Fichas</a>
+              <a class="nav-link" onclick="irPara('../fichas/Lista_fichas.html')">Fichas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../Lista-peca.html">Produtos</a>
+              <a class="nav-link" onclick="irPara('../Lista-peca.html')">Produtos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../Lista-tecido.html">Tecidos</a>
+              <a class="nav-link" onclick="irPara('../Lista-tecido.html')">Tecidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashHome.html">Monitoramento</a>
+              <a class="nav-link" onclick="irPara('dashHome.html')">Monitoramento</a>
             </li>
         </div>
       </div>
@@ -88,7 +89,7 @@
   <div class="mt-5 mb-3 text-center" style="color: #696969; font-size: 1.2rem;">Escolha o que deseja acompanhar primeiro:</div>
 
   <div class="d-flex flex-column gap-2">
-  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irParaDash('dashPedido.html')">
+  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irPara('dashPedido.html')">
     <div class="card-body d-flex gap-4 align-items-center">
       <blockquote class="blockquote mb-0 col-9">
         <p style="color: #012171; font-weight: 350;">Meus Pedidos</p>
@@ -96,7 +97,7 @@
       <img src="../assets/iconePedidoDash.svg" class="col-3" style="width: 15%;"/>
     </div>
   </div>
-  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irParaDash('dashCliente.html')">
+  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irPara('dashCliente.html')">
     <div class="card-body d-flex gap-4 align-items-center">
       <blockquote class="blockquote mb-0 col-9">
         <p style="color: #012171; font-weight: 350;">Meus Clientes</p>
@@ -104,7 +105,7 @@
       <img src="../assets/profileClienteIconDash.svg" class="col-3" style="width: 15%;"/>
     </div>
   </div>
-  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irParaDash('dashPeca.html')">
+  <div class="card mx-4 mt-3 shadow rounded-4" style="background-color: white; height: 100px;" onclick="irPara('dashPeca.html')">
     <div class="card-body d-flex gap-4 align-items-center">
       <blockquote class="blockquote mb-0 col-9">
         <p style="color: #012171; font-weight: 350;">Minhas Pecas</p>
@@ -115,13 +116,5 @@
 </div>
 </body>
 <script>
-  function irParaDash(local){
-    setTimeout(() => {
-      window.location = `${local}`
-    },200)
-  }
-
-  function nomearUser(){
-    document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("usuario")
-  }
+  document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("usuario")
 </script>

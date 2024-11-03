@@ -16,17 +16,18 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
 <body onload="principaisTecidos()">
   <header class="header py-4 bg-light px-0 mt-3">
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="">
+      <a href="javascript:void(0);">
         <img
           src="../assets/botao-voltar 4.svg"
           alt="botao-voltar"
           class="mx-3"
-          onclick="window.history.back()"
+          onclick="voltar()"
       /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img
@@ -38,25 +39,25 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="../home.html">Home</a>
+              <a class="nav-link active" aria-current="page" onclick="irPara('../home.html')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pedido.html">Pedidos</a>
+              <a class="nav-link" onclick="irPara('../pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contatos</a>
+              <a class="nav-link" onclick="irPara('#')">Contatos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../fichas/Lista_fichas.html">Fichas</a>
+              <a class="nav-link" onclick="irPara('../fichas/Lista_fichas.html')">Fichas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../Lista-peca.html">Produtos</a>
+              <a class="nav-link" onclick="irPara('../Lista-peca.html')">Produtos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../Lista-tecido.html">Tecidos</a>
+              <a class="nav-link" onclick="irPara('../Lista-tecido.html')">Tecidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashHome.html">Monitoramento</a>
+              <a class="nav-link" onclick="irPara('dashHome.html')">Monitoramento</a>
             </li>
         </div>
       </div>
@@ -151,8 +152,20 @@
   const currentYear = new Date().getFullYear();
   document.getElementById("anoAtual").innerHTML = currentYear;
 
-  function principaisTecidos(){
+ async function principaisTecidos(){
     var id = sessionStorage.getItem("id")
+
+    var year = currentYear
+
+    const idUsuario = sessionStorage.getItem('id')
+    // const data = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${year}`);
+    //     if (!data.ok) {
+    //     throw new Error('Erro ' + data.statusText, data.message);
+    //     }
+
+    // const formatedData = await data.json()
+
+    console.log("Resposta: ", formatedData)
 
       var FormatedData = [
       {

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./css/novoForm.css">
   <script defer src="js/peca_editar.js"></script>
   <script defer src="js/peca_cadastro.js"></script>
+  <script type="module" src="../js/navegar.js"></script>
 </head>
 
 <body onload="listarPecas();">
@@ -25,12 +26,12 @@
   </header> -->
   <header class="header py-4 bg-light px-0 mt-3">
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="">
+      <a href="javascript:void(0);">
         <img
           src="./assets/botao-voltar 4.svg"
           alt="botao-voltar"
           class="mx-3"
-          onclick="window.history.go(-2)"
+          onclick="voltar()"
       /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <img
@@ -42,25 +43,25 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              <a class="nav-link active" aria-current="page" onclick="irPara('home.html')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pedido.html">Pedidos</a>
+              <a class="nav-link" onclick="irPara('pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contatos</a>
+              <a class="nav-link" onclick="irPara('')">Contatos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="fichas/Lista_fichas.html">Fichas</a>
+              <a class="nav-link" onclick="irPara('fichas/Lista_fichas.html')">Fichas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Lista-peca.html">Produtos</a>
+              <a class="nav-link" onclick="irPara('Lista-peca.html')">Produtos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Lista-tecido.html">Tecidos</a>
+              <a class="nav-link" onclick="irPara('Lista-tecido.html')">Tecidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashboard/dashHome.html">Monitoramento</a>
+              <a class="nav-link" onclick="irPara('dashboard/dashHome.html')">Monitoramento</a>
             </li>
         </div>
       </div>
