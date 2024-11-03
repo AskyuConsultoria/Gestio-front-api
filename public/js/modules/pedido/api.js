@@ -10,6 +10,7 @@ window.buscarEnderecoPorClienteId = buscarEnderecoPorClienteId
 window.buscarTelefonePorClienteId = buscarTelefonePorClienteId
 window.buscarClientesPorResponsavelId = buscarClientesPorResponsavelId
 window.atualizarEnderecoAgendamento = atualizarEnderecoAgendamento
+window.escolherRenderizacao = escolherRenderizacao
 
 
 async function buscarAgendamento() {
@@ -30,8 +31,9 @@ async function buscarAgendamento() {
             return []
         }
 
-        await criarCardPipe(dados)
+        
         const dados = await response.json()
+        await criarCardPipe(dados)
         console.log(dados)
         pedido.preencherDadosDePedidoCompleto(dados)
 
@@ -158,7 +160,7 @@ async function buscarEnderecoPorClienteId(nomeModal) {
     }
   
     var usuarioId = parseInt(sessionStorage.getItem("id"))
-    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID")
+    var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${clienteId}`, {
@@ -369,7 +371,7 @@ async function atualizarEnderecoAgendamento(enderecoId) {
         const dados = await response.json()
         console.log(dados)
         
-        buscarEnderecoPorId()
+       await  buscarEnderecoPorId()
         pedido.esconderModalMultivalorado()
         return response.status
        
@@ -392,7 +394,7 @@ async function atualizarTelefoneAgendamento(telefoneId) {
         const dados = await response.json()
         console.log(dados)
         
-        buscarTelefonePorId()
+        await buscarTelefonePorId()
         pedido.esconderModalMultivalorado()
         return response.status
        
@@ -810,7 +812,7 @@ export {
     atualizarEndereco,
     atualizarTelefone,
     atualizarEnderecoModal,
-    atualizarTelefoneModal
+    atualizarTelefoneModal,
     atualizarClienteModal,
     atualizarEnderecoAgendamento,
     atualizarTelefoneAgendamento,

@@ -1,5 +1,4 @@
 
-import { cadastrarEnderecoModal } from "./api.js"
 import * as pedido from "./pedido.js"
 import * as cliente from "./../cliente/contato.js"
 
@@ -73,7 +72,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
   return listaDeConteudo
 }
   
-  function validarConteudosNulosEEspecificos(listaDeConteudo, indiceInput, indiceDivContent, tipoFormulario){
+  async function validarConteudosNulosEEspecificos(listaDeConteudo, indiceInput, indiceDivContent, tipoFormulario){
     var formularioValido = true
   
     for(var i = 0; i < listaDeConteudo.length; i++){
@@ -162,7 +161,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
     if(formularioValido){
       if(tipoFormulario == "pedido") pedido.salvarModificacao()
       if(tipoFormulario == "telefone" || tipoFormulario == "endereco" || tipoFormulario == "cliente-modal" ) pedido.salvarModificacaoModal()  
-      if(tipoFormulario == "cliente") cliente.salvarContato()
+      if(tipoFormulario == "cliente") await cliente.salvarContato()
     } 
   }
   

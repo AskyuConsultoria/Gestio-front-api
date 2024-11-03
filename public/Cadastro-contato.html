@@ -10,7 +10,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/adicionar-contato.css">
-    <script type="module" src="./js/cadastro-contato.js"></script>
+    <script type="module" src="./js/modules/cliente/contato.js"></script>
     <script type="module" src="./js/modules/cliente/motorGrafico.js"></script>
     <link rel="stylesheet" href="">
     <title>Adicionar Novo Contato</title>
@@ -241,91 +241,7 @@
                         style="height: 40px;">Visualizar Dependentes</button>
                 </div>
             </div>
-            <div id="conteudo-endereco" class="d-none">
-                <div class="d-flex flex-row">
-                    <div class="d-flex ps-3 mb-2 w-50">
-                        <label for="input-cep" class="text-secondary fw-light">CEP</label>
-                    </div>
-
-                    <div class="d-flex ps-3 mb-2 w-50">
-                        <label for="input-numero" class="text-secondary fw-light">Número</label>
-                    </div>
-                </div>
-
-                <div class="d-flex flex-row">
-                    <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-cep">
-                        <input class="w-75 form-control endereco" placeholder="00000-000" type="text"
-                            onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCep)" id="input-cep"
-                            disabled="">
-                        <div class="invalid-feedback">
-                            Por favor insira corretamente o CEP.
-                        </div>
-                    </div>
-                    <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-numero">
-                        <input class="w-75 form-control endereco" placeholder="00" type="tel" id="input-numero"
-                            disabled="">
-                        <div class="invalid-feedback">
-                            Por favor insira corretamente o número do endereco.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex ps-3 mb-2 w-100">
-                    <label for="input-rua" class="text-secondary fw-light">Rua</label>
-                </div>
-
-                <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-rua">
-                    <input class="w-100 form-control endereco" placeholder="Av. Marechal teodoro" type="text"
-                        onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoRua)" id="input-rua"
-                        disabled="">
-                    <div class="invalid-feedback">
-                        Por favor insira a rua do pedido.
-                    </div>
-                </div>
-
-                <div class="d-flex ps-3 mb-2 w-100">
-                    <label for="input-bairro" class="text-secondary fw-light">Bairro</label>
-                </div>
-
-                <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-bairro">
-                    <input class="w-100 form-control endereco" placeholder="Paulista" type="text"
-                        onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoBairro)" id="input-bairro"
-                        disabled="">
-                    <div class="invalid-feedback">
-                        Por favor insira o bairro do pedido.
-                    </div>
-                </div>
-
-                <div class="d-flex flex-row">
-                    <div class="d-flex ps-3 mb-2 w-50">
-                        <label for="input-cidade" class="text-secondary fw-light">Cidade</label>
-                    </div>
-
-                    <div class="d-flex ps-3 mb-2 w-50">
-                        <label for="input-uf" class="text-secondary fw-light">UF</label>
-                    </div>
-                </div>
-
-                <div class="d-flex flex-row">
-                    <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-cidade">
-                        <input class="w-75 form-control endereco" placeholder="SP" type="text"
-                            onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCidade)"
-                            id="input-cidade" disabled="">
-                        <div class="invalid-feedback">
-                            Por favor insira a cidade do pedido.
-                        </div>
-                    </div>
-                    <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-uf">
-                        <input class="w-75 form-control endereco" placeholder="00" type="text"
-                            onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoUf)" id="input-uf"
-                            disabled="">
-                        <div class="invalid-feedback">
-                            Por favor insira o uf do pedido.
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            
         </div>
 
 

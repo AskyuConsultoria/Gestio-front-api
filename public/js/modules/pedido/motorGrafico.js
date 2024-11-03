@@ -240,7 +240,7 @@ function esconderInputsEndereco(){
 }
 
 function exibirInputsEndereco(){
-    var conteudoEndereco = document.querySelector("#conteudo-endereco")
+    const conteudoEndereco = document.querySelector("#conteudo-endereco")
     if(conteudoEndereco.classList.contains('d-none')){
         conteudoEndereco.classList.remove('d-none')
     }
