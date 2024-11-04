@@ -10,17 +10,55 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/contato.css">
-    <script type="module" src="js/modules/cliente/contato.js"></script>
     <title>Meus Clientes</title>
+    <script type="module" src="js/modules/cliente/contato.js"></script>
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
 <body>
-    <header class="header py-4 bg-light w-100 px-0">
-        <div class="container d-flex justify-content-between">
-            <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3" onclick="window.history.go(-1)">
-            <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" onclick="" class="mx-3">
+    <header class="header py-4 bg-light px-0 mt-3">
+        <div class="container d-flex justify-content-between align-items-center">
+          <a href="javascript:void(0);">
+            <img
+              src="./assets/botao-voltar 4.svg"
+              alt="botao-voltar"
+              class="mx-3"
+              onclick="voltar()"
+          /></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+              <img
+              src="./assets/burger-bar 1 (1).svg"
+              alt="menu-lateral"
+              class="navbar-toggler-icon mx-3"/>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #012171; color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" onclick="irPara('home.html')">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('pedido.html')">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('Contato.html')">Contatos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('fichas/Lista_fichas.html')">Fichas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('Lista-peca.html')">Produtos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('Lista-tecido.html')">Tecidos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="irPara('dashboard/dashHome.html')">Monitoramento</a>
+                </li>
+            </div>
+          </div>
         </div>
-    </header>
+      </header>
 
     <div class="container-md mt-4 p-3">
         <div class="mt-2 py-2">
@@ -48,29 +86,6 @@
 
         <div class="d-flex flex-column w-100" id="conteudo-cliente">
             <div class="d-flex flex-column w-100" id="conteudo-cliente">
-                <div class="card mb-3 mt-4 w-100" style="border-radius: 10px; position: relative;">
-                    <div class="blue-stripe"
-                        style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
-                    </div>
-                    <div class="card-content" style="padding-left: 20px;">
-                        <div class="card-body mb-20">
-                            <span class="card-title">John Doe</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="card mb-3 mt-4" style="border-radius: 10px; position: relative;">
-            <div class="blue-stripe"
-                style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
-            </div>
-            <div class="card-content" style="padding-left: 20px;">
-                <div class="card-body">
-                    <span class="card-title">John Doe</span>
-                    <span class="card-subtitle" style="margin-top: 10px; display: block;">Dependente: Jane Doe</span>
-                </div>
             </div>
         </div>
 

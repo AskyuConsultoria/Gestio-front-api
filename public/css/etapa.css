@@ -1,0 +1,615 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+:root {
+    --vermelho: #BB0B15;
+    --amarelo: #F4D176;
+    --azul: #012171;
+    --sombra: rgba(0, 0, 14, 0.163);
+    --cinza: #696969;
+    --cinzaClaro: #EEEEEE;
+}
+
+header {
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    div {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    span {
+        color: var(--azul);
+    }
+
+}
+
+.breadcrumb div span:first-of-type {
+    margin-left: 2%;
+}
+
+.bold-title {
+    color: var(--azul);
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+.titulo-card {
+    max-width: 100%;
+}
+
+.peca-nome {
+    margin-left: 20%;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--azul)
+}
+
+.medidas {
+    margin-left: 20%;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.peca-card {
+    max-width: 90%;
+    max-height: 9rem;
+    box-shadow: 4px 4px 8px var(--sombra);
+}
+
+.etapa-card {
+    max-width: 90%;
+    height: 5rem;
+}
+
+.etapa-card a {
+    text-decoration: none;
+}
+
+
+.card {
+    max-width: 95%;
+    max-height: 9rem;
+    box-shadow: 0px 6px 2px var(--sombra);
+    border-radius: 12px;
+}
+
+.peca-card:active {
+    background-color: var(--azul);
+    color: white;
+
+    small {
+        color: white;
+    }
+
+    .peca-nome {
+        color: white;
+    }
+
+}
+
+.etapa-card {
+    background-color: var(--azul);
+    color: white;
+
+    small {
+        color: white;
+    }
+
+    .etapa-nome {
+        color: white;
+    }
+
+    .total-etapa {
+        font-size: 18px;
+    }
+
+}
+
+.etapa-card:active {
+    background-color: #0a3abd;
+}
+
+.total-peca {
+    text-align: center;
+}
+
+.total-peca .valor {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.container-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+}
+
+.valor {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.imagem-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+
+.imagem-container img {
+    display: block;
+}
+
+.imagem-container .imagem2 {
+    display: none;
+}
+
+.peca-card:active .imagem-container .imagem1 {
+    display: none;
+}
+
+.peca-card:active .imagem-container .imagem2 {
+    display: block;
+}
+
+.etapa-card {
+    margin-top: 1%;
+}
+
+.cancelado {
+    border-left: 30px solid var(--vermelho) !important;
+}
+
+.finalizados {
+    border-left: 30px solid var(--azul) !important;
+    margin-left: 6%;
+}
+
+.card-pessoa {
+    width: 80vw;
+    height: 4rem;
+    box-shadow: 0px 6px 2px var(--sombra);
+    border-radius: 10px;
+    color: black;
+    border-left: 30px solid var(--amarelo);
+    background-color: white;
+
+    .texto-card {
+        margin-left: 10%;
+
+        div {
+            font-weight: 400;
+            font-size: 18px;
+        }
+
+        span {
+            font-size: 14px;
+        }
+    }
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+}
+
+.tooltip .popover-header {
+    background-color: orange;
+}
+
+.popover {
+    background-color: white;
+    border-color: orange;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+}
+
+.popover-header {
+    background-color: orange;
+}
+
+.btn-danger {
+    background-color: white;
+    border: none;
+}
+
+.seta-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip.tooltip-inner {
+    --bs-tooltip-color: var(--bs-white);
+}
+
+.seta-container img {
+    display: block;
+}
+
+.seta-container .seta2 {
+    display: none;
+}
+
+.peca-card:active .seta-container .seta1 {
+    display: none;
+}
+
+.peca-card:active .seta-container .seta2 {
+    display: block;
+}
+
+
+.sub-title {
+    color: var(--cinza);
+    font-size: 16px;
+}
+
+.card-body {
+    .etapa {
+        width: 10%;
+        font-size: 12.7px;
+        font-weight: 500;
+    }
+}
+
+.descricao-page {
+    width: 100%;
+
+    span {
+        width: 98%;
+        font-size: 18px;
+        font-weight: 600;
+    }
+}
+
+.zero {
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--azul);
+
+    img {
+        height: 28vh;
+    }
+
+    div {
+        width: 55%;
+        margin-left: 20%;
+    }
+}
+
+
+.modal-etapa {
+    color: white;
+    transition-duration: 600ms;
+
+}
+
+.modal-etapa-title {
+    font-size: 28px;
+}
+
+.pd-title {
+    color: black;
+    font-size: 25px;
+
+    b {
+        color: var(--azul);
+    }
+}
+
+.pedido-etapa {
+    width: 50%;
+}
+
+.modal-etapa-header {
+    background-color: var(--azul) !important;
+    height: 6rem;
+    width: 32rem;
+}
+
+/* PARA BOTÃO CLOSE  */
+.header-off {
+    width: 55%;
+    margin-left: 7%;
+}
+
+.modal-etapa-body {
+    background-color: var(--cinzaClaro);
+    width: 100%;
+    height: 90vh;
+    overflow-y: auto;
+
+    .pedido-etapa {
+        margin-right: 23%;
+    }
+}
+
+.finalizado {
+    transition: transform 1s ease-in-out;
+}
+
+.finalizado.subir {
+    transform: translateY(-100%);
+}
+
+.finalizado.descer {
+    transform: translateY(100%);
+}
+
+.comum {
+    transition: transform 1s ease-in-out;
+}
+
+.comum.subir {
+    transform: translateY(-100%);
+}
+
+.comum.descer {
+    transform: translateY(100%);
+}
+
+.menu {
+    background-color: var(--azul) !important;
+}
+
+.barra-busca {
+    background-color: white;
+    height: 2.4rem;
+    border-radius: 4px;
+    width: 60%;
+    margin-left: 8%;
+
+    input {
+        border: none;
+        outline: none;
+        width: 15rem;
+    }
+
+    input:active {
+        border: none;
+    }
+}
+
+.close {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 42px;
+}
+
+.etapa-title {
+    text-align: center;
+    color: black;
+    font-weight: 700;
+}
+
+.sub-pedido {
+    margin-left: 6%;
+    color: black;
+    font-weight: 500;
+    font-size: 14px;
+    width: 71%;
+    text-align: center;
+
+    .status-etapa {
+        color: var(--azul);
+        font-weight: 700;
+        margin-right: 9%;
+    }
+}
+
+
+.custom-switch:checked {
+    background-color: #007bff;
+}
+
+
+.custom-switch {
+    background-color: #dc3545;
+}
+
+.text-switch {
+    color: black;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.form-switch {
+    width: 55%;
+}
+
+.nome-etapa {
+    color: var(--azul);
+}
+
+
+/* Adiciona efeito de hover ao botão de fechar */
+.close:hover {
+    color: rgb(109, 0, 0);
+}
+
+.header-container {
+    background-color: var(--cinzaClaro);
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+    flex-grow: 1;
+}
+
+
+/* RESPONSIVIDADE TABLET */
+@media (min-width: 768px) and (max-width: 991px) {
+    header {
+        img {
+            height: 5vh;
+        }
+    }
+
+    .form-switch {
+        width: 24%;
+    }
+
+    .sub-pedido {
+        margin-left: 23%;
+        font-size: 17px;
+        width: 53%;
+    }
+
+
+    .modal-etapa-title {
+        font-size: 36px;
+    }
+
+    .modal-etapa-header {
+        width: 51rem;
+    }
+
+    .header-off {
+        width: 86%;
+    }
+
+    .header-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .card {
+        max-width: 90%;
+
+
+        .peca-nome {
+            font-size: 32px;
+        }
+
+        img {
+            height: 5vh
+        }
+
+        ;
+
+        .medidas {
+            font-size: 25px;
+        }
+    }
+
+    .card-body {
+        .etapa {
+            font-size: 18px;
+        }
+
+        max-width: 100%;
+    }
+
+    .barra-busca {
+        width: 50%;
+        margin-left: 24%;
+
+        img {
+            height: 3vh;
+        }
+    }
+
+    .card-pessoa {
+        width: 55vw;
+    }
+
+    .pd-title {
+        font-size: 30px;
+    }
+
+    .cont-etapa {
+        margin-left: 10%;
+    }
+
+    .etapa-card {
+        max-width: 80%;
+        height: 5rem;
+
+        .etapa-nome {
+            font-size: 22px;
+        }
+
+        img {
+            height: 5vh
+        }
+
+        ;
+
+        .medidas {
+            font-size: 25px;
+        }
+    }
+
+    .etapa-nome {
+        font-size: 28px;
+    }
+
+    .sub-title {
+        font-size: 20px;
+    }
+
+    .imagem-container {
+        img {
+            height: 4vh;
+        }
+    }
+
+    .bold-title {
+        font-size: 40px;
+    }
+
+    small {
+        font-size: 18px;
+    }
+
+    img {
+        height: 5vh;
+    }
+
+}
+
+
+
+.link {
+    transition: all 0.3s ease-in-out;
+    /* Define a transição para todas as propriedades */
+    transition-delay: 0.5s;
+    /* Adiciona um delay de 0.5s na transição */
+}
+
+.link:active {
+    transform: scale(0.95);
+    /* Define a escala do link ao ser clicado */
+}

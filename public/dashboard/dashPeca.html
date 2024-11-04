@@ -45,7 +45,7 @@
               <a class="nav-link" onclick="irPara('../pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" onclick="irPara('#')">Contatos</a>
+              <a class="nav-link" onclick="irPara('../Contato.html')">Contatos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" onclick="irPara('../fichas/Lista_fichas.html')">Fichas</a>
@@ -76,8 +76,8 @@
 
 <div class="py-4 mx-4">
     <p style="color: #696969;">Essas são as peças que mais encantaram seus clientes este semestre!</p>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Qual mês deseja consultar</option>
+    <select onchange="atualizarDados()" id="select_ano" class="form-select" aria-label="Default select example">
+        <option selected>Qual ano deseja consultar</option>
 
       </select>
 </div>
@@ -98,28 +98,59 @@
 </div>
 </body>
 <script>
+
+  const currentYear = new Date().getFullYear();
+
+  document.getElementById("select_ano").innerHTML += `<option value="${currentYear}">${currentYear}</option>` 
+  document.getElementById("select_ano").innerHTML += `<option value="${currentYear-1}">${currentYear-1}</option>` 
+  document.getElementById("select_ano").value = currentYear 
+
   const ctx = document.getElementById('pecasChart').getContext('2d');
-  
-  const data = {
-      labels: ['Red', 'Blue', 'Yellow', 'Green'],
-      datasets: [{
-          label: 'My Dataset',
-          data: [300, 50, 100, 150],
-          backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-          ],
-          borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-          ],
-          borderWidth: 1
-      }]
-  };
+
+  async function obterData(){
+
+    const idUsuario = sessionStorage.getItem('id')
+     const dados = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${currentYear}`);
+         if (!dados.ok) {
+         throw new Error('Erro ' + dados.statusText, dados.message);
+         }
+
+    const formatedData = await dados.json()
+
+    console.log("Resposta: ", formatedData)
+
+    const labels = formatedData.map(item => item.nomePeca);
+    const dataValues = formatedData.map(item => item.qtdVendida);
+
+    const backgroundColors = labels.map((_, index) => {
+    const hue = 240 - index * (240 / labels.length);
+    return `hsl(${hue}, 100%, 50%)`;
+    });
+
+    const borderColors = labels.map((_, index) => {
+        const hue = 240 - index * (240 / labels.length);
+        return `hsl(${hue}, 100%, 30%)`;
+    });
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Quantidade Vendida',
+            data: dataValues,
+            backgroundColor: backgroundColors,
+            borderColor: borderColors,
+            borderWidth: 1
+        }]
+    };
+
+    return criar_grafico(data)
+  }
+
+  obterData()
+
+  let myChart;
+
+  function criar_grafico(data){
 
   const config = {
       type: 'doughnut',
@@ -134,7 +165,7 @@
       }
   };
 
-  const myChart = new Chart(ctx, config);
+  myChart = new Chart(ctx, config);
 
   // Criar a legenda manualmente
   const legendContainer = document.getElementById('legend');
@@ -144,45 +175,55 @@
       colorBox.style.backgroundColor = myChart.data.datasets[0].backgroundColor[index];
       legendItem.appendChild(colorBox);
       legendItem.appendChild(document.createTextNode(label));
-      legendContainer.appendChild(legendItem);
+      //legendContainer.appendChild(legendItem);
   });
-</script>
-<script>
 
-  const currentYear = new Date().getFullYear();
+  return myChart
+
+}
+
+  function obterDataISO() {
+    const selectAno = document.getElementById("select_ano");
+    const anoSelecionado = parseInt(selectAno.value, 10); 
+
+    const data = new Date(anoSelecionado, 0, 1); 
+
+    return data.toISOString();
+}
+
   document.getElementById("anoAtual").innerHTML = currentYear;
 
  async function principaisTecidos(){
     var id = sessionStorage.getItem("id")
 
-    var year = currentYear
+    var dataInicio = obterDataISO()
 
     const idUsuario = sessionStorage.getItem('id')
-    // const data = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${year}`);
-    //     if (!data.ok) {
-    //     throw new Error('Erro ' + data.statusText, data.message);
-    //     }
+     const data = await fetch(`http://localhost:8080/tecido-view/${id}?dataInicio=${dataInicio}`);
+         if (!data.ok) {
+         throw new Error('Erro ' + data.statusText, data.message);
+         }
 
-    // const formatedData = await data.json()
+    const formatedData = await data.json()
 
     console.log("Resposta: ", formatedData)
 
-      var FormatedData = [
-      {
-        "nome": "Algodão",
-        "porcentagem": 50
-      },
-      {
-        "nome": "Linho",
-        "porcentagem": 30
-      },
-      {
-        "nome": "ferro",
-        "porcentagem": 20
-      }
-    ]
+    //   var formatedData = [
+    //   {
+    //     "nome": "Algodão",
+    //     "porcentagem": 50
+    //   },
+    //   {
+    //     "nome": "Linho",
+    //     "porcentagem": 30
+    //   },
+    //   {
+    //     "nome": "ferro",
+    //     "porcentagem": 20
+    //   }
+    // ]
 
-    FormatedData.forEach(tecido => {
+    formatedData.forEach(tecido => {
       document.getElementById("tecidos").innerHTML += `
       <div class="card mx-4 mt-3 shadow rounded-4 py-1" style="background-color: #012171;">
       <div class="card-body d-flex gap-3 align-items-center mx-4">
@@ -190,7 +231,7 @@
           <p style="color: white; font-weight: 350;">${tecido.nome}</p>
         </blockquote>
         <div class="col-3 fs-2" style="color: white; font-weight: 350;"">
-        ${tecido.porcentagem}%
+        ${tecido.qtdTecidos}
         </div>
       </div>
     </div>
@@ -198,4 +239,38 @@
     })
 
   }
+
+
+  async function atualizarDados() {
+        const idUsuario = sessionStorage.getItem('id')
+        var year = document.getElementById("select_ano").value
+        const dados = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${year}`);
+            if (!dados.ok) {
+            throw new Error('Erro ' + dados.statusText, dados.message);
+            }
+
+        const formatedData = await dados.json()
+
+        console.log("Resposta: ", formatedData)
+
+        const labels = formatedData.map(item => item.nomePeca);
+        const dataValues = formatedData.map(item => item.qtdVendida);
+        const backgroundColors = gerarCores(labels);
+
+        myChart.data.labels = labels;
+        myChart.data.datasets[0].data = dataValues;
+        myChart.data.datasets[0].backgroundColor = backgroundColors;
+
+        myChart.update();
+    }
+
+    function gerarCores(labels) {
+        const backgroundColors = labels.map((_, index) => {
+            const hue = 240 - index * (240 / labels.length);
+            return `hsl(${hue}, 100%, 50%)`;
+        });
+
+        return backgroundColors;
+    }
+
 </script>

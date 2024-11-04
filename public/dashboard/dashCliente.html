@@ -44,7 +44,7 @@
               <a class="nav-link" onclick="irPara('../pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" onclick="irPara('#')">Contatos</a>
+              <a class="nav-link" onclick="irPara('../Contato.html')">Contatos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" onclick="irPara('../fichas/Lista_fichas.html')">Fichas</a>
@@ -76,7 +76,7 @@
                 <div class="card-body shadow rounded-4">
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="text-center">
-                            <p style="color: #696969; font-size: 0.8rem;">Novos clientes registrados</p>
+                            <p style="color: #696969; font-size: 0.8rem;">Novos pedidos registrados</p>
                             <h3 id="clientesRegistrados" style="text-shadow: 0px 2px 3px black; font-size: 2rem; font-weight: 450;"></h3>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
 
     <div class="pt-4 mx-4 mb-3">
         <p style="color: #696969;">Aqui estão os <b>clientes que mais marcaram presença na sua agenda</b></p>
-        <select class="form-select" id="mes">
+        <select onchange="getTopCliente()" class="form-select" id="mes">
             <option selected>Qual mês deseja consultar</option>
             <!-- Meses? -->
           </select>
@@ -101,37 +101,87 @@
 </body>
 <script>
     const currentYear = new Date().getFullYear();
-    document.getElementById("anoAtual").innerHTML = currentYear;
-
-    function clientesRegistradosKPI(){
-        var id = sessionStorage.getItem("id")
-
-        var FormatedData = 2
-
-        document.getElementById("clientesRegistrados").innerHTML = FormatedData
+    function atualizarMeses() {
+      const meses = [
+          "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+          "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      ];
+      
+      const dataAtual = new Date();
+      const mesAtual = dataAtual.getMonth();
+      
+      const selectMes = document.getElementById("mes");
+      selectMes.innerHTML = ""; 
+      
+      meses.forEach((mes, index) => {
+          selectMes.innerHTML += `<option value="${index}">${mes}</option>`;
+      });
+      
+      selectMes.value = mesAtual;
     }
 
-    function getTopCliente(){
-        var id = sessionStorage.getItem("id")
-      
-        var FormatedData = [
-            {
-                "nome": "John",
-                "sobrenome": "doe",
-                "countPedidos": 2
-            },
-            {
-                "nome": "Jane",
-                "sobrenome": "doe",
-                "countPedidos": 4
-            },
-            {
-                "nome": "Carlos",
-                "sobrenome": "Alberto",
-                "countPedidos": 3
-            }
-        ]
+    atualizarMeses();
 
+    function obterDataISO() {
+        const selectMes = document.getElementById("mes");
+        const mesSelecionado = parseInt(selectMes.value, 10);
+        const anoAtual = new Date().getFullYear();
+
+        const data = new Date(anoAtual, mesSelecionado, 1);
+        
+        return data.toISOString();
+    }
+
+
+    async function clientesRegistradosKPI(){
+      var id = sessionStorage.getItem("id")
+
+      var mes = obterDataISO()
+
+      const idUsuario = sessionStorage.getItem('id')
+      const data = await fetch(`http://localhost:8080/pedido-view/${id}?dataInicio=${mes}`);
+          if (!data.ok) {
+          throw new Error('Erro ' + data.statusText, data.message);
+          }
+          const FormatedData = await data.json()  
+          var count = 0
+          FormatedData.forEach( cliente => {
+            count += cliente.qtdPedidos
+          })
+        document.getElementById("clientesRegistrados").innerHTML = count
+    }
+
+    async function getTopCliente(){
+
+      document.getElementById("clientes").innerHTML = ""
+        var id = sessionStorage.getItem("id")
+
+        var mes = obterDataISO()
+
+        const idUsuario = sessionStorage.getItem('id')
+        const data = await fetch(`http://localhost:8080/pedido-view/${id}?dataInicio=${mes}`);
+            if (!data.ok) {
+            throw new Error('Erro ' + data.statusText, data.message);
+            }
+            const FormatedData = await data.json()  
+        // var FormatedData = [
+        //     {
+        //         "nome": "John",
+        //         "sobrenome": "doe",
+        //         "countPedidos": 2
+        //     },
+        //     {
+        //         "nome": "Jane",
+        //         "sobrenome": "doe",
+        //         "countPedidos": 4
+        //     },
+        //     {
+        //         "nome": "Carlos",
+        //         "sobrenome": "Alberto",
+        //         "countPedidos": 3
+        //     }
+        // ]
+        console.log(FormatedData)
         FormatedData.sort((a, b) => b.countPedidos - a.countPedidos);
 
         FormatedData.forEach(cliente =>{
@@ -140,14 +190,14 @@
             <div class="card-body d-flex gap-4 align-items-center">
               <img src="../assets/estrela (1) 2.svg" class="col-1"/>
               <blockquote class="blockquote mb-0 col-8 ">
-                <p style="color: white; font-weight: 350;">${cliente.nome} ${cliente.sobrenome}</p>
+                <p style="color: white; font-weight: 350;">${cliente.nome}</p>
               </blockquote>
               <div class="col-3 fs-2" style="color: white;">
-              ${cliente.countPedidos}
+              ${cliente.qtdPedidos}
               </div>
             </div>
           </div>`
         })
-
+        clientesRegistradosKPI()
     }
 </script>

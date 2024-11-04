@@ -23,7 +23,7 @@
     <script type="module" src="../js/navegar.js"></script>
 </head>
 
-<body onload="escolherRenderizacao()" id="body" class="mt-3">
+<body onload="escolherRenderizacao(); buscarEtapas()" id="body" class="mt-3">
 
     <!-- Ínicio do Modal -->
     <div class="modal fade" id="modal-multivalorado" tabindex="-1" aria-labelledby="modal-multivadorado-label" aria-hidden="true">
@@ -261,7 +261,7 @@
                     id="input-etapa" required>
                     <option value="">
                     </option>
-                    <select>
+                </select>
                         <div class="invalid-feedback">
                             Por favor selecione corretamente a etapa.
                         </div>

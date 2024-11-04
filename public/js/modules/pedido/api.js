@@ -486,11 +486,6 @@ async function buscarStatusAgendamento(){
     }
    
 }
-
-
-
-buscarEtapas()
-
 export {
     buscarAgendamento,
     buscarClienteView,

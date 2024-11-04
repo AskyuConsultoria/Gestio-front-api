@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de peças </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/etapa.css">
+  <script defer src="js/etapa.js"></script>
+  <script type="module" src="../js/navegar.js"></script>
+</head>
+
+<body style="background-color: var(--cinzaClaro) !important;" onload="listarEtapas()">
+  <header class="header py-4 bg-light px-0 mt-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="javascript:void(0);">
+        <img
+          src="./assets/botao-voltar 4.svg"
+          alt="botao-voltar"
+          class="mx-3"
+          onclick="voltar()"
+      /></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <img
+          src="./assets/burger-bar 1 (1).svg"
+          alt="menu-lateral"
+          class="navbar-toggler-icon mx-3"/>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #012171; color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4" style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" onclick="irPara('home.html')">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('pedido.html')">Pedidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('Contato.html')">Contatos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('fichas/Lista_fichas.html')">Fichas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('Lista-peca.html')">Produtos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('Lista-tecido.html')">Tecidos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="irPara('dashboard/dashHome.html')">Monitoramento</a>
+            </li>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container-md cont-etapa mt-3 p-3">
+    <div class="pd-title d-flex justify-content-between align-items-center mx-3">
+      <span>Minhas <b>Etapas</b></span>
+    </div>
+    <div class="descricao-page d-flex align-items-center justify-content-center mx-2 mt-3">
+      <span>Consulte o total de pedidos em cada etapa:</span>
+    </div>
+  </div>
+  <div class="container etapas" id="container">
+    <!-- USAR O ETAPAS PARA CRIAR DE FORMA DINAMICA COM JS (MANTER CLASSES BOOTSTRAP) -->
+    <!-- INSERIR PELO ID , PUXAR DADOS DA ETAPA ESPECIFICA PELO ID -->
+  </div>
+
+  
+  <div class="modal-etapa">
+    <div id="finalizado" class="finalizado" style="display: block; position: fixed; top: 100%; z-index: 100;">
+      <div class="modal-etapa-header d-flex align-items-center">
+        <div class="header-off d-flex align-items-center justify-content-evenly flex-row">
+          <h5 class="modal-etapa-title mt-4"></h5>
+        </div>
+        <img src="./assets/marca-x 2.svg" class="mt-2" alt="voltar" type="button" id="fechar">
+      </div>
+      <div class="modal-etapa-body">
+        <div class="etapa-title mt-3">
+          <span class="pedido-etapa">PEDIDOS NA ETAPA <span class="nome-etapa"></span></span>
+        </div>
+          <!-- CRIA CARD PESSOA = CLIENTE -->
+        <div class="container-pessoa" id="container-pessoa-finalizado">
+        </div>
+      </div>
+    </div>
+
+    <div id="comum" class="comum" style="display: block; position: fixed; top: 100%; z-index: 100;">
+      <div class="modal-etapa-header d-flex align-items-center">
+        <div class="header-off d-flex align-items-center justify-content-evenly flex-row">
+          <h5 class="modal-etapa-title title2 mt-4"></h5>
+        </div>
+        <img src="./assets/marca-x 2.svg" class="mt-2" alt="voltar" type="button" id="fechar2">
+      </div>
+      <div class="modal-etapa-body">
+        <div class="etapa-title mt-3">
+          <span class="pedido-etapa">PEDIDOS NA ETAPA <span class="nome-etapa nome2"></span></span>
+        </div>
+        <div class="sub-pedido mt-2 d-flex align-items-center justify-content-evenly flex-row mt-3">
+          <div>VOCÊ ESTÁ VENDO PEDIDOS</div>
+          <div class="status-etapa">EM ANDAMENTO</div>
+        </div>
+        <div class="barra-busca d-flex align-items-center justify-content-evenly mt-3">
+          <img src="./assets/search.svg" alt="lupa-pesquisa">
+          <input type="text" onchange="buscaAvancada(this)" placeholder="Pesquise os clientes do pedido">
+        </div>
+        <div class="switch-card d-flex align-items-center flex-column">
+          <div id = "total" class="form-check form-switch d-flex align-items-center justify-content-evenly mt-3 p-0 m-0">
+            <!-- TOTAL DE PEDIDOS DA ETAPA -->
+            <div class="text-switch ">Total de pedidos: <span class="total-pedidos"></span></div>
+            <input class="form-check-input custom-switch" onclick="mudarSwitch()" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+              checked>
+          </div>
+          <!-- CRIA CARD PESSOA = CLIENTE -->
+          <div class="container-pessoa" id="container-pessoa-comum">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <div class="offcanvas offcanvas-end menu" data-bs-dismiss="offcanvas" tabindex="-1" id="offcanvasNavbar"
+    aria-labelledby="offcanvasNavbarLabel" style=" color: white; border-radius: 1rem 0rem 0rem 1rem; width: 65%;">
+    <div class="offcanvas-body menu">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4"
+        style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contatos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Fichas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Lista-peca.html">Produtos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Lista-tecido.html">Tecidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard.html">Monitoramento</a>
+        </li>
+    </div>
+  </div>
+  </div>
+
+
+</body>
+
+</html>
