@@ -18,9 +18,15 @@ async function buscarAgendamento() {
     var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
     var usuarioId = sessionStorage.getItem("id")
 
+    if (sessionStorage.getItem(`cardCriado-${agendamentoId}`)) {
+        console.log("O card já foi criado para este agendamento.");
+        return;
+    }
+
     try {
         const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET"
+
         });
 
         if (!response.ok) {
@@ -31,9 +37,13 @@ async function buscarAgendamento() {
             return []
         }
 
-        
+
         const dados = await response.json()
-        await criarCardPipe(dados)
+        await criarCardPipe(dados);
+
+        sessionStorage.setItem(`cardCriado-${agendamentoId}`, true);
+
+
         console.log(dados)
         pedido.preencherDadosDePedidoCompleto(dados)
 
@@ -97,7 +107,7 @@ async function buscarClientePorId(novoClienteId) {
 async function buscarEnderecoPorId() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
-    if(sessionStorage.getItem("ENDERECO-MODAL-ID") != null) enderecoId = sessionStorage.getItem("ENDERECO-MODAL-ID")
+    if (sessionStorage.getItem("ENDERECO-MODAL-ID") != null) enderecoId = sessionStorage.getItem("ENDERECO-MODAL-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
@@ -125,7 +135,7 @@ async function buscarEnderecoPorId() {
 async function buscarTelefonePorId() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
-    if(sessionStorage.getItem("TELEFONE-MODAL-ID") != null) telefoneId = sessionStorage.getItem("TELEFONE-MODAL-ID")
+    if (sessionStorage.getItem("TELEFONE-MODAL-ID") != null) telefoneId = sessionStorage.getItem("TELEFONE-MODAL-ID")
 
     try {
         const response = await fetch(`http://localhost:8080/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
@@ -154,11 +164,11 @@ async function buscarEnderecoPorClienteId(nomeModal) {
     var usuarioId = sessionStorage.getItem("id")
     var clienteId = sessionStorage.getItem("CLIENTE-ID")
 
-    if(clienteId == null){
+    if (clienteId == null) {
         pedido.escolherModalMultivalorado(nomeModal, [])
         return
     }
-  
+
     var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
@@ -188,9 +198,9 @@ async function buscarEnderecoPorClienteId(nomeModal) {
 
 async function buscarTelefonePorClienteId(nomeModal) {
     var usuarioId = sessionStorage.getItem("id")
-    var clienteId = sessionStorage.getItem("CLIENTE-ID")    
-    
-    if(clienteId == null){
+    var clienteId = sessionStorage.getItem("CLIENTE-ID")
+
+    if (clienteId == null) {
         pedido.escolherModalMultivalorado(nomeModal, [])
         return
     }
@@ -222,11 +232,11 @@ async function buscarTelefonePorClienteId(nomeModal) {
 async function buscarClientesPorResponsavelId(nomeModal) {
     var usuarioId = sessionStorage.getItem("id")
     var clienteId = sessionStorage.getItem("CLIENTE-ID")
-    var responsavelId = sessionStorage.getItem("RESPONSAVEL-ID") 
-    var isResponsavel = sessionStorage.getItem("RESPONSAVEL") == "true"   
+    var responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
+    var isResponsavel = sessionStorage.getItem("RESPONSAVEL") == "true"
 
-    if(isResponsavel == true) responsavelId = clienteId
-       
+    if (isResponsavel == true) responsavelId = clienteId
+
 
     try {
         const response = await fetch(`http://localhost:8080/clientes/por-responsavel/${usuarioId}/${responsavelId}`, {
@@ -304,7 +314,7 @@ async function atualizarDadosCliente(clienteId) {
         const dados = await response.json()
         console.log(dados)
         return response.status
-       
+
 
     } catch (error) {
 
@@ -360,7 +370,7 @@ async function atualizarDadosPedido(agendamentoId) {
 }
 
 async function atualizarEnderecoAgendamento(enderecoId) {
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
@@ -370,11 +380,11 @@ async function atualizarEnderecoAgendamento(enderecoId) {
 
         const dados = await response.json()
         console.log(dados)
-        
-       await  buscarEnderecoPorId()
+
+        await buscarEnderecoPorId()
         pedido.esconderModalMultivalorado()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
@@ -383,7 +393,7 @@ async function atualizarEnderecoAgendamento(enderecoId) {
 
 
 async function atualizarTelefoneAgendamento(telefoneId) {
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
@@ -393,19 +403,19 @@ async function atualizarTelefoneAgendamento(telefoneId) {
 
         const dados = await response.json()
         console.log(dados)
-        
+
         await buscarTelefonePorId()
         pedido.esconderModalMultivalorado()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
     }
 }
 
-async function atualizarEndereco(){
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+async function atualizarEndereco() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
 
@@ -434,10 +444,10 @@ async function atualizarEndereco(){
 
         const dados = await response.json()
         console.log(dados)
-        
+
         buscarEnderecoPorId()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
@@ -445,8 +455,8 @@ async function atualizarEndereco(){
 }
 
 
-async function atualizarTelefone(){
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+async function atualizarTelefone() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
     var numero = document.querySelector("#input-numero-celular").value
 
@@ -457,18 +467,18 @@ async function atualizarTelefone(){
 
         const dados = await response.json()
         console.log(dados)
-        
+
         buscarTelefonePorId()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
     }
 }
 
-async function atualizarEnderecoModal(){
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+async function atualizarEnderecoModal() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-MODAL-ID"))
 
@@ -497,10 +507,10 @@ async function atualizarEnderecoModal(){
 
         const dados = await response.json()
         console.log(dados)
-        
+
         buscarEnderecoPorId()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
@@ -508,8 +518,8 @@ async function atualizarEnderecoModal(){
 }
 
 
-async function atualizarTelefoneModal(){
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+async function atualizarTelefoneModal() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-MODAL-ID"))
     var numero = document.querySelector("#input-modal-numero-celular").value
 
@@ -520,10 +530,10 @@ async function atualizarTelefoneModal(){
 
         const dados = await response.json()
         console.log(dados)
-        
+
         buscarTelefonePorId()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
@@ -599,7 +609,7 @@ async function cadastrarClienteModal() {
 
 async function criarPedido() {
     var usuarioId = parseInt(sessionStorage.getItem("id"))
-    
+
 
     try {
         const response = await fetch(`http://localhost:8080/agendamento`, {
@@ -625,7 +635,7 @@ async function criarPedido() {
         await pedido.exibirStatusDaRespostaAPI(response.status)
         sessionStorage.setItem("AGENDAMENTO-ID", dados.id)
         sessionStorage.setItem("PAGINA-PEDIDO", "consultar-pedido")
-        
+
         removerEstilizacaoDasInputs()
         escolherRenderizacao(false, null)
 
@@ -639,15 +649,15 @@ async function criarPedido() {
 
 async function criarCardPipe(agendamento) {
     console.log("agendamento:", agendamento)
-    const phone= buscarTelefonePorClienteId()
 
     const dados = {
-        "nome": agendamento.cliente.nome + " " + agendamento.cliente.sobrenome,
-        "email": agendamento.email,
-        "phone": phone.numero,
+        "cliente": agendamento.cliente.nome + " " + agendamento.cliente.sobrenome,
+        "usuario": agendamento.usuario.usuario,
+        "email cliente": agendamento.cliente.email,
+        "phone": agendamento.telefone.numero,
         "resumo": agendamento.nome,
-        "data": agendamento.dataInicio
-    }
+        "data": formatarData(agendamento.dataInicio)
+    };
 
     console.log(dados)
 
@@ -660,11 +670,31 @@ async function criarCardPipe(agendamento) {
 
 }
 
+function formatarData(data) {
+    var dia = new Date(data).getDate()
+    var mes = new Date(data).getMonth() + 1
+    var ano = new Date(data).getFullYear()
 
-async function cadastrarEnderecoModal(){
-    var usuarioId = parseInt(sessionStorage.getItem("id")) 
+    return `${dia}/${mes}/${ano}`
+}
+
+function formatarHorario(data) {
+    var horas = new Date(data).getHours()
+
+    var horarioFormatado = ""
+    if (horas <= 9) {
+        horarioFormatado = `0${horas}h`
+    }
+
+    horarioFormatado = `${horas}h`
+    return horarioFormatado
+}
+
+
+async function cadastrarEnderecoModal() {
+    var usuarioId = parseInt(sessionStorage.getItem("id"))
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
-    
+
     try {
         const response = await fetch(`http://localhost:8080/enderecos/${usuarioId}`, {
             method: "POST",
@@ -689,10 +719,10 @@ async function cadastrarEnderecoModal(){
 
         const dados = await response.json()
         console.log(dados)
-        
+
         buscarEnderecoPorId()
         return response.status
-       
+
     } catch (error) {
 
         console.log(`Houve um erro: ${error}`)
@@ -722,15 +752,15 @@ async function cadastrarTelefoneModal() {
                 numero: document.querySelector(`#input-modal-numero-celular`).value
             })
         })
-        
+
         var dados = await response.json()
-        console.log(dados) 
+        console.log(dados)
 
         buscarTelefonePorId()
         return response.status
 
     } catch (error) {
-    console.log(`Houve um erro: ${error}`)
+        console.log(`Houve um erro: ${error}`)
     }
 
 }
@@ -763,12 +793,12 @@ async function buscarEtapas() {
 
 }
 
-async function buscarStatusAgendamento(){
+async function buscarStatusAgendamento() {
 
-    try{
+    try {
         const usuarioId = parseInt(sessionStorage.getItem('id'))
         const agendamentoId = parseInt(sessionStorage.getItem('AGENDAMENTO-ID'))
-    
+
         const response = await fetch(`http://localhost:8080/agendamento-log/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
@@ -787,10 +817,10 @@ async function buscarStatusAgendamento(){
 
         pedido.preencherStatusAgendamento(dados)
 
-    } catch(error){
-            console.log(`Houve um erro no servidor ${error}`)
+    } catch (error) {
+        console.log(`Houve um erro no servidor ${error}`)
     }
-   
+
 }
 
 
