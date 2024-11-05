@@ -99,8 +99,7 @@ lista = dataFormated
 
 lista.forEach(itemPedido => {
     document.getElementById("container").innerHTML += `
-        <div class="card mb-2 mx-auto position-relative" style="max-width: 92%; background-color: #012171; color: white">
-            <a onclick="irPara(${itemPedido.id})">
+        <div class="card mb-2 mx-auto position-relative" id="${itemPedido.id}" onclick="irVisualizarFicha(this)" style="max-width: 92%; background-color: #012171; color: white">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body" id="${itemPedido.id}" onclick="IrVisualizarFicha(this)">
@@ -112,7 +111,6 @@ lista.forEach(itemPedido => {
                     </div>
                 </div>
             </div>
-            </a>
             <div class="container-right">
                 <img src="../assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${itemPedido.id})">
@@ -171,6 +169,8 @@ async function buscarItemPedido(){
         console.log(error)
     }
 }
+
+
 
 async function buscarAgendamento() {
 
@@ -370,6 +370,7 @@ async function buscarDadosCliente(){
 
 async function associarValoresFicha(itemPedidoId){
   var itemPedido = await buscarDadosFicha(itemPedidoId)
+  sessionStorage.setItem('FICHA-ID', itemPedido.id)
   sessionStorage.setItem('PECA-ID', itemPedido.peca.id)
   sessionStorage.setItem('CLIENTE-ID', itemPedido.cliente.id)
 }
@@ -393,8 +394,9 @@ async function buscarDadosFicha(itemPedidoId){
     
 }
 
-function IrVisualizarFicha(elFicha){
-    sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
-    location.assign("http://localhost:3333/fichas/vincular_medidas.html")
-}
+
+
+
+
+
 

@@ -62,6 +62,7 @@
             </div>
         </div>
         <button onclick="salvar()" class="salvar shadow-sm p-2 pt-3 pb-3">Salvar</button>
+        <button onclick="transferirParaImportFicha()" id="import-ficha-btn" class="salvar shadow-sm p-2 pt-3 mt-3 pb-3">PDF <img src="../assets/import (1) 1.png"></button>
     </div>
 
 
@@ -77,7 +78,7 @@
             info.style.display = "none"
         }
     }
-
+    let tecidoNomes = [];
     async function adicionarInformacoes() {
         var usuarioNome = sessionStorage.getItem("usuario")
         var peca = sessionStorage.getItem("PECA-ID")
@@ -105,6 +106,7 @@
         var formatedData = await data.json()
         console.log(formatedData)
         document.getElementById("tecidoInfo").innerHTML += ` ${formatedData.nome} |`
+        tecidoNomes.push(formatedData.nome)
     }
 
 
@@ -266,9 +268,11 @@
            await buscarValoresMedida()
            botaoSalvar.onclick = atualizarFicha
            botaoSalvar.innerText = "Atualizar"
+           exibirBotaoPDF()
         } else {
            botaoSalvar.onclick = salvar
            botaoSalvar.innerText = "Salvar"
+           ocultarBotaoPDF()
         }
 
         
@@ -385,6 +389,83 @@ async function validarCriacaoPedido(itemPedidoId) {
     var pedido = await criarPedido()
     sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
     location.assign("http://localhost:3333/associar_fichas.html")
+}
+
+
+function exibirBotaoPDF(){
+    const botaoImport = document.querySelector("#import-ficha-btn")
+    if(botaoImport.classList.contains('d-none')){
+        botaoImport.classList.remove('d-none')
+    }
+}
+
+function ocultarBotaoPDF(){
+    const botaoImport = document.querySelector("#import-ficha-btn")
+    if(!botaoImport.classList.contains('d-none')){
+        botaoImport.classList.add('d-none')
+    }
+}
+
+async function buscarValoresMedidas(){
+    const usuarioId = sessionStorage.getItem("id")
+    const itemPedidoId = sessionStorage.getItem("FICHA-ID")
+
+    try{
+        const response =  await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${itemPedidoId}`, {
+            method: "GET"
+        })
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro:")
+        console.log(error)
+    }
+}
+
+
+async function criarObjetoFicha(){
+    const valoresMedidas = await buscarValoresMedidas()
+    const fichaData = {
+        nome: valoresMedidas[0].cliente.nome,
+        responsavel: validarExistenciaResponsavel(valoresMedidas[0].cliente),
+        peca: valoresMedidas[0].itemPedido.peca.nome,
+        tecidos: tecidoNomes,
+        medidas: inserirMedidasFormatadas(valoresMedidas),
+    };
+    
+    sessionStorage.setItem("FICHA", JSON.stringify(fichaData))
+    return fichaData
+}
+
+async function transferirParaImportFicha(){
+    await console.log(criarObjetoFicha()) 
+    setTimeout( () => {
+        location.assign("http://localhost:3333/importar-ficha.html")
+    }, 500)
+}
+
+function inserirMedidasFormatadas(listaValorMedida){
+    var medidas = []
+    for(var i = 0; i < listaValorMedida.length; i++){
+        medidas.push({nome: listaValorMedida[i].nomeMedida.nome, valor: listaValorMedida[i].valor})
+    }
+    return medidas
+}
+
+async function inserirTecidosFormatados(){
+    console.log(tecidoNomes)
+    var listaTecido = tecidoNomes
+}
+
+function validarExistenciaResponsavel(cliente){
+    if(cliente.responsavel != null && cliente.responsavel.nome != null){
+        return cliente.responsavel.nome
+    } 
+
+    return null
 }
 
     
