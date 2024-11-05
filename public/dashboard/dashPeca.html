@@ -67,7 +67,7 @@
   <div style="border-radius: 0% 0% 0% 50%; background-color: #012171; width: 100%; height: 12rem;" class="shadow">
     <div class="d-flex justify-content-around align-items-center pt-4">
         <div class="col-8">
-            <h5 class="card-title fs-1" style="color: white; font-weight: 400;">Minhas Pecas</h5>
+            <h5 class="card-title fs-1" style="color: white; font-weight: 400;">Minhas Peças</h5>
             <i class="card-subtitle mb-2" style="color: white; font-size: small;">Dados atualizados <span id="anoAtual"></span></i>
         </div>
         <img class="image col-4" style="width: 11%;" src="../assets/pecaIconeDash.svg"/>
@@ -110,7 +110,7 @@
   async function obterData(){
 
     const idUsuario = sessionStorage.getItem('id')
-     const dados = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${currentYear}`);
+     const dados = await fetch(`http://192.168.79.215:8080/pecas/view/${idUsuario}?ano=${currentYear}`);
          if (!dados.ok) {
          throw new Error('Erro ' + dados.statusText, dados.message);
          }
@@ -199,7 +199,7 @@
     var dataInicio = obterDataISO()
 
     const idUsuario = sessionStorage.getItem('id')
-     const data = await fetch(`http://localhost:8080/tecido-view/${id}?dataInicio=${dataInicio}`);
+     const data = await fetch(`http://192.168.79.215:8080/tecido-view/${id}?dataInicio=${dataInicio}`);
          if (!data.ok) {
          throw new Error('Erro ' + data.statusText, data.message);
          }
@@ -244,7 +244,7 @@
   async function atualizarDados() {
         const idUsuario = sessionStorage.getItem('id')
         var year = document.getElementById("select_ano").value
-        const dados = await fetch(`http://localhost:8080/pecas/view/${idUsuario}?ano=${year}`);
+        const dados = await fetch(`http://192.168.79.215:8080/pecas/view/${idUsuario}?ano=${year}`);
             if (!dados.ok) {
             throw new Error('Erro ' + dados.statusText, dados.message);
             }

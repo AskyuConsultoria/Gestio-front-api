@@ -103,7 +103,7 @@ function associarResponsavel(idResponsavel) {
 }
 
 function validarNumeroDeCaracteresEBuscarClientes(nome) {
-  if (nome.length > 0 && window.location.pathname == "/Contato.html") preencherCardsDeCliente()
+  if (nome.length > -1 && window.location.pathname == "/Contato.html") preencherCardsDeCliente()
   else if (window.location.pathname == "/Adicionar-dependente.html") preencherCardsDeClienteResponsavel()
   if (nome.length == 0) document.querySelector("#conteudo-cliente").innerHTML = ""
 }

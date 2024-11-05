@@ -42,7 +42,7 @@ function botaoTecido() {
 //Integrar com o backend
 async function listarBotaoPeca() {
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/pecas/${idUsuario}`);
+    const data = await fetch(`http://192.168.79.215:8080/pecas/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -86,7 +86,7 @@ function mudarTecido(texto2) {
 // Conectar com o backEnd
 async function listarFichas(){
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}`);
+    const data = await fetch(`http://192.168.79.215:8080/itens-pedidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -125,7 +125,7 @@ async function criarPedido(){
     const agendamentoConsultado = await buscarAgendamento()
 
     try{
-        const response = await fetch("http://localhost:8080/pedido", {
+        const response = await fetch("http://192.168.79.215:8080/pedido", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -156,7 +156,7 @@ async function buscarItemPedido(){
     const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
 
     try{
-        const response =  await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        const response =  await fetch(`http://192.168.79.215:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 
@@ -178,7 +178,7 @@ async function buscarAgendamento() {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://192.168.79.215:8080/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 
@@ -209,7 +209,7 @@ async function validarAssociacaoPedido(itemPedidoId) {
     var pedido = await criarPedido()
     sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
     console.log(pedido)
-    location.assign("http://localhost:3333/associar-ficha.html")
+    location.assign("http://192.168.79.215:3333/associar-ficha.html")
 }
 
 
@@ -219,7 +219,7 @@ async function IrVisualizarFicha(elFicha){
     } else {
         sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
         await associarValoresFicha(elFicha.id)
-        location.assign("http://localhost:3333/fichas/vincular_medidas.html")
+        location.assign("http://192.168.79.215:3333/fichas/vincular_medidas.html")
     }
     
 }
@@ -288,7 +288,7 @@ function buscaAvançadaCliente(texto){
 async function listarClientes(){
     
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://localhost:8080/clientes/${idUsuario}`, {
+    const data = await fetch(`http://192.168.79.215:8080/clientes/${idUsuario}`, {
         method: 'GET'
     });
         if (!data.ok) {
@@ -350,7 +350,7 @@ function irParaFinal(peca, tecido){
 async function buscarDadosCliente(){
     var idCliente = sessionStorage.getItem("CLIENTE-ID")
 
-    const data = await fetch( `http://localhost:8080/clientes/${idCliente}/buscarUm`);
+    const data = await fetch( `http://192.168.79.215:8080/clientes/${idCliente}/buscarUm`);
     if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -379,7 +379,7 @@ async function buscarDadosFicha(itemPedidoId){
     const usuarioId = sessionStorage.getItem('id')
 
     try{
-        var response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        var response = await fetch(`http://192.168.79.215:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 

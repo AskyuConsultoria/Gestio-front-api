@@ -102,7 +102,7 @@
 
     async function listarPeca(){
         const idUsuario = sessionStorage.getItem('id')
-        const data = await fetch(`http://localhost:8080/pecas/${idUsuario}`);
+        const data = await fetch(`http://192.168.79.215:8080/pecas/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -117,7 +117,7 @@
 
     async function listarTecido(){
         const idUsuario = sessionStorage.getItem('id')
-        const data = await fetch(`http://localhost:8080/tecidos/${idUsuario}`);
+        const data = await fetch(`http://192.168.79.215:8080/tecidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }

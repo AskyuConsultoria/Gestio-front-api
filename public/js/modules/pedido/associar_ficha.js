@@ -3,7 +3,7 @@ async function buscarPedidosPorAgendamentoId(){
     const agendamentoId = sessionStorage.getItem('AGENDAMENTO-ID')
 
     try{
-        const reponse = await fetch(`http://localhost:8080/pedido/buscar-por-agendamento/${usuarioId}/${agendamentoId}`, {
+        const reponse = await fetch(`http://192.168.79.215:8080/pedido/buscar-por-agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET",
         });
 

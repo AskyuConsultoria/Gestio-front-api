@@ -10,7 +10,7 @@
     var user = document.getElementById("usuario").value;
     var senha = document.getElementById("senha").value;
     
-    const data = await fetch(`http://localhost:8080/usuarios/login?usuario=${user}&senha=${senha}`);
+    const data = await fetch(`http://192.168.79.215:8080/usuarios/login?usuario=${user}&senha=${senha}`);
       if (!data.ok) {
         if (data.status === 404) {
           construirModalGenerico("statusButton", null, null, "Usuário ou senha estão errados")
