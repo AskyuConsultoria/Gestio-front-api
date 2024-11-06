@@ -4,7 +4,7 @@ async function gerarRoteiroViaLLM(){
     const etapa = "Primeira entrevista"
 
     try {
-        const response = await fetch(`http://192.168.79.215:8080/api-llm`, {
+        const response = await fetch(`http://192.168.137.199:8080/api-llm`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

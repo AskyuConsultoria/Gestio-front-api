@@ -10,7 +10,7 @@ if (document.querySelector('#modal-generico')) {
 
 
 function fecharJanela(){
-    window.location.replace("http://192.168.79.215:3333/fichas/vincular_medidas.html")
+    window.location.replace("http://192.168.137.199:3333/fichas/vincular_medidas.html")
 }
   
 

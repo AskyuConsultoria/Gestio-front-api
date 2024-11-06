@@ -123,7 +123,7 @@
     var year = document.getElementById("select_ano").value
 
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`http://192.168.79.215:8080/pedido-view/mes/${idUsuario}?ano=${year}`);
+    const data = await fetch(`http://192.168.137.199:8080/pedido-view/mes/${idUsuario}?ano=${year}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText, data.message);
         }

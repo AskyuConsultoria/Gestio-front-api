@@ -12,7 +12,7 @@ async function cadastrarMedida(){
 
     console.log(dados)
 
-    const respostaCadastro = await fetch(`http://192.168.79.215:8080/nomes-medidas/${usuario}/${idPeca}`, {
+    const respostaCadastro = await fetch(`http://192.168.137.199:8080/nomes-medidas/${usuario}/${idPeca}`, {
     method: "POST" ,
     body: JSON.stringify(dados),
     headers: {"Content-type": "application/json; charset=UTF-8"},

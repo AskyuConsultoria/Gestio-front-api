@@ -559,7 +559,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
   <div class="d-flex px-3 flex-column" id='wrapper-${lista[i].id}' onclick="cliqueExpandidoWrapper(this)">
     <div class="form-check">
     <input class="form-check-input" type="radio" name="flexRadioDefault" id="${lista[i].id}">
-    <span id="span-multivalorado-${i}">${lista[i].nome} ${lista[i].sobrenome}</span>
+    <span id="span-multivalorado-${i}">${validarSeECliente(lista[i])}</span>
     <span class="fw-medium" style="color: #012171; margin-left: 45%" id="btn-edit-${lista[i].id}" onclick="preencherFormulario('${nomeModal}','atualizar', ${lista[i].id})">Editar</span>
     </div>
    <div class="d-flex ps-4 pt-1 pb-1 text-secondary" style="width: 85%">
@@ -946,4 +946,12 @@ export function validarEventoKeyboard(evento) {
   }
 }
 
+
+function validarSeECliente(objeto){
+  if(objeto.cliente != null && objeto.cliente.nome != null){
+    return `${objeto.cliente.nome} ${objeto.cliente.sobrenome}`
+  } else {
+    return `${objeto.nome} ${objeto.sobrenome}` 
+  }
+}
 

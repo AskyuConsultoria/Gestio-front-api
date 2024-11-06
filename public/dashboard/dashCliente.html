@@ -139,7 +139,7 @@
       var mes = obterDataISO()
 
       const idUsuario = sessionStorage.getItem('id')
-      const data = await fetch(`http://192.168.79.215:8080/pedido-view/${id}?dataInicio=${mes}`);
+      const data = await fetch(`http://192.168.137.199:8080/pedido-view/${id}?dataInicio=${mes}`);
           if (!data.ok) {
           throw new Error('Erro ' + data.statusText, data.message);
           }
@@ -159,7 +159,7 @@
         var mes = obterDataISO()
 
         const idUsuario = sessionStorage.getItem('id')
-        const data = await fetch(`http://192.168.79.215:8080/pedido-view/${id}?dataInicio=${mes}`);
+        const data = await fetch(`http://192.168.137.199:8080/pedido-view/${id}?dataInicio=${mes}`);
             if (!data.ok) {
             throw new Error('Erro ' + data.statusText, data.message);
             }
