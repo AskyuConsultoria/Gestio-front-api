@@ -18,7 +18,7 @@ router.get("/", function (res) {
 })
 );
 
-var url = `http://192.168.137.199:${PORTA}`
+var url = `http://localhost:${PORTA}`
 
 app.listen(PORTA, function () {
     console.log(`O seu site já está na web na url ${url}`);

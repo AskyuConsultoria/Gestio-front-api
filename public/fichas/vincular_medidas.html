@@ -88,18 +88,20 @@
         var tecidos = JSON.parse(sessionStorage.getItem("tecidos"))
 
         document.getElementById("pecaInfo").innerHTML += ` ${peca}`
-
-        tecidos.map(tecido => {
-
-            getTecido(tecido)
-        })
+        if (Array.isArray(tecidos)) {
+            tecidos.map(tecido => {
+            getTecido(tecido);
+            });
+        } else {
+            getTecido(tecidos);
+        }
 
 
     }
 
     async function getTecido(tecido) {
         var idUsuario = sessionStorage.getItem("id")
-        var data = await fetch(`http://192.168.137.199:8080/tecidos/${idUsuario}/${tecido}`);
+        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -115,7 +117,7 @@
     async function getmedidasPeca() {
         var idUsuario = sessionStorage.getItem("id")
         var peca = sessionStorage.getItem("PECA-ID")
-        var data = await fetch(`http://192.168.137.199:8080/nomes-medidas/${idUsuario}/${peca}`);
+        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -160,7 +162,7 @@
                 "id": idPeca
             }
         }
-        itemPedido = await fetch(`http://192.168.137.199:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
+        itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
             method: "POST",
             body: JSON.stringify(itemPedidoBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -220,7 +222,7 @@
             "usuario": { "id": idUsuario },
             "peca": { "id": idPeca }
         }
-        var valorMedida = await fetch(`http://192.168.137.199:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
+        var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
             method: "POST",
             body: JSON.stringify(medidaBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -240,7 +242,7 @@
     
 
         try{
-          const response =  await fetch(`http://192.168.137.199:8080/valores-medidas/${idUsuario}/${idFicha}`, {
+          const response =  await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idFicha}`, {
             method: "GET"
           })
 
@@ -289,7 +291,7 @@ async function atualizarValorMedida(valorMedidaId, valor) {
     const usuarioId = sessionStorage.getItem('id')
 
     try{
-        var response = await fetch(`http://192.168.137.199:8080/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
+        var response = await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
             method: "PUT"
         })
 
@@ -308,7 +310,7 @@ async function criarPedido(){
     const agendamentoConsultado = await buscarAgendamento()
 
     try{
-        const response = await fetch("http://192.168.137.199:8080/pedido", {
+        const response = await fetch("http://localhost:8080/pedido", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -339,7 +341,7 @@ async function buscarItemPedido(){
     const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
 
     try{
-        const response =  await fetch(`http://192.168.137.199:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        const response =  await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 
@@ -359,7 +361,7 @@ var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
 var usuarioId = sessionStorage.getItem("id")
 
 try {
-    const response = await fetch(`http://192.168.137.199:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
         method: "GET"
     });
 
@@ -388,7 +390,7 @@ async function validarCriacaoPedido(itemPedidoId) {
     sessionStorage.setItem("ITEM-PEDIDO-ID", itemPedidoId)
     var pedido = await criarPedido()
     sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
-    location.assign("http://192.168.137.199:3333/associar_fichas.html")
+    location.assign("http://localhost:3333/associar_fichas.html")
 }
 
 
@@ -411,7 +413,7 @@ async function buscarValoresMedidas(){
     const itemPedidoId = sessionStorage.getItem("FICHA-ID")
 
     try{
-        const response =  await fetch(`http://192.168.137.199:8080/valores-medidas/${usuarioId}/${itemPedidoId}`, {
+        const response =  await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${itemPedidoId}`, {
             method: "GET"
         })
 
@@ -443,7 +445,7 @@ async function criarObjetoFicha(){
 async function transferirParaImportFicha(){
     await console.log(criarObjetoFicha()) 
     setTimeout( () => {
-        location.assign("http://192.168.137.199:3333/importar-ficha.html")
+        location.assign("http://localhost:3333/importar-ficha.html")
     }, 500)
 }
 

@@ -6,7 +6,7 @@ async function cadastrarContato() {
     const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
 
     try {
-        const response = await fetch(`http://192.168.137.199:8080/clientes`, {
+        const response = await fetch(`http://localhost:8080/clientes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -40,7 +40,7 @@ async function cadastrarTelefone(tipoTelefone) {
     const clienteId = sessionStorage.getItem('CLIENTE-ID')
 
     try {
-        const response = await fetch(`http://192.168.137.199:8080/telefone`, {
+        const response = await fetch(`http://localhost:8080/telefone`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -75,7 +75,7 @@ async function buscarClientePorId(novoClienteId) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://192.168.137.199:8080/clientes/${novoClienteId}/buscarUm`, {
+        const response = await fetch(`http://localhost:8080/clientes/${novoClienteId}/buscarUm`, {
             method: "GET"
         });
 
@@ -106,7 +106,7 @@ async function buscarClientesPorNome(clienteNome) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://192.168.137.199:8080/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
+        const response = await fetch(`http://localhost:8080/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
             method: "GET"
         });
 
