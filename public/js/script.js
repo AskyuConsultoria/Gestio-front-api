@@ -21,8 +21,8 @@
           await fetch(`http://localhost:8080/usuarios/login/deslogar?usuario=${user}`, {
             method: "POST" ,
             headers: {"Content-type": "application/json; charset=UTF-8"},
-        })
-          construirModalGenerico("statusButton", null, null, "Por Favor tente novamente com a mesma senha e usuario!")
+          })
+          login()
         } 
         else {
           construirModalGenerico("statusButton", null, null, "Erro no login. Contate a nossa equipe ou aguarde!")
