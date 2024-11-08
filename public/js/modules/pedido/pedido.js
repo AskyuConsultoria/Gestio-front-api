@@ -906,6 +906,10 @@ export function esconderModalMultivalorado() {
   modalMultivalorado.hide()
 }
 
+export function esconderModalGenerico(){
+  modalGenerico.hide()
+}
+
 export function houveMudancaDeDados() {
   if (salvarPedido || salvarCliente || salvarEndereco || salvarTelefone || atualizarEndereco || atualizarTelefone) return true
   else return false

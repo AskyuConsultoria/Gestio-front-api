@@ -157,12 +157,18 @@ function agregarERetornarConteudosModal(tipoConteudo){
       
   
     }
+
+    verificarAssociacaoTelefone(formularioValido)
+    verificarAssociacaoEndereco(formularioValido)
   
     if(formularioValido){
       if(tipoFormulario == "pedido") pedido.salvarModificacao()
       if(tipoFormulario == "telefone" || tipoFormulario == "endereco" || tipoFormulario == "cliente-modal" ) pedido.salvarModificacaoModal()  
       if(tipoFormulario == "cliente") await cliente.salvarContato()
-    } 
+    } else {
+      pedido.esconderModalGenerico()
+    }
+
   }
   
   function estilizarCamposDoFormulario(valido, elInput, elDivContent, mensagem){
@@ -212,6 +218,52 @@ function agregarERetornarConteudosModal(tipoConteudo){
     } 
       
   }
+
+
+  function verificarAssociacaoTelefone(formularioValido){
+    var elInputTelefone = document.querySelector("#conteudo-telefone")
+    if(elInputTelefone.classList.contains('d-none')){
+      formularioValido = false
+      exibirErroAssociacaoTelefone()
+      return
+    } 
+
+    ocultarErroAssociacaoTelefone()
+  }
+
+  function verificarAssociacaoEndereco(formularioValido){
+    var elInputEndereco = document.querySelector("#conteudo-endereco")
+    if(elInputEndereco.classList.contains('d-none')){
+      formularioValido = false
+      exibirErroAssociacaoEndereco()
+      return
+    } 
+
+    ocultarErroAssociacaoEndereco()
+  }
+
+  function exibirErroAssociacaoTelefone(){
+      var divErroTelefone = document.querySelector("#validacao-associacao-telefone")
+      if(!divErroTelefone.classList.contains('d-flex')) divErroTelefone.classList.add('d-flex')
+  }
+
+  function exibirErroAssociacaoEndereco(){
+    var divErroEndereco = document.querySelector("#validacao-associacao-endereco")
+    if(!divErroEndereco.classList.contains('d-flex')) divErroEndereco.classList.add('d-flex')
+  }
+
+  function ocultarErroAssociacaoTelefone(){
+    var divErroTelefone = document.querySelector("#validacao-associacao-telefone")
+    if(divErroTelefone.classList.contains('d-flex')) divErroTelefone.classList.remove('d-flex')
+  }
+
+  function ocultarErroAssociacaoEndereco(){
+    var divErroEndereco = document.querySelector("#validacao-associacao-endereco")
+    if(divErroEndereco.classList.contains('d-flex')) divErroEndereco.classList.remove('d-flex')
+  }
+
+
+
 
 
 export {

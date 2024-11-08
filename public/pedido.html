@@ -195,11 +195,14 @@
          </div>
     
 
-            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
+            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 flex-column align-items-center">
                 <button class="botao-associar rounded-pill text-white w-75" onclick="buscarTelefonePorClienteId('telefone')"
                     id="botao-pedido" style="height: 40px;">
                     Selecionar telefone do Cliente
                 </button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-telefone">
+                    Por favor associe o telefone do cliente
+                </div>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
@@ -296,11 +299,14 @@
                 <span>Endereço do Pedido</span>
             </div>
 
-            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
+            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 flex-column align-items-center">
                 <button class="botao-associar rounded-pill text-white w-75" onclick="buscarEnderecoPorClienteId('endereco')"
                     id="botao-pedido" style="height: 40px;">
                     Selecionar endereço do Cliente
                 </button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-endereco">
+                    Por favor associe o endereço do cliente
+                </div>
             </div>
             </div>
             <div id="conteudo-endereco">
