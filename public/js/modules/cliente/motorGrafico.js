@@ -49,15 +49,6 @@ function escolherRenderizacao(){
 }
 
 
-
-function verificarAssociacoesEExibirBotaoSalvar(){
-   var enderecoAssociado = !document.querySelector("#input-cep").classList.contains('d-none')
-   var telefoneAssociado = !document.querySelector("#input-numero-celular").classList.contains('d-none')
-
-   if(enderecoAssociado && telefoneAssociado) motorGraficoForm.exibirBotaoSalvar()
-
-}
-
 function esconderBotoesAssociacao(){
    var botoesAssociacao = document.querySelectorAll(".botao-associar")
 
@@ -83,7 +74,7 @@ function exibirComponenteDependente(){
     const responsavelExiste = sessionStorage.getItem("RESPONSAVEL-ID") != null
     const clienteExiste = sessionStorage.getItem("CLIENTE-ID") != null
     const componenteDependentes = document.querySelector("#componente-dependentes")
-    if(responsavelExiste && clienteExiste){
+    if(responsavelExiste & clienteExiste){
         if(componenteDependentes.classList.contains('d-none')){
             componenteDependentes.classList.remove('d-none')
         }

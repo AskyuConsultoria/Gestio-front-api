@@ -59,6 +59,8 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         esconderInputsEndereco()
         esconderInputsNumero()
         esconderCardEndereco()
+        esconderBotaoItensPedido()
+        esconderBotaoCancelar()
 
         if (sessionStorage.getItem("CLIENTE-ID") != null) {
             listaComponenteExibido.shift()
@@ -78,8 +80,10 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
         bloquearInputs()
         exibirBotoesEdicao()
         exibirEtapa()
+        exibirBotaoItensPedido()
         exibirBotaoSalvar()
-        
+        exibirBotaoCancelar()
+
         api.buscarAgendamento()
         api.buscarStatusAgendamento()
         renderizar("200%", "Pedido")
@@ -97,7 +101,7 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 function fecharJanela() {
     var paginaParaIr = document.querySelector('.botao-confirmacao').id
 
-    if(paginaParaIr == "adicionar-pedido"){
+    if (paginaParaIr == "adicionar-pedido") {
         escolherRenderizacao(false, paginaParaIr)
         return
     }
@@ -118,198 +122,229 @@ function fecharJanela() {
 }
 
 
-function agregarInputsEmLista(){
+function agregarInputsEmLista() {
     var listaInput = []
     var inputs = document.querySelectorAll('input')
-    for(var i = 0; i < inputs.length; i++){
+    for (var i = 0; i < inputs.length; i++) {
         listaInput.push(inputs[i])
     }
     return listaInput
 }
 
-function bloquearInputs(){
+function bloquearInputs() {
     var listaInput = agregarInputsEmLista()
 
-    for(var i = 0; i < listaInput.length; i++){
+    for (var i = 0; i < listaInput.length; i++) {
         listaInput[i].disabled = true
         document.querySelector('#input-etapa').disabled = true
     }
 }
 
-function desbloquearInputs(){
+function desbloquearInputs() {
     var listaInput = agregarInputsEmLista()
 
-    for(var i = 0; i < listaInput.length; i++){
+    for (var i = 0; i < listaInput.length; i++) {
         listaInput[i].disabled = false
         document.querySelector('#input-etapa').disabled = false
     }
 }
 
-function desbloquearFormulario(botaoId){
+function desbloquearFormulario(botaoId) {
 
     var classe = botaoId.substring(botaoId.indexOf('-') + 1);
     var listaInput = document.querySelectorAll(`.${classe}`)
 
-    if(classe == 'cliente'){
+    if (classe == 'cliente') {
         var elNumero = document.querySelector('#input-numero-celular')
         elNumero.disabled = false
-    } 
+    }
 
-    if(classe == 'pedido'){
+    if (classe == 'pedido') {
         var elEtapa = document.querySelector('#input-etapa')
         elEtapa.disabled = false
     }
 
-    for(var i = 0; i < listaInput.length; i++){
+    for (var i = 0; i < listaInput.length; i++) {
         listaInput[i].disabled = false
     }
 }
 
 
-function esconderBotoesEdicao(){
+function esconderBotoesEdicao() {
     var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
 
-    for(var i = 0; i < listaBotaoEdicao.length; i++){
-        if(listaBotaoEdicao[i].classList.contains('d-block')){
+    for (var i = 0; i < listaBotaoEdicao.length; i++) {
+        if (listaBotaoEdicao[i].classList.contains('d-block')) {
             listaBotaoEdicao[i].classList.remove('d-block')
         }
 
-        if(!listaBotaoEdicao[i].classList.contains('d-none')){
+        if (!listaBotaoEdicao[i].classList.contains('d-none')) {
             listaBotaoEdicao[i].classList.add('d-none')
-        } 
+        }
     }
 }
 
-function exibirBotoesEdicao(){
+function exibirBotoesEdicao() {
     var listaBotaoEdicao = document.querySelectorAll('.botao-edicao')
 
-    for(var i = 0; i < listaBotaoEdicao.length; i++){
-        if(listaBotaoEdicao[i].classList.contains('d-none')){
+    for (var i = 0; i < listaBotaoEdicao.length; i++) {
+        if (listaBotaoEdicao[i].classList.contains('d-none')) {
             listaBotaoEdicao[i].classList.remove('d-none')
         }
 
-        if(!listaBotaoEdicao[i].classList.contains('d-block')){
+        if (!listaBotaoEdicao[i].classList.contains('d-block')) {
             listaBotaoEdicao[i].classList.add('d-block')
-        } 
+        }
     }
 }
 
-function esconderBotaoSalvar(){
+function esconderBotaoSalvar() {
     var botaoSalvar = document.querySelector('#botao-salvar')
 
-    if(botaoSalvar.classList.contains('d-block')){
+    if (botaoSalvar.classList.contains('d-block')) {
         botaoSalvar.classList.remove('d-block')
     }
 
-    if(!botaoSalvar.classList.contains('d-none')){
+    if (!botaoSalvar.classList.contains('d-none')) {
         botaoSalvar.classList.add('d-none')
-    } 
+    }
 }
 
-function exibirBotaoSalvar(){
+function exibirBotaoSalvar() {
     var botaoSalvar = document.querySelector('#botao-salvar')
 
-    if(botaoSalvar.classList.contains('d-none')){
+    if (botaoSalvar.classList.contains('d-none')) {
         botaoSalvar.classList.remove('d-none')
     }
 
-    if(!botaoSalvar.classList.contains('d-block')){
+    if (!botaoSalvar.classList.contains('d-block')) {
         botaoSalvar.classList.add('d-block')
-    } 
+    }
 
 }
 
-function esconderEtapa(){
+function esconderEtapa() {
     var labelEtapa = document.querySelector('#label-etapa')
     var contentEtapa = document.querySelector('#content-etapa')
 
-    if(!labelEtapa.classList.contains('d-none')){
+    if (!labelEtapa.classList.contains('d-none')) {
         labelEtapa.classList.add('d-none')
     }
 
-    if(!contentEtapa.classList.contains('d-none')){
+    if (!contentEtapa.classList.contains('d-none')) {
         contentEtapa.classList.add('d-none')
     }
 }
 
-function esconderInputsEndereco(){
+function esconderInputsEndereco() {
     var conteudoEndereco = document.querySelector("#conteudo-endereco")
-    if(!conteudoEndereco.classList.contains('d-none')){
+    if (!conteudoEndereco.classList.contains('d-none')) {
         conteudoEndereco.classList.add('d-none')
     }
 }
 
-function exibirInputsEndereco(){
+function exibirInputsEndereco() {
     const conteudoEndereco = document.querySelector("#conteudo-endereco")
-    if(conteudoEndereco.classList.contains('d-none')){
+    if (conteudoEndereco.classList.contains('d-none')) {
         conteudoEndereco.classList.remove('d-none')
     }
 
 }
 
-function esconderInputsNumero(){
+function esconderInputsNumero() {
     var conteudoTelefone = document.querySelector("#conteudo-telefone")
-    if(!conteudoTelefone.classList.contains('d-none')){
+    if (!conteudoTelefone.classList.contains('d-none')) {
         conteudoTelefone.classList.add('d-none')
     }
 }
 
-function exibirInputsNumero(){
+function exibirInputsNumero() {
     var conteudoTelefone = document.querySelector("#conteudo-telefone")
-    if(conteudoTelefone.classList.contains('d-none')){
+    if (conteudoTelefone.classList.contains('d-none')) {
         conteudoTelefone.classList.remove('d-none')
     }
 
 }
 
-function esconderCardEndereco(){
+function esconderCardEndereco() {
     var cardEndereco = document.querySelector("#card-label-endereco")
-    if(!cardEndereco.classList.contains('d-none')){
+    if (!cardEndereco.classList.contains('d-none')) {
         cardEndereco.classList.add('d-none')
     }
 }
 
-function exibirCardEndereco(){
+function exibirCardEndereco() {
     var cardEndereco = document.querySelector("#card-label-endereco")
-    if(cardEndereco.classList.contains('d-none')){
+    if (cardEndereco.classList.contains('d-none')) {
         cardEndereco.classList.remove('d-none')
+    }
+}
+
+function esconderBotaoCancelar() {
+    var botaoCancelar = document.querySelector("#content-btn-cancelar")
+    if (!botaoCancelar.classList.contains('d-none')) {
+        botaoCancelar.classList.add('d-none')
     }
 
 }
 
+function exibirBotaoCancelar() {
+    var botaoCancelar = document.querySelector("#content-btn-cancelar")
+    if (botaoCancelar.classList.contains('d-none')) {
+        botaoCancelar.classList.remove('d-none')
+    }
+}
 
-function exibirEtapa(){
+function esconderBotaoItensPedido() {
+    var botaoItensPedido = document.querySelector("#conteudo-item-pedido")
+    if (!botaoItensPedido.classList.contains('d-none')) {
+        botaoItensPedido.classList.add('d-none')
+    }
+
+}
+
+function exibirBotaoItensPedido() {
+    var botaoItensPedido = document.querySelector("#conteudo-item-pedido")
+    if (botaoItensPedido.classList.contains('d-none')) {
+        botaoItensPedido.classList.remove('d-none')
+    }
+}
+
+
+
+
+function exibirEtapa() {
     var labelEtapa = document.querySelector('#label-etapa')
     var contentEtapa = document.querySelector('#content-etapa')
 
-    if(labelEtapa.classList.contains('d-none')){
+    if (labelEtapa.classList.contains('d-none')) {
         labelEtapa.classList.remove('d-none')
     }
 
-    if(contentEtapa.classList.contains('d-none')){
+    if (contentEtapa.classList.contains('d-none')) {
         contentEtapa.classList.remove('d-none')
     }
 
 
-    if(!labelEtapa.classList.contains('d-block')){
+    if (!labelEtapa.classList.contains('d-block')) {
         labelEtapa.classList.add('d-block')
     }
 
-    if(!contentEtapa.classList.contains('d-block')){
+    if (!contentEtapa.classList.contains('d-block')) {
         contentEtapa.classList.add('d-block')
     }
 }
 
-function removerEstilizacaoDasInputs(){
+function removerEstilizacaoDasInputs() {
     var inputs = document.querySelectorAll('input')
-    for(var i = 0; i < inputs.length; i++){
-        if(inputs[i].classList.contains('is-valid')){
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].classList.contains('is-valid')) {
             inputs[i].classList.remove('is-valid')
         }
     }
 
     const selectEtapa = document.querySelector('#input-etapa')
-    if(selectEtapa.classList.contains('is-valid')){
+    if (selectEtapa.classList.contains('is-valid')) {
         selectEtapa.classList.remove('is-valid')
     }
 }
@@ -326,11 +361,13 @@ export {
     esconderBotoesEdicao,
     esconderCardEndereco,
     esconderBotaoSalvar,
+    esconderBotaoCancelar,
     exibirInputsEndereco,
     exibirInputsNumero,
     exibirBotaoSalvar,
     exibirBotoesEdicao,
     exibirCardEndereco,
+    exibirBotaoCancelar,
     desbloquearInputs,
     desbloquearFormulario,
     removerEstilizacaoDasInputs

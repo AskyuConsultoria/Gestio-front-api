@@ -45,4 +45,10 @@ function preencherCardsPedido(listaPedido){
 }
 
 
+function removerCacheFicha(){
+    sessionStorage.removeItem("ITEM-PEDIDO-ID")
+    sessionStorage.removeItem("FICHA-ID")
+}
+
+
 buscarPedidosPorAgendamentoId()
