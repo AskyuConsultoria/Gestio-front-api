@@ -6,14 +6,12 @@ import * as formulario from "./formulario.js"
 window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
 window.construirModalGenerico = construirModalGenerico
 window.validarEventoKeyboard = validarEventoKeyboard
-window.verificarDadosEExibirBotaoDeConfirmacao = verificarDadosEExibirBotaoDeConfirmacao
-window.construirModalGenerico = construirModalGenerico
 window.validarAtualizacaoEndereco = validarAtualizacaoEndereco
 window.reexbirValoresDaConsulta = reexbirValoresDaConsulta
 window.salvarModificaoModal = salvarModificacaoModal
 window.preencherFormulario = preencherFormulario
 window.cliqueExpandidoWrapper = cliqueExpandidoWrapper
-
+window.desativarAgendamentoESeusPedidos = desativarAgendamentoESeusPedidos
 
 window.clienteId = sessionStorage.getItem('CLIENTE-ID')
 window.inputClienteId = clienteId;
@@ -431,7 +429,7 @@ export function construirModalGenerico(elementoId, status) {
   if (elementoId == "statusButton") {
     elementoFooter.innerHTML =
       `
-     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="reexbirValoresDaConsulta()" style="background-color: #012171;">
+     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="reexbirValoresDaConsulta()" id="button-status" style="background-color: #012171;">
         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
     </button>
     `
@@ -452,6 +450,21 @@ export function construirModalGenerico(elementoId, status) {
     `
 
     textoModal = "Deseja salvar as alterações no pedido?"
+    modalGenerico.show()
+  }
+
+  if(elementoId == "botao-cancelar"){
+    elementoFooter.innerHTML = `
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="desativarAgendamentoESeusPedidos()" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="modalGenerico.hide()" id="botao-status" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    </button>
+    `
+
+    textoModal = status
     modalGenerico.show()
   }
 
@@ -853,6 +866,16 @@ export async function validarAtualizacaoEndereco(nomeModal) {
 
 }
 
+export async function desativarAgendamentoESeusPedidos() {
+  var responseAgendamento = await api.desativarAgendamento()
+  var responsePedidos = await api.desativarPedidosPorAgendamento()
+  exibirStatusDaRespostaAPIGenerico(responsePedidos, "Agendamento cancelado com sucesso.")
+  const elBtnStatus = document.querySelector("#button-status") 
+  elBtnStatus.addEventListener("click", function (){
+    window.location.assign("http://localhost:3333/home.html")
+  })
+}
+
 
 export async function salvarModificacaoModal() {
   var listaDeResponse = []
@@ -940,6 +963,12 @@ export function exibirStatusDaRespostaAPI(response) {
   var status = "Alterações salvas com sucesso"
   if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
   dadosForamAtualizados()
+  construirModalGenerico("statusButton", status)
+}
+
+export function exibirStatusDaRespostaAPIGenerico(response, status) {
+  if (response.status == 500 || response.status == 400 || response.status == 404) status = `Ocorreu um erro no servidor: ${response.status}.`
+  if(response.status == 204) status = `Agendamento e Pedidos já estão inativos.`
   construirModalGenerico("statusButton", status)
 }
 

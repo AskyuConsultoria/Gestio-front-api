@@ -821,6 +821,45 @@ async function buscarStatusAgendamento(){
    
 }
 
+async function desativarPedidosPorAgendamento(){
+    const usuarioId = sessionStorage.getItem("id")
+    const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+
+    try{
+        var response = await fetch(`http://localhost:8080/pedido/excluir-por-agendamento/${usuarioId}/${agendamentoId}`,{
+            method: "DELETE"
+        })
+
+        var dados = await response.json()
+        console.log(dados)
+        return response.status
+
+    } catch(error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+        return response.status
+    }
+    
+}
+
+async function desativarAgendamento() {
+    var usuarioId = sessionStorage.getItem("id")
+    var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
+
+    try{
+        var response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+            method: "DELETE"
+        })
+
+        var dados = await response.json()
+        return response.status
+
+    } catch (error){
+        console.log("Ocorreu um erro: ")
+        return error
+    }
+}
+
 
 
 buscarEtapas()
@@ -850,5 +889,7 @@ export {
     cadastrarClienteModal,
     buscarEtapas,
     buscarStatusAgendamento,
-    buscarTelefonePorIdEtapa
+    buscarTelefonePorIdEtapa,
+    desativarPedidosPorAgendamento,
+    desativarAgendamento
 }

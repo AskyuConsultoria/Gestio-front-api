@@ -14,13 +14,24 @@ var cliente = []
 //     `
 // }
 
-// integrar com o back
-function deletarFicha(){
-    console.log('deletar')
-    const botao = document.getElementById('1')
+async function deletarFicha(fichaId){
+    const usuarioId = sessionStorage.getItem("id")
+    const botao = document.getElementById(fichaId)
     botao.remove()
     event.preventDefault();
-    console.log('prevenido')
+
+    try{
+        var response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${fichaId}`, {
+            method: "DELETE"
+        })
+
+        var dados = await response.json()
+        return dados
+        
+    } catch (error) {
+        console.log("Ocorreu um erro:")
+        console.log(error)
+    }
 }
 
 
