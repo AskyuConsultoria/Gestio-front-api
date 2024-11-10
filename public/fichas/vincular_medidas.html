@@ -184,6 +184,7 @@
         
         validarCriacaoPedido(idItemPedido)
         vincularMedidas()
+        vincularTecidos(idItemPedido)
     }
 
     async function vincularMedidas() {
@@ -212,6 +213,51 @@
             window.location = "Lista_fichas.html"
         }, 2000);
     }
+
+    async function vincularTecidos(itemPedidoId){
+       const tecidos = sessionStorage.getItem("tecidos")
+       const listaTecido = JSON.parse(tecidos)
+
+       for(var i = 0; i < listaTecido.length; i++){
+       await cadastrarColecaoTecido(itemPedidoId, listaTecido[i])
+       }
+
+    }
+
+    async function cadastrarColecaoTecido(itemPedidoId, tecidoId){
+        const usuarioId = sessionStorage.getItem("id")
+
+        try{
+            const response = await fetch(`http://localhost:8080/colecoes-tecidos/${usuarioId}/${itemPedidoId}/${tecidoId}`, {
+                method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               usuario: {
+                id: usuarioId
+               },
+               itemPedido: {
+                id: itemPedidoId
+               },
+               tecido: {
+                id: tecidoId
+               }
+            })
+            })
+
+            var dados = await response.json()
+            console.log(dados)
+            return dados
+
+        } catch(error){
+            console.log("Ocorreu um erro: ")
+            console.log(error)
+        }
+    }
+
+
+
 
     async function cadastrarMedida(idMedida, medidaValue, idUsuario, idCliente, idPeca, idItemPedido) {
         const medidaBody = {
@@ -263,11 +309,45 @@
         }
     }
 
+    async function buscarTecidosFicha(){
+        var usuarioId = sessionStorage.getItem("id")
+        var fichaId = sessionStorage.getItem("FICHA-ID")
+
+        try{
+            const response = await fetch(`http://localhost:8080/colecoes-tecidos/${usuarioId}/${fichaId}`, {
+                method: "GET"
+            })
+
+            const dados = await response.json()
+            console.log(dados)
+            return dados
+
+        } catch (error){
+            console.log("Ocorreu um erro: ")
+            console.log(error)
+        }
+
+    }
+
+
+    async function preeencherTecidosFicha(){
+        const listaTecido = await buscarTecidosFicha()
+
+        var elementoTecidoInfo = document.querySelector("#tecidoInfo")
+        var stringFormatada = "Tecidos: "
+        for(var i = 0; i < listaTecido.length; i++){
+            stringFormatada += ` ${listaTecido[i].tecido.nome} |`
+        }
+
+        elementoTecidoInfo.innerText = stringFormatada
+    }
+
     async function validarOrigem(){
         var botaoSalvar = document.querySelector('.salvar')
 
         if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
            await buscarValoresMedida()
+           await preeencherTecidosFicha()
            botaoSalvar.onclick = atualizarFicha
            botaoSalvar.innerText = "Atualizar"
            exibirBotaoPDF()
