@@ -14,19 +14,19 @@ var cliente = []
 //     `
 // }
 
-async function deletarFicha(fichaId){
+async function deletarFicha(evento, fichaId){
     const usuarioId = sessionStorage.getItem("id")
     const botao = document.getElementById(fichaId)
     botao.remove()
-    event.preventDefault();
+    evento.stopPropagation();
 
     try{
         var response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${fichaId}`, {
             method: "DELETE"
         })
 
-        var dados = await response.json()
-        return dados
+        console.log(response)
+        return response.status
         
     } catch (error) {
         console.log("Ocorreu um erro:")
@@ -124,7 +124,7 @@ lista.forEach(itemPedido => {
             </div>
             <div class="container-right">
                 <img src="../assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(${itemPedido.id})">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(event, ${itemPedido.id})">
             </div>
         </div>`
 });

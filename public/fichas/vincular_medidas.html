@@ -346,6 +346,8 @@
         var botaoSalvar = document.querySelector('.salvar')
 
         if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
+           const pedido = await buscarPedido()
+           sessionStorage.setItem("FICHA-ID", pedido.itemPedido.id)
            await buscarValoresMedida()
            await preeencherTecidosFicha()
            botaoSalvar.onclick = atualizarFicha
@@ -435,6 +437,26 @@ async function buscarItemPedido(){
     }
 }
 
+async function buscarPedido(){
+    const usuarioId = sessionStorage.getItem("id")
+    const pedidoId = sessionStorage.getItem("PEDIDO-ID")
+
+    try{
+        const response =  await fetch(`http://localhost:8080/pedido/${usuarioId}/${pedidoId}`, {
+            method: "GET"
+        })
+
+        const dados = await response.json()
+        console.log(dados)
+        return dados
+
+    } catch(error){
+        console.log("Ocorreu um erro:")
+        console.log(error)
+    }
+}
+
+
 async function buscarAgendamento() {
 
 var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
@@ -470,7 +492,7 @@ async function validarCriacaoPedido(itemPedidoId) {
     sessionStorage.setItem("ITEM-PEDIDO-ID", itemPedidoId)
     var pedido = await criarPedido()
     sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
-    location.assign("http://localhost:3333/associar_fichas.html")
+    location.assign("http://localhost:3333/fichas/associar_fichas.html")
 }
 
 
