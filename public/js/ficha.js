@@ -376,9 +376,6 @@ async function buscarDadosCliente(){
 }
 
 
-
-
-
 async function associarValoresFicha(itemPedidoId){
   var itemPedido = await buscarDadosFicha(itemPedidoId)
   sessionStorage.setItem('FICHA-ID', itemPedido.id)

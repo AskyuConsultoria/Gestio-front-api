@@ -14,7 +14,7 @@ function fecharJanela(){
 }
   
 
- function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
+function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
     var elementoBody = document.querySelector("#body-modal-generico")
     var elementoFooter = document.querySelector("#footer-modal-generico")
   
