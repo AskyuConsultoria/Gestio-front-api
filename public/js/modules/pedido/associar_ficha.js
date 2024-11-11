@@ -34,7 +34,7 @@ function preencherCardsPedido(listaPedido){
     
             <div class="d-flex flex-row w-100 justify-content-between h-75 align-items-center ps-3 pb-3 pt-3">
               <span class="text-white">${listaPedido[i].cliente.nome} ${listaPedido[i].cliente.sobrenome} - ${listaPedido[i].itemPedido.peca.nome}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
+              <svg id="${listaPedido[i].id}" onclick="excluirPedidoPorId(event, this.id)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>
             </div>
   
           </div>
@@ -42,6 +42,25 @@ function preencherCardsPedido(listaPedido){
         </div>
     </div>`
     }    
+}
+
+
+async function excluirPedidoPorId(evento, pedidoId){
+    evento.stopPropagation()   
+    const usuarioId = sessionStorage.getItem("id")
+    try{
+        const response = await fetch(`http://localhost:8080/pedido/${usuarioId}/${pedidoId}`, {
+            method: "DELETE"
+        })
+
+
+        console.log(response)
+        buscarPedidosPorAgendamentoId()
+        return response.status
+
+    } catch(error){
+        console.log(error)
+    }
 }
 
 
