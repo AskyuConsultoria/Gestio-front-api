@@ -12,6 +12,10 @@ window.salvarModificaoModal = salvarModificacaoModal
 window.preencherFormulario = preencherFormulario
 window.cliqueExpandidoWrapper = cliqueExpandidoWrapper
 window.desativarAgendamentoESeusPedidos = desativarAgendamentoESeusPedidos
+window.escolherDelete = escolherDelete
+window.desativarendereco = desativarendereco
+window.desativarcliente = desativarcliente
+window.desativartelefone = desativartelefone
 
 window.clienteId = sessionStorage.getItem('CLIENTE-ID')
 window.inputClienteId = clienteId;
@@ -419,7 +423,7 @@ if (document.querySelector('#modal-generico')) {
 
 
 
-export function construirModalGenerico(elementoId, status) {
+export function construirModalGenerico(elementoId, status, primeiraFuncao, segundaFuncao) {
   var textoModal = ""
   var elementoBody = document.querySelector("#body-modal-generico")
   var elementoFooter = document.querySelector("#footer-modal-generico")
@@ -498,6 +502,22 @@ export function construirModalGenerico(elementoId, status) {
     modalGenerico.show()
   }
 
+  if (elementoId == "genericButton") {
+    elementoFooter.innerHTML = `
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick=${primeiraFuncao}  style="background-color: #012171;">
+         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+     </button>
+ 
+     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick=${segundaFuncao} style="background-color: #012171;">
+         <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+     </button>
+     `
+
+    textoModal = status
+    modalGenerico.show()
+  }
+  
+
   elementoBody.innerHTML = textoModal
 }
 
@@ -573,7 +593,8 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     <div class="form-check">
     <input class="form-check-input" type="radio" name="flexRadioDefault" id="${lista[i].id}">
     <span id="span-multivalorado-${i}">${validarSeECliente(lista[i])}</span>
-    <span class="fw-medium" style="color: #012171; margin-left: 45%" id="btn-edit-${lista[i].id}" onclick="preencherFormulario('${nomeModal}','atualizar', ${lista[i].id})">Editar</span>
+    <span class="fw-medium" style="color: #012171; margin-left: 20%" id="btn-edit-${lista[i].id}" onclick="preencherFormulario('${nomeModal}','atualizar', ${lista[i].id})">Editar</span>
+    <span class="fw-medium" style="color: #9B111E; margin-left: 10%" id="${lista[i].id}" onclick="escolherDelete('${nomeModal}', this.id, event)">Excluir</span>
     </div>
    <div class="d-flex ps-4 pt-1 pb-1 text-secondary" style="width: 85%">
     <span style="width: -18px;" id="corpo-multivalorado-${i}">${eval(corpo)}</span>
@@ -738,6 +759,7 @@ export async function preencherFormulario(tipoFormulario, verbo, idAtualizacao) 
     }
 
 
+
   }
 
   if (tipoFormulario == 'cliente') {
@@ -778,11 +800,37 @@ export async function preencherFormulario(tipoFormulario, verbo, idAtualizacao) 
       await api.buscarClientePorId(idAtualizacao)
     }
 
+  
   }
 
 
 }
 
+
+export async function escolherDelete(nomeModal, idModal, evento){
+  evento.stopPropagation()
+  sessionStorage.setItem(`${nomeModal.toUpperCase()}-DELETE-ID`, idModal) 
+  construirModalGenerico("genericButton", `Você tem certeza que quer excluir este ${nomeModal}?`, `desativar${nomeModal}()`, 'modalGenerico.hide()')
+}
+
+
+export async function desativarendereco(){
+  await api.desativarEndereco()
+  construirModalGenerico("statusButton", "Endereco excluído com sucesso.")
+  await api.buscarEnderecoPorClienteId("endereco")
+}
+
+export async function desativartelefone(){
+  await api.desativarTelefone()
+  construirModalGenerico("statusButton", "Telefone excluído com sucesso.")
+  await api.buscarTelefonePorClienteId("telefone")
+}
+
+export async function desativarcliente(){
+  await api.desativarCliente()
+  construirModalGenerico("statusButton", "Cliente excluído com sucesso.")
+  await api.buscarClientesPorResponsavelId("cliente")
+}
 
 
 

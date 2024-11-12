@@ -860,6 +860,60 @@ async function desativarAgendamento() {
     }
 }
 
+async function desativarTelefone(){
+    var usuarioId = sessionStorage.getItem("id")
+    var telefoneId = sessionStorage.getItem("TELEFONE-DELETE-ID")
+
+    try{
+        var response = await fetch(`http://localhost:8080/telefone/${usuarioId}/${telefoneId}`, {
+            method: "DELETE"
+        })
+
+        return response.status
+
+    } catch (error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+}
+
+async function desativarEndereco(){
+    var usuarioId = sessionStorage.getItem("id")
+    var enderecoId = sessionStorage.getItem("ENDERECO-DELETE-ID")
+
+    try{
+        var response = await fetch(`http://localhost:8080/enderecos/${usuarioId}/${enderecoId}`, {
+            method: "DELETE"
+        })
+
+        return response.status
+
+    } catch (error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+}
+
+async function desativarCliente() {
+    // Realiza a dessasociação de um responsável de um cliente
+
+    var usuarioId = sessionStorage.getItem("id")
+    var clienteId = sessionStorage.getItem("CLIENTE-DELETE-ID")
+
+    try{
+        var response = await fetch(`http://localhost:8080/clientes/${usuarioId}/${clienteId}`, {
+            method: "PATCH"
+        })
+
+        return response.status
+
+    } catch (error){
+        console.log("Ocorreu um erro: ")
+        console.log(error)
+    }
+
+}
+
 
 
 buscarEtapas()
@@ -891,5 +945,8 @@ export {
     buscarStatusAgendamento,
     buscarTelefonePorIdEtapa,
     desativarPedidosPorAgendamento,
-    desativarAgendamento
+    desativarAgendamento,
+    desativarTelefone,
+    desativarEndereco,
+    desativarCliente
 }
