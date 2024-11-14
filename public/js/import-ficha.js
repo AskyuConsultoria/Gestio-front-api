@@ -9,11 +9,6 @@ if (document.querySelector('#modal-generico')) {
   }
 
 
-function fecharJanela(){
-    window.location.replace("http://localhost:3333/fichas/vincular_medidas.html")
-}
-  
-
 function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
     var elementoBody = document.querySelector("#body-modal-generico")
     var elementoFooter = document.querySelector("#footer-modal-generico")
@@ -49,3 +44,6 @@ function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, texto
 }
 
 
+function fecharJanela(){
+  window.location.replace("http://localhost:3333/fichas/vincular_medidas.html")
+}
