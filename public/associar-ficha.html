@@ -20,6 +20,42 @@
         <script type="module" src="../js/navegar.js"></script>
 </head>
 
+ <!-- ínicio do modal genérico -->
+ <div class="modal fade" id="modal-generico" tabindex="-1" role="dialog" aria-labelledby="modalGenerico"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+         <div class="modal-header border-bottom-0">
+         </div>
+         <div class="modal-body fs-4 text-center" id="body-modal-generico">
+             Existem alterações não salvas no seu pedido, deseja salvar?
+         </div>
+         <div class="modal-footer d-flex border-top-0 pt-0" id="conteudo-botao-modal">
+             <div class="d-flex w-100 justify-content-center align-items-center" id="footer-modal-generico">
+                 <button type="button"
+                     class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3"
+                     data-dismiss="modal" style="background-color: #012171;">
+                     <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                         fill="#FFFF">
+                         <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+                     </svg>
+                 </button>
+                 <button type="button"
+                     class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3"
+                     style="background-color: #012171;">
+                     <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px"
+                         fill="#FFFF">
+                         <path
+                             d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                     </svg>
+                 </button>
+             </div>
+         </div>
+     </div>
+ </div>
+</div>
+
+
 <body id="body" class="mt-3 pt-4" onload="removerCacheFicha()">
 
     <!-- inicio página de pedido completa-->
@@ -57,3 +93,10 @@
 </body>
 
 </html>
+<script>
+if (document.querySelector('#modal-generico')) {
+    const modalGenerico = new bootstrap.Modal(document.getElementById('modal-generico'))
+  
+    window.modalGenerico = modalGenerico
+  }
+</script>

@@ -26,13 +26,19 @@ async function deletarFicha(evento, fichaId){
         })
 
         console.log(response)
+        if(response.ok){ 
+            construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Ficha descartada com sucesso.")
+        }
         return response.status
         
     } catch (error) {
-        console.log("Ocorreu um erro:")
+        alert(`Ocorreu um erro: ${error.message}`)
         console.log(error)
     }
+
 }
+
+
 
 
 function botaoPeca() {
@@ -124,7 +130,7 @@ lista.forEach(itemPedido => {
             </div>
             <div class="container-right">
                 <img src="../assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarFicha(event, ${itemPedido.id})">
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="construirModalGenerico('actionButton', 'deletarFicha(event, ${itemPedido.id})', 'modalGenerico.hide()', 'Você quer descartar esta ficha?')">
             </div>
         </div>`
 });
@@ -151,12 +157,19 @@ async function criarPedido(){
         })
 
 
+        if(response.ok){
         const dados = await response.json()
+        sessionStorage.setItem("PECA-ID", dados.itemPedido.peca.id)
+        construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Pedido criado com sucesso.")
+        setTimeout(() => location.assign("http://localhost:3333/associar-ficha.html"), 800)
+
         console.log(dados)
         return dados
-
+        }
+        
+    
     } catch(error){
-        console.log("Ocorreu um erro: ")
+        alert(`Ocorreu um erro: ${error.message}`)
         console.log(error)
     }
     
@@ -217,10 +230,7 @@ async function buscarAgendamento() {
 async function validarAssociacaoPedido(itemPedidoId) {
     if(!sessionStorage.getItem("CADASTRO-PEDIDO")) return
     sessionStorage.setItem("ITEM-PEDIDO-ID", itemPedidoId)
-    var pedido = await criarPedido()
-    sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
-    console.log(pedido)
-    location.assign("http://localhost:3333/associar-ficha.html")
+    construirModalGenerico("actionButton", "criarPedido()", "modalGenerico.hide()", "Quer salvar essa ficha no pedido?")
 }
 
 
@@ -404,7 +414,38 @@ async function buscarDadosFicha(itemPedidoId){
 
 
 
+function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
+    var elementoBody = document.querySelector("#body-modal-generico")
+    var elementoFooter = document.querySelector("#footer-modal-generico")
+  
+    elementoFooter.innerHTML = ""
+  
+    if (elementoId == "statusButton") {
+      elementoFooter.innerHTML =
+        `
+       <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick=${primeiraFuncao} style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+      </button>
+      `
+      modalGenerico.show()
+    }
+  
+    if (elementoId == "actionButton") {
+      elementoFooter.innerHTML = `
+  
+      <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="${primeiraFuncao}"  style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+      </button>
+  
+      <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="${segundaFuncao}" style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </button>
+      `
+  
+      modalGenerico.show()
+    }
 
-
+    elementoBody.innerText = textoModal
+}
 
 

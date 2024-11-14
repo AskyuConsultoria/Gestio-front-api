@@ -158,8 +158,11 @@ function agregarERetornarConteudosModal(tipoConteudo){
   
     }
 
-    verificarAssociacaoTelefone(formularioValido)
-    verificarAssociacaoEndereco(formularioValido)
+    if(!sessionStorage.getItem("PAGINA-CONTATO")){
+      verificarAssociacaoTelefone(formularioValido)
+      verificarAssociacaoEndereco(formularioValido)
+    }
+    
   
     if(formularioValido){
       if(tipoFormulario == "pedido") pedido.salvarModificacao()
