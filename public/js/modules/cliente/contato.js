@@ -12,6 +12,8 @@ window.limparCache = limparCache
 window.validarSeEResponsavelDependente = validarSeEResponsavelDependente
 window.associarResponsavel = associarResponsavel
 window.removerClienteId = removerClienteId
+window.desativarCliente = desativarCliente
+window.validarDivClicada = validarDivClicada
 
 async function salvarContato() {
   var listaDeResponse = []
@@ -24,7 +26,7 @@ async function salvarContato() {
   }
 
   if (listaDeResponse.length == 0) {
-    construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
+    pedido.construirModalGenerico("statusButton", "Nenhum dado foi modificado, atualize um dado para salvar.")
     return
   }
 
@@ -56,13 +58,16 @@ async function preencherCardsDeCliente() {
     boxCliente.innerHTML +=
       `
           <div class="card mb-3 mt-4 w-100" id="${listaCliente[i].id}" data-responsavel-id="${validarSePossuiResponsavelERetornarId(listaCliente[i])}" style="border-radius: 10px; position: relative;" 
-          onclick="limparCache(); validarSeEResponsavelDependente(this.dataset.responsavelId); transferirParaPagina('Cadastro-contato.html',['PAGINA-CONTATO', 'CLIENTE-ID'], ['consultar-contato', this.id])">
+          onclick="validarDivClicada(event, this.dataset.responsavelId, this.id);">
                 <div class="blue-stripe"
                     style="background-color: #012171; border-top-left-radius: 10px; border-bottom-left-radius: 10px; width: 20px; height: 100%; position: absolute; left: 0;">
                 </div>
                 <div class="card-content" style="padding-left: 20px;">
                     <div class="card-body mb-20">
-                        <span class="card-title">${listaCliente[i].nome} ${listaCliente[i].sobrenome}</span>
+                        <div class="d-flex justify-content-between">
+                          <span class="card-title">${listaCliente[i].nome} ${listaCliente[i].sobrenome}</span>
+                          <svg id="svg-delete" xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#012171"><path id="svg-path-delete" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"></path></svg>
+                        </div>
                         ${validarPossuiResponsavelERetornarElementoString(listaCliente[i])}
                     </div>
                 </div>
@@ -70,6 +75,7 @@ async function preencherCardsDeCliente() {
           `
   }
 }
+
 
 async function preencherCardsDeClienteResponsavel() {
   var nomeCliente = document.querySelector("#input-pesquisa-cliente").value
@@ -88,13 +94,26 @@ async function preencherCardsDeClienteResponsavel() {
                 </div>
                 <div class="card-content" style="padding-left: 20px;">
                     <div class="card-body mb-20">
-                        <span class="card-title">${listaCliente[i].nome} ${listaCliente[i].sobrenome}</span>
+                        <span class="card-title" style="margin-right: 45%">${listaCliente[i].nome} ${listaCliente[i].sobrenome}</span>
                         ${validarPossuiResponsavelERetornarElementoString(listaCliente[i])}
                     </div>
                 </div>
             </div>
           `
   }
+}
+
+function validarDivClicada(evento, responsavelId, clienteId){
+
+  if(evento.target.id == "svg-delete" || evento.target.id == "svg-path-delete"){
+    evento.stopPropagation()
+    construirModalGenerico("actionButton", `desativarCliente('${evento}', '${clienteId}')`, "modalGenerico.hide()", "Você deseja descartar este cliente?")
+    return
+  }
+
+  limparCache()
+  validarSeEResponsavelDependente(responsavelId)
+  transferirParaPagina('Cadastro-contato.html',['PAGINA-CONTATO', 'CLIENTE-ID'], ['consultar-contato', clienteId])
 }
 
 
@@ -157,7 +176,6 @@ function removerClienteId() {
 }
 
 function limparCache() {
-
   if (sessionStorage.getItem("TELEFONE-ID") != null) {
     sessionStorage.removeItem("TELEFONE-ID")
   }
@@ -175,6 +193,61 @@ function limparCache() {
   }
 }
 
+async function desativarCliente(evento, clienteId){
+  var usuarioId = sessionStorage.getItem("id")
+  try{
+    const response = await fetch(`http://localhost:8080/clientes/${usuarioId}/${clienteId}`, {
+      method: "DELETE"
+    })
+
+    if(response.ok){
+      console.log(response)
+      construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Cliente descartado com sucesso.")
+      preencherCardsDeCliente()
+    }
+
+  } 
+  catch(error){
+    console.log(error)
+    alert(`Ocorreu um erro: ${error.message}`)
+  }
+}
+
+function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
+  var elementoBody = document.querySelector("#body-modal-generico")
+  var elementoFooter = document.querySelector("#footer-modal-generico")
+
+  elementoFooter.innerHTML = ""
+
+  if (elementoId == "statusButton") {
+    elementoFooter.innerHTML =
+      `
+     <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick=${primeiraFuncao} style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+    `
+    modalGenerico.show()
+  }
+
+  if (elementoId == "actionButton") {
+    elementoFooter.innerHTML = `
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="${primeiraFuncao}"  style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+    </button>
+
+    <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="${segundaFuncao}" style="background-color: #012171;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    </button>
+    `
+
+    modalGenerico.show()
+  }
+
+  elementoBody.innerText = textoModal
+}
+
+
 export {
   salvarContato,
   preencherDadosCliente,
@@ -182,5 +255,7 @@ export {
   transferirParaPagina,
   limparCache,
   validarSeEResponsavelDependente,
-  validarNumeroDeCaracteresEBuscarClientes
+  validarNumeroDeCaracteresEBuscarClientes,
+  desativarCliente,
+  validarDivClicada
 }
