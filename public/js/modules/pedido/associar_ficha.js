@@ -28,7 +28,7 @@ function preencherCardsPedido(listaPedido){
     conteudoPedido.innerHTML = ""
     for(var i = 0; i < listaPedido.length; i++){
         conteudoPedido.innerHTML += `<div class="d-flex container px-3 col-12 py-2 flex-row w-100">
-        <div class="consultar-pedido d-flex flex-row w-100 rounded shadow-sm" style="background-color: #012171;" id="${listaPedido[i].id}" onclick="salvarDadosETransferirParaOutraPagina(this.id)">
+        <div class="consultar-pedido d-flex flex-row w-100 rounded shadow-sm" style="background-color: #012171;" id="${listaPedido[i].itemPedido.id}" data-peca-id="${listaPedido[i].itemPedido.peca.id}" onclick="salvarDadosETransferirParaOutraPagina(this.id, this.dataset.pecaId)">
        
           <div class="d-flex flex-column h-100 rounded align-items-center justify-content-center" style="width: 90%; background-color: #012171;">
     
@@ -72,10 +72,11 @@ function removerCacheFicha(){
     sessionStorage.removeItem("FICHA-ID")
 }
 
-function salvarDadosETransferirParaOutraPagina(itemPedidoId){
+function salvarDadosETransferirParaOutraPagina(fichaId, pecaId){
     sessionStorage.removeItem("CADASTRO-PEDIDO")
     sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
-    sessionStorage.setItem("PEDIDO-ID", itemPedidoId)
+    sessionStorage.setItem("FICHA-ID", fichaId)
+    sessionStorage.setItem("PECA-ID", pecaId)
     window.location.assign("http://localhost:3333/fichas/vincular_medidas.html")
 }
 

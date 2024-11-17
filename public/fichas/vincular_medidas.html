@@ -113,6 +113,7 @@
         }
     }
     let tecidoNomes = [];
+    
     async function adicionarInformacoes() {
         var usuarioNome = sessionStorage.getItem("usuario")
         var peca = sessionStorage.getItem("PECA-ID")
@@ -157,8 +158,8 @@
         </div>`
     }
 
-       
 
+    document.querySelector("#pecaInfo").innerText = `Peça: ${medidasTotais[0].peca.nome}`
     }
 
 
@@ -331,6 +332,8 @@
             inputs[i].value = valoresMedidas[i].valor
             inputs[i].id = valoresMedidas[i].id
         }
+        
+        document.querySelector("#observacoesInput").value = `${valoresMedidas[0].itemPedido.observacao}`
     }
 
     async function buscarTecidosFicha(){
@@ -370,9 +373,6 @@
         var botaoSalvar = document.querySelector('.salvar')
 
         if(sessionStorage.getItem("E-VISUALIZACAO-FICHA")){
-           const pedido = await buscarPedido()
-           sessionStorage.setItem("FICHA-ID", pedido.itemPedido.id)
-           sessionStorage.setItem("PECA-ID", pedido.itemPedido.peca.id)
            await getmedidasPeca()
            await buscarValoresMedida()
            await preeencherTecidosFicha()
@@ -398,8 +398,9 @@
 
     var listaInput = document.querySelectorAll(".input-valor-medida")
     for(var i = 0; i < listaInput.length; i++){
-        atualizarValorMedida(listaInput[i].id, listaInput[i].value)
+       await atualizarValorMedida(listaInput[i].id, listaInput[i].value)
     }
+    await atualizarObservacoes()
     construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Ficha atualizada com sucesso")
 }
 
@@ -418,6 +419,30 @@ async function atualizarValorMedida(valorMedidaId, valor) {
     } catch(error) {
         console.log("Ocorreu um erro: ")
         console.log(error)
+    }
+}
+
+async function atualizarObservacoes(){
+    const usuarioId = sessionStorage.getItem("id")
+    const fichaId = sessionStorage.getItem("FICHA-ID")
+    const valorObservacao = document.querySelector("#observacoesInput").value 
+
+    try{
+        const response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${fichaId}?observacao=${valorObservacao}`, {
+            method: "PATCH"
+        })
+
+
+        if(response.ok){
+            var dados = await response.json()
+            console.log(dados)
+            return dados
+        }
+       
+
+    } catch(error){
+        console.log(`Ocorreu um erro: ${error}`)
+        alert(`Ocorreu um erro: ${error.message}`)
     }
 }
 
