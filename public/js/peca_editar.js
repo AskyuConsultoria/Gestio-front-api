@@ -5,16 +5,21 @@ async function listarPecas(){
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
+
+
+        
     
     console.log(data)
     const FormatedData = await data.json()
 
     console.log("Resposta: ", FormatedData)
 
+    document.getElementById("container").innerHTML = ""
+
     FormatedData.forEach(peca => {
         document.getElementById("container").innerHTML += `
             <div class="peca-card card mb-2 mx-auto position-relative">
-            <a onclick="irParaMedida(${peca.id})">
+            <a onclick="irPara(${peca.id})">
                 <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
@@ -34,14 +39,12 @@ async function listarPecas(){
                 </div>
                 </div>
                 <div class="container-right mt-4" data-bs-toggle="tooltip" data-bs-placement="top" title="Para visualizar as medidas da peça clique aqui">
-                </a>
                 <div class="seta-container">
-                    <a onclick="deletarPeca(${peca.id})">
-                        <img src="./assets/lixeira_branca.svg" alt="lixeira de excluir" class="seta1">
-                    </a>
+                    <img src="./assets/next 3.svg" alt="seta visualizar medida da peça" class="seta1">
+                    <img src="./assets/proximo 1.svg" alt="seta visualizar medida da peça" class="seta2">
                 </div>
                 </div>
-            
+            </a>
         </div>
         `
 
@@ -49,64 +52,69 @@ async function listarPecas(){
         
     });
 
-    descEditar()
+    // descEditar()
 
 }
 
-
-async function listarMedidas(){
-    const usuario = sessionStorage.getItem("id")
-    const idPeca = sessionStorage.getItem("idPeca")
+async function listarMedidas() {
+    const usuario = sessionStorage.getItem("id");
+    const idPeca = sessionStorage.getItem("idPeca");
 
     const data1 = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`);
-        if (!data1.ok) {
+    if (!data1.ok) {
         throw new Error('Erro ' + data1.statusText);
-        }
+    }
 
-    const FormatedData1 = await data1.json()
+    const FormatedData1 = await data1.json();
+    console.log(FormatedData1);
 
-    console.log(FormatedData1)
-
-    document.getElementById("peca_bread_road").innerHTML = (FormatedData1.nome).toUpperCase()
-    document.getElementById("titulo").innerHTML = (FormatedData1.nome).toUpperCase()
+    document.getElementById("peca_bread_road").innerHTML = (FormatedData1.nome).toUpperCase();
+    document.getElementById("titulo").innerHTML = (FormatedData1.nome).toUpperCase();
 
     const data = await fetch(`http://localhost:8080/nomes-medidas/${usuario}/${idPeca}`);
-        if (!data.ok) {
+    if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
-        }
+    }
 
-const FormatedData = await data.json()
+    if (data.status === 204) {
+        document.getElementById("container").innerHTML = `<span class="text-secondary ps-4">Não há medidas cadastradas<span>`;
+        return;
+    }
 
-console.log("Resposta: ", FormatedData)
+    const medidas = await data.json();
+    console.log("Resposta: ", medidas);
 
-FormatedData.forEach(medida => {
-    document.getElementById("container").innerHTML += `
-        <div class="card mb-2 mx-auto position-relative" style="max-width: 92%;">
+    document.getElementById("container").innerHTML = "";
+
+    for(var i = 0; i < medidas.length; i++){
+        document.getElementById("container").innerHTML += `
+        <div class="card mb-2 mx-auto w-100 position-relative" style="max-width: 92%; background-color: #012171; color: white">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
-                                <span class="medidas card-title mt-2">${medida.nome}</span>
+                                <span class="medidas card-title mt-2">${medidas[i].nome}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="container-right">
-                <img src="./assets/lixeira.svg" alt="lixeira exclusão" class="lixeira btn btn-danger"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Ao clicar aqui uma medida de peça é excluida" onclick="deletarMedida(${medida.id})">
+                <img src="./assets/lixeira_branca.svg" alt="lixeira exclusão" class="lixeira btn" style="border:none"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="" onclick="construirModalGenerico('actionButton', 'deletarMedida(${medidas[i].id})', 'modalGenerico.hide()', 'Você quer descartar esta medida?')">
             </div>
         </div>`
-});
+    }
 
+    // descEditar();
 }
 
 async function descEditar(){
     var id = document.getElementById("peca").value
 
     const usuario = sessionStorage.getItem("id")
-    const idPeca = sessionStorage.getItem("PECA-ID")
+    const idPeca = sessionStorage.getItem("idPeca")
 
     const data = await fetch(`http://localhost:8080/pecas/${usuario}/${id}`);
         if (!data.ok) {
@@ -143,21 +151,21 @@ async function editarPeca(){
 })
 
     if(respostaCadastro.status == 200){
-       window.location.href="./Lista-peca.html"
+       listarPecas()
     } else{
         alert("Ocorreu um erro ao cadastrar a peça")
     }
     
 }
 
-function irParaMedida(id){
-    sessionStorage.setItem("PECA-ID", id)
-    window.location.href="./Lista-medida.html"
+function irPara(id){
+    sessionStorage.setItem("idPeca", id)
+    sa("./peca-escolhida.html")
 }
 
-async function deletarPeca(id){
+async function deletarPeca(){
 
-    const idPeca = sessionStorage.getItem("PECA-ID")
+    const idPeca = sessionStorage.getItem("idPeca")
     const usuario = sessionStorage.getItem("id")
 
 
@@ -166,7 +174,7 @@ async function deletarPeca(id){
 })
 
     if(respostaCadastro.status == 200){
-       window.location.href="./Lista-peca.html"
+        listarPecas()
     } else{
         alert("Ocorreu um erro ao deletar a peça")
     }
@@ -175,7 +183,7 @@ async function deletarPeca(id){
 
 async function deletarMedida(idMedida){
 
-    const idPeca = sessionStorage.getItem("PECA-ID")
+    const idPeca = sessionStorage.getItem("idPeca")
     const usuario = sessionStorage.getItem("id")
 
 
@@ -184,10 +192,46 @@ async function deletarMedida(idMedida){
     headers: {"Content-type": "application/json; charset=UTF-8"}
 })
     console.log(respostaMedida)
-    if(respostaMedida.status == 200){
-       window.location.href="./Lista-medida.html"
+    if(respostaMedida.status == 200 || respostaMedida.status == 204){
+       construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Nome de medida descartado com sucesso.")
+       await listarMedidas()
     } else{
         alert("Ocorreu um erro ao deletar a peça")
     }
     
 }
+
+function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {
+    var elementoBody = document.querySelector("#body-modal-generico")
+    var elementoFooter = document.querySelector("#footer-modal-generico")
+  
+    elementoFooter.innerHTML = ""
+  
+    if (elementoId == "statusButton") {
+      elementoFooter.innerHTML =
+        `
+       <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick=${primeiraFuncao} style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+      </button>
+      `
+      modalGenerico.show()
+    }
+  
+    if (elementoId == "actionButton") {
+      elementoFooter.innerHTML = `
+  
+      <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button me-3" onclick="${primeiraFuncao}"  style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
+      </button>
+  
+      <button type="button" class="justify-content-center align-items-center rounded-5 p-2 rounded-button ms-3" onclick="${segundaFuncao}" style="background-color: #012171;">
+          <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#FFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </button>
+      `
+  
+      modalGenerico.show()
+    }
+
+    elementoBody.innerText = textoModal
+}
+
