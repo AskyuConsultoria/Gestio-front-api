@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="./css/novoForm.css">
   <script defer src="js/peca_editar.js"></script>
   <script defer src="js/peca_cadastro.js"></script>
-  <script defer src="js/unload.js"></script>
 </head>
 
 <!-- ínicio do modal genérico -->
@@ -53,11 +52,11 @@ aria-hidden="true">
 </div>
 
 
-<body style="background-color: var(--cinzaClaro) !important;" onbeforeunload="unload.js" onload="listarPecas();">
+<body style="background-color: var(--cinzaClaro) !important;" onload="listarPecas();">
 
   <header class="header-container py-4 bg-light w-100 px-0 " style="background-color: var(--cinzaClaro) !important;">
     <div class="container d-flex justify-content-between align-items-center">
-      <a href="">
+      <a onclick="window.history.go(-1)">
         <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3" onclick="window.history.back()" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">

@@ -147,6 +147,8 @@ function buscarPedidosGrafico(dados) {
 
     var aumento = pedidos[pedidos.length - 1] - pedidos[pedidos.length - 2];
     var porcentagem = (aumento / pedidos[pedidos.length - 2]) * 100;
+
+
     if (aumento > 0) {
         document.getElementById("porcentagem_mudanca").innerHTML = porcentagem.toFixed(2);
     } else if (aumento < 0) {
@@ -154,6 +156,9 @@ function buscarPedidosGrafico(dados) {
     } else {
         document.getElementById("porcentagem_mudanca").innerHTML = 0;
     }
+
+    if(aumento > 0 && pedidos[pedidos.length - 2] == 0) porcentagem =  document.getElementById("porcentagem_mudanca").innerHTML = "+100"
+    if(aumento == 0) porcentagem = document.getElementById("porcentagem_mudanca").innerHTML = "0"
 
     const menorValor = Math.min(...pedidos);
     const ctx = document.getElementById('pedidoChart').getContext('2d');

@@ -84,6 +84,8 @@ async function listarMedidas() {
     const medidas = await data.json();
     console.log("Resposta: ", medidas);
 
+    document.querySelector("#descricao-peca").innerHTML = `${medidas[0].peca.descricao}`
+
     document.getElementById("container").innerHTML = "";
 
     for(var i = 0; i < medidas.length; i++){
