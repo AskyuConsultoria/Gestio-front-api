@@ -21,5 +21,15 @@ function irPara(local) {
     window.location.href = local;
 }
 
+function irParaPeca(idPeca){
+    if (pilha.peek() !== "peca-escolhida.html") {
+        pilha.push(window.location.href);
+        sessionStorage.setItem("desfazer", JSON.stringify(pilha));
+    }
+    sessionStorage.setItem("idPeca", idPeca)
+    window.location.href = "peca-escolhida.html";
+}
+
 window.voltar = voltar;
 window.irPara = irPara;
+window.irParaPeca = irParaPeca;

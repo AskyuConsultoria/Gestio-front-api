@@ -12,7 +12,7 @@ async function listarPecas() {
         for(var i = 0; i < pecas.length; i++){
             document.getElementById("container").innerHTML += `
             <div class="card mb-2 mx-auto w-100 position-relative" style="max-width: 92%; background-color: #012171; color: white">
-                <div class="row g-0" onclick="salvarPecaEIrPara(${pecas[i].id})">
+                <div class="row g-0" onclick="irParaPeca(${pecas[i].id})">
                     <div class="col-md-8">
                         <div class="card-body">
                             <div class="d-flex flex-row align-items-center justify-content-between">
@@ -78,12 +78,6 @@ async function deletarPeca(id) {
     } else {
         alert("Erro ao deletar a peça.");
     }
-}
-
-
-function salvarPecaEIrPara(pecaId){
-    sessionStorage.setItem("idPeca", pecaId )
-    location.assign("./peca-escolhida.html")
 }
 
 function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, textoModal) {

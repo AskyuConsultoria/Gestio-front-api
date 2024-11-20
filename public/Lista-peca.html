@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./css/novoForm.css">
   <script defer src="js/peca_editar.js"></script>
   <script defer src="js/peca_cadastro.js"></script>
+  <script type="module" defer src="js/navegar.js"></script>
 </head>
 
 <!-- ínicio do modal genérico -->
@@ -54,10 +55,10 @@ aria-hidden="true">
 
 <body style="background-color: var(--cinzaClaro) !important;" onload="listarPecas();">
 
-  <header class="header-container py-4 bg-light w-100 px-0 " style="background-color: var(--cinzaClaro) !important;">
+  <header class="header py-4 bg-light px-0" style="background-color: var(--cinzaClaro) !important;">
     <div class="container d-flex justify-content-between align-items-center">
-      <a onclick="window.history.go(-1)">
-        <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3" onclick="window.history.back()" /></a>
+      <a href="javascript:void(0);">
+        <img src="./assets/botao-voltar 4.svg" alt="botao-voltar" class="mx-3" onclick="voltar()" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <img src="./assets/burger-bar 1 (1).svg" alt="menu-lateral" class="navbar-toggler-icon mx-3" />
@@ -68,25 +69,25 @@ aria-hidden="true">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 gap-4"
             style="font-size: larger; margin-left: 2rem; margin-top: 6rem;">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" onclick="irPara('home.html')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pedidos</a>
+              <a class="nav-link" onclick="irPara('pedido.html')">Pedidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contatos</a>
+              <a class="nav-link" onclick="irPara('Contato.html')">Contatos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Fichas</a>
+              <a class="nav-link" onclick="irPara('fichas/Lista_fichas.html')">Fichas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="meus-produtos.html">Produtos</a>
+              <a class="nav-link" onclick="irPara('Lista-peca.html')">Produtos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="Lista-tecido.html">Tecidos</a>
+              <a class="nav-link" onclick="irPara('Lista-tecido.html')">Tecidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="dashboard.html">Monitoramento</a>
+              <a class="nav-link" onclick="irPara('dashboard/dashHome.html')">Monitoramento</a>
             </li>
         </div>
       </div>

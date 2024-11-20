@@ -19,7 +19,7 @@ async function listarPecas(){
     FormatedData.forEach(peca => {
         document.getElementById("container").innerHTML += `
             <div class="peca-card card mb-2 mx-auto position-relative">
-            <a onclick="irPara(${peca.id})">
+            <a onclick="irParaPeca(${peca.id})">
                 <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
@@ -160,10 +160,10 @@ async function editarPeca(){
     
 }
 
-function irPara(id){
-    sessionStorage.setItem("idPeca", id)
-    sa("./peca-escolhida.html")
-}
+// function irPara(id){
+//     sessionStorage.setItem("idPeca", id)
+//     sa("./peca-escolhida.html")
+// }
 
 async function deletarPeca(){
 
