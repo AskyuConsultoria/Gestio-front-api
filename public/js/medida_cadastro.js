@@ -19,7 +19,7 @@ async function cadastrarMedida(){
 })
 
     if(respostaCadastro.status == 201){
-       window.location.href="./Lista-medida.html"
+       window.location.href="./peca-escolhida.html"
     } else{
         alert("Ocorreu um erro ao cadastrar a peça")
     }
