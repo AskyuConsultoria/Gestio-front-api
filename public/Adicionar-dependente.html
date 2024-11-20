@@ -12,15 +12,15 @@
     <link rel="stylesheet" href="css/adicionar-dependente.css">
     <script type="module" src="./js/modules/cliente/contato.js"></script>
     <title>Adicionar Dependente</title>
+    <script type="module" src="js/navegar.js"></script>
 </head>
 
 <body class="background2" onload="validarNumeroDeCaracteresEBuscarClientes('')">
     <header class="header w-100 px-0">
         <div class="container text-center">
-            <div class="icon-wrapper d-flex justify-content-end" onclick="window.history.go(-1)">
+            <div class="icon-wrapper d-flex justify-content-end" onclick="voltarEspecifico('Contato.html')">
                 <img src="./assets/x-circle (1).svg" alt="botão-sair" id="close-btn"
-                    onclick="window.history.go(-1)"
-                    class="ms-auto icon-lg ">
+                    class="ms-auto icon-lg " style="z-index:10">
             </div>
         </div>
     </header>

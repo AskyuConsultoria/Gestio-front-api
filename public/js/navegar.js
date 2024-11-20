@@ -30,6 +30,19 @@ function irParaPeca(idPeca){
     window.location.href = "peca-escolhida.html";
 }
 
+function voltarEspecifico(pagina){
+    window.location.href = pagina;
+}
+
+function addVoltar(pagina){
+    if (pilha.peek() !== pagina) {
+        pilha.push(window.location.href);
+        sessionStorage.setItem("desfazer", JSON.stringify(pilha));
+    }
+}
+
 window.voltar = voltar;
 window.irPara = irPara;
 window.irParaPeca = irParaPeca;
+window.voltarEspecifico = voltarEspecifico;
+window.addVoltar = addVoltar;

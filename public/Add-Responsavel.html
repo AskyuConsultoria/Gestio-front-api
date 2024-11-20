@@ -12,6 +12,7 @@
         crossorigin="anonymous"></script>
     <script type="module" src="js/modules/cliente/contato.js"></script>
     <link rel="stylesheet" href="css/add-responsavel.css">
+    <script type="module" src="js/navegar.js"></script>
 </head>
 
 <body>
@@ -20,7 +21,7 @@
         <div class="container text-center">
             <div class="icon-wrapper d-flex justify-content-end">
                 <img src="./assets/x-circle (1).svg" alt="botão-sair" id="close-btn"
-                    onclick="window.history.go(-1)"
+                    onclick="voltarEspecifico('Contato.html')"
                     style="margin-right: -50px;" class="icon-lg">
             </div>
         </div>
@@ -31,6 +32,7 @@
             <h2 class="titulo text-center text-white mb-5">Novo Contato</h2>
             <span class="titulo sub-title">Esse contato possui um responsável?</span>
             <div class="d-flex flex-column pt-4">
+                <!-- Se precisar adicionar um addVoltar('Adicionar-dependente.html');  -->
                 <button class="btn btn-lg bg-body rounded mt-3 mb-4" onclick="transferirParaPagina('Adicionar-dependente.html', ['PAGINA-CONTATO'], ['criar-contato'] )">
                     Sim
                 </button>
