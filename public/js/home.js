@@ -25,7 +25,7 @@ async function buscarUltimos7Pedidos(idUsuario) {
 async function buscarAgendamentoPorClienteNome(nomeCliente){
   const usuarioId = sessionStorage.getItem('id')
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}`, {
+    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=true`, {
       method: "GET"
     });
 
@@ -119,17 +119,22 @@ function ativarFiltro(elemento){
 }
 
 function realizarPesquisa(input){
-  if(input.value.length == 0){
+  if(input.value.length < 1){
     exibirComponentes()
     buscarUltimos7Pedidos(sessionStorage.getItem('id'))
   } 
 
-  if(input.value.length >= 2){
+  if(input.value.length >= 1){
+    try{
     if(pesquisarPorClienteNome) buscarAgendamentoPorClienteNome(input.value)
     if(pesquisarPorClienteEmail) buscarAgendamentoPorClienteEmail(input.value)
     if(pesquisarPorPeca) buscarAgendamentoPorPeca(input.value)
     if(pesquisarPorTecido) buscarAgendamentoPorTecido(input.value)
     ocultarComponentes()  
+    } catch{
+      exibirComponentes()
+      buscarUltimos7Pedidos(sessionStorage.getItem('id'))
+    }
   } 
     
 }
