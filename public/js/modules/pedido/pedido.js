@@ -1021,9 +1021,7 @@ export function exibirStatusDaRespostaAPIGenerico(response, status) {
 
 
 export function validarEventoKeyboard(evento) {
-  if (evento.key == "Enter") {
     api.buscarClientesPorNome(document.querySelector("#input-cliente").value)
-  }
 }
 
 

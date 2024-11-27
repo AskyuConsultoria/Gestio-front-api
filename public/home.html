@@ -159,17 +159,15 @@
 
       <div class="d-flex col-2 align-items-left justify-content-left">
         <div class="avatar-usuario rounded-circle">
-          <img src="assets/homem-bem-vestido.jpg" class="h-100 w-100 rounded-circle" alt="">
+          <img src="assets/gestioSemBG.svg" class="h-110 w-100 rounded-circle" alt="">
         </div>
       </div>
 
-      <div class="d-flex col-8 align-items-center justify-content-left">
-        <span id="nome-usuario">
-          Usuário indefinido
-        </span>
+      <div class="d-flex col-8 align-items-center justify-content-left" style="font-size: 1.25rem;">
+        Bem vindo de volta <span id="nome-usuario" class="ms-2" style="font-weight: bold;"> Usuário indefinido</span>
       </div>
 
-      <div class="d-flex col-2 align-items-end justify-content-end">
+      <!-- <div class="d-flex col-2 align-items-end justify-content-end">
         <div class="icone-notificacao d-flex rounded shadow-sm align-items-center justify-content-center bg-body">
           <?xml version="1.0" ?><svg class="" height="32" viewBox="0 0 32 32" width="32"
             xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +178,7 @@
                 id="bell_ring_notification_alarm" />
             </g>
           </svg>
-        </div>
+        </div> -->
 
       </div>
 
@@ -201,7 +199,7 @@
           stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
       </svg>
     </button>
-    <input type="text" class="w-75 h-auto form-control" type="search" id="input-search" onchange="realizarPesquisa(this)" placeholder="Pesquisar por Pedidos">
+    <input type="text" class="w-75 h-auto form-control" type="search" id="input-search" oninput="realizarPesquisa(this)" placeholder="Pesquisar por Pedidos">
       <button class="input-group-text w-auto h-auto bg-body" id="search" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
           viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -392,7 +390,7 @@
   <!-- Fim da Label de Pedidos -->
 
   <!-- Ínicio dos Pedidos -->
-   <div class="pb-3" id="pedidos-conteudo">
+   <!-- <div class="pb-3" id="pedidos-conteudo">
     <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
       <div class="d-flex flex-row w-100 bg-body rounded">
         <div class="d-flex bg-warning h-100 w-15 rounded rounded-end-0" style="width: 2rem;"></div>
@@ -449,7 +447,7 @@
   
       </div>
      </div>
-   </div>
+   </div> -->
   
 
 
