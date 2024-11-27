@@ -350,6 +350,23 @@ function removerEstilizacaoDasInputs() {
     }
 }
 
+function removerEstilizacaoDasInputsInvalidas() {
+    var inputs = document.querySelectorAll('input')
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].classList.contains('is-invalid')) {
+            inputs[i].classList.remove('is-invalid')
+        }
+    }
+
+    var divCep = document.querySelector("#div-invalid-cep")
+    if(divCep.classList.contains("d-block")) divCep.classList.remove("d-block")
+}
+
+function removerDivsInvalidasDosBotoesDeAssociacao(nome){
+    var divAssociacao = document.querySelector(`#validacao-associacao-${nome}`)
+    if(divAssociacao.classList.contains('d-flex')) divAssociacao.classList.remove('d-flex')
+}
+
 
 export {
     renderizar,
@@ -371,7 +388,9 @@ export {
     exibirBotaoCancelar,
     desbloquearInputs,
     desbloquearFormulario,
-    removerEstilizacaoDasInputs
+    removerEstilizacaoDasInputs,
+    removerEstilizacaoDasInputsInvalidas,
+    removerDivsInvalidasDosBotoesDeAssociacao
 }
 
 

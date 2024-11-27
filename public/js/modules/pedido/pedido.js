@@ -885,7 +885,6 @@ export async function validarAtualizacaoEndereco(nomeModal) {
   var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
   var IspaginaContato = sessionStorage.getItem("PAGINA-CONTATO") != null
 
-
   if (id == sessionStorage.getItem(`${nomeModal.toUpperCase()}-MODAL-ID`) && agendamentoId != null) {
     esconderModalMultivalorado()
     return
@@ -898,6 +897,7 @@ export async function validarAtualizacaoEndereco(nomeModal) {
       if (IspaginaContato) sessionStorage.setItem(`${nomeModal.toUpperCase()}-ID`, id)
       await api.buscarEnderecoPorId()
       motorGrafico.exibirInputsEndereco()
+      motorGrafico.removerDivsInvalidasDosBotoesDeAssociacao(nomeModal)
     }
     if (nomeModal == 'telefone') {
       atualizarTelefone = true
@@ -905,7 +905,9 @@ export async function validarAtualizacaoEndereco(nomeModal) {
       if (IspaginaContato) sessionStorage.setItem(`${nomeModal.toUpperCase()}-ID`, id)
       await api.buscarTelefonePorId()
       motorGrafico.exibirInputsNumero()
+      motorGrafico.removerDivsInvalidasDosBotoesDeAssociacao(nomeModal)
     }
+    motorGrafico.removerEstilizacaoDasInputsInvalidas()
     esconderModalMultivalorado()
     
   }
