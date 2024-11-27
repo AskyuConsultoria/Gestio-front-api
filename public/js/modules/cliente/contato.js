@@ -45,6 +45,14 @@ function preencherDadosCliente(cliente) {
   document.querySelector('#input-sobrenome').value = cliente.sobrenome
   document.querySelector('#input-email').value = cliente.email
   sessionStorage.setItem("CLIENTE-ID", cliente.id)
+
+
+  if(document.querySelector("#conteudo-botao-dependente")){
+    if(cliente.responsavel != null && cliente.responsavel.nome != null){
+    document.querySelector("#botao-dependente-cliente").innerText = `${cliente.responsavel.nome} ${cliente.responsavel.sobrenome}`
+    }
+    document.querySelector("#botao-dependente-cliente").onclick = () => validarDivClicada(event, cliente.responsavel.id, cliente.responsavel.id)
+  }
 }
 
 async function preencherCardsDeCliente() {
@@ -113,6 +121,11 @@ function validarDivClicada(evento, responsavelId, clienteId){
 
   limparCache()
   validarSeEResponsavelDependente(responsavelId)
+  
+  if(evento.target.id == "botao-dependente-cliente"){
+    sessionStorage.setItem("RESPONSAVEL", true)
+  }
+
   transferirParaPagina('Cadastro-contato.html',['PAGINA-CONTATO', 'CLIENTE-ID'], ['consultar-contato', clienteId])
 }
 

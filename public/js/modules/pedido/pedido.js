@@ -565,7 +565,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     corpo = "lista[i].numero"
     id = telefoneId
 
-  } else if (nomeModal == "cliente") {
+  } else if (nomeModal == "dependente") {
     tituloModal.innerText = "Informações do Dependente"
     corpo = "exibirClienteCompleto(lista[i])"
     id = responsavelId
@@ -800,7 +800,6 @@ export async function preencherFormulario(tipoFormulario, verbo, idAtualizacao) 
       await api.buscarClientePorId(idAtualizacao)
     }
 
-  
   }
 
 

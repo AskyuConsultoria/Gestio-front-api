@@ -249,6 +249,8 @@ function salvarDadosETransferirParaOutraPagina(classe, agendamentoId, dataPedido
   }
 
   if(classe == "adicionar-pedido"){
+    sessionStorage.removeItem("CLIENTE-ID")
+    sessionStorage.removeItem("PAGINA-CONTATO")
     sessionStorage.setItem("PAGINA-PEDIDO", "adicionar-pedido")
   }
 

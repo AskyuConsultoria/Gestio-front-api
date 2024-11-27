@@ -39,6 +39,7 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
 
     if (renderizarEscolhaCliente) {
         paginaEscolhida = "associar-cliente"
+        api.buscarClientesPorNome('')
     }
 
     if (renderizarPagina != undefined) {

@@ -10,6 +10,7 @@ window.buscarTelefonePorClienteId = buscarTelefonePorClienteId
 window.buscarClientesPorResponsavelId = buscarClientesPorResponsavelId
 window.atualizarEnderecoAgendamento = atualizarEnderecoAgendamento
 window.escolherRenderizacao = escolherRenderizacao
+window.buscarClientesPorNome = buscarClientesPorNome
 
 
 async function buscarAgendamento() {

@@ -9,7 +9,8 @@ function escolherRenderizacao(){
     var enderecoId = sessionStorage.getItem("ENDERECO-MODAL-ID")
     var telefoneId = sessionStorage.getItem("TELEFONE-MODAL-ID")
     var clienteId = sessionStorage.getItem("CLIENTE-ID")
-
+    var responsavel = sessionStorage.getItem("RESPONSAVEL")
+    
     if(paginaRenderizada == 'criar-contato'){
         motorGraficoForm.esconderInputsEndereco()
         motorGraficoForm.esconderInputsNumero()
@@ -27,9 +28,7 @@ function escolherRenderizacao(){
 
         exibirBotoesAssociacao()
         exibirComponenteDependente()
-        renderizarTextoConsultaEndereco()
-        renderizarTextoConsultaTelefone()
-
+    
         if(enderecoId != null){
             motorGraficoForm.exibirInputsEndereco()
             renderizarTextoConsultaEndereco()
@@ -44,6 +43,32 @@ function escolherRenderizacao(){
 
         if(clienteId != null){
             apiContato.buscarClientePorId(clienteId)
+        }
+
+
+
+        var cardLabelDependente = document.querySelector("#card-label-dependente")
+        if(responsavel == "false"){
+            if(!cardLabelDependente.classList.contains("d-none")){
+                cardLabelDependente.classList.add("d-none")
+            }
+            sessionStorage.setItem("RESPONSAVEL-ID", clienteId) 
+        } else {
+            if(cardLabelDependente.classList.contains("d-none")){
+                cardLabelDependente.classList.remove("d-none")
+            }
+        }
+
+        var conteudoBotaoDependente = document.querySelector("#conteudo-botao-dependente")
+        if(responsavel == "false"){
+            if(conteudoBotaoDependente.classList.contains("d-none")){
+                conteudoBotaoDependente.classList.remove("d-none")
+            }
+        } else {
+            if(!conteudoBotaoDependente.classList.contains("d-none")){
+                conteudoBotaoDependente.classList.add("d-none")
+            }
+            
         }
     }
 }
