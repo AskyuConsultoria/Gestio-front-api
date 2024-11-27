@@ -607,16 +607,7 @@ export async function escolherModalMultivalorado(nomeModal, lista) {
     if (lista[i].id == id && i != 0 && lista.length > 1) exibirEnderecoSalvoPrimeiro(lista[i], i)
   }
 
-  conteudoModal.innerHTML += `
-  <div class="d-flex px-3 mb-5">
-    <button type="button" class="btn btn-lg text-secondary me-2" data-bs-dismiss="modal-multivalorado" onclick="preencherFormulario('${nomeModal.toLowerCase()}', 'salvar')" style="border-color: #eeeaea;">+ Adicionar ${nomeModal} do Cliente</button>
-  </div>
-
-  <div class="d-flex justify-content-between px-3">
-    <button type="button" class="btn btn-lg text-secondary me-2" data-bs-dismiss="modal-multivalorado" style="border-color: #eeeaea; width: 48%" onclick="modalMultivalorado.hide()">Cancelar</button>
-    <button type="button" class="btn btn-lg text-white" style="background-color: #012171; width: 48%" onclick="validarAtualizacaoEndereco('${nomeModal}')">Confirmar</button>
-  </div>`
-
+ 
 
   const elModalMultivalorado = document.querySelector('#modal-multivalorado')
   if (!elModalMultivalorado.classList.contains('show')) modalMultivalorado.show()

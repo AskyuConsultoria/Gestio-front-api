@@ -122,7 +122,7 @@ lista.forEach(itemPedido => {
                     <div class="card-body" id="${itemPedido.id}" onclick="IrVisualizarFicha(this)">
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <div class="d-flex">
-                                <span class="medidas card-title mt-2 fs-5"> ${itemPedido.peca.nome} ♢ ${itemPedido.cliente.nome} ${itemPedido.cliente.sobrenome}</span>
+                                <span class="medidas card-title mt-2 fs-5"> ${itemPedido.peca.nome} | ${itemPedido.cliente.nome} ${itemPedido.cliente.sobrenome}</span>
                             </div>
                         </div>
                     </div>
