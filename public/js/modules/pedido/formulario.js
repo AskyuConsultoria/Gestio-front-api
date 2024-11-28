@@ -100,6 +100,12 @@ function agregarERetornarConteudosModal(tipoConteudo){
           validacao: 'igual',
           digitos: 11,
           mensagem: "Número de digitos do telefone inválido"
+        },
+        {
+          nome: "data-inicio",
+          validacao: "dataInicioMenorQueDataFim",
+          digitos: null,
+          mensagem: "Data de início é maior que a de do fim do agendamento."
         }
       ]
     }
@@ -161,6 +167,7 @@ function agregarERetornarConteudosModal(tipoConteudo){
     if(!sessionStorage.getItem("PAGINA-CONTATO")){
       verificarAssociacaoTelefone(formularioValido)
       verificarAssociacaoEndereco(formularioValido)
+      verificarAssociacaoCliente(formularioValido)
     }
     
   
@@ -219,6 +226,28 @@ function agregarERetornarConteudosModal(tipoConteudo){
       }
   
     } 
+
+
+    if(tipoValidacao == 'maiorOuIgual'){
+  
+      if(valorCampo.length >= digitos){
+        return true
+      } else{
+        return false
+      }
+  
+    } 
+
+
+    if(tipoValidacao == "dataInicioMenorQueDataFim"){
+      var dataInicio = new Date(document.querySelector("#input-data-inicio").value)
+      var dataFim = new Date(document.querySelector("#input-data-fim").value)
+
+      if(dataInicio > dataFim) return false
+      else return true 
+    }
+
+    
       
   }
 
@@ -245,6 +274,22 @@ function agregarERetornarConteudosModal(tipoConteudo){
     ocultarErroAssociacaoEndereco()
   }
 
+
+  function verificarAssociacaoCliente(formularioValido){
+    if(document.querySelector("#associacao-cliente")){
+      formularioValido = false
+      exibirErroAssociacaoCliente()
+      return
+    } 
+
+    ocultarErroAssociacaoCliente()
+  }
+
+  function exibirErroAssociacaoCliente(){
+    var divErroCliente = document.querySelector("#validacao-associacao-cliente")
+    if(!divErroCliente.classList.contains('d-flex')) divErroCliente.classList.add('d-flex')
+  }
+
   function exibirErroAssociacaoTelefone(){
       var divErroTelefone = document.querySelector("#validacao-associacao-telefone")
       if(!divErroTelefone.classList.contains('d-flex')) divErroTelefone.classList.add('d-flex')
@@ -253,6 +298,11 @@ function agregarERetornarConteudosModal(tipoConteudo){
   function exibirErroAssociacaoEndereco(){
     var divErroEndereco = document.querySelector("#validacao-associacao-endereco")
     if(!divErroEndereco.classList.contains('d-flex')) divErroEndereco.classList.add('d-flex')
+  }
+
+  function ocultarErroAssociacaoCliente(){
+    var divErroCliente = document.querySelector("#validacao-associacao-cliente")
+    if(divErroCliente.classList.contains('d-flex')) divErroCliente.classList.remove('d-flex')
   }
 
   function ocultarErroAssociacaoTelefone(){
@@ -264,8 +314,6 @@ function agregarERetornarConteudosModal(tipoConteudo){
     var divErroEndereco = document.querySelector("#validacao-associacao-endereco")
     if(divErroEndereco.classList.contains('d-flex')) divErroEndereco.classList.remove('d-flex')
   }
-
-
 
 
 

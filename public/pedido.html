@@ -123,10 +123,13 @@
     </div>
 
     <!-- Botão de assosiar cliente -->
-    <div class="d-flex px-3 pt-3 mb-3 componente">
-        <div class="d-flex rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
+    <div class="d-flex px-3 pt-3 mb-3 componente" id="associacao-cliente">
+        <div class="d-flex flex-column rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
             <button class="botao-pedido rounded-pill text-white w-75" onclick="escolherRenderizacao(true)"
                 style="height: 40px;">Cliente Responsável</button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-cliente">
+                    Por favor associe o cliente ao agendamento
+                </div>
         </div>
     </div>
 

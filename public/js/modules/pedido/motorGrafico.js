@@ -67,6 +67,7 @@ function escolherRenderizacao(renderizarEscolhaCliente, renderizarPagina) {
             listaComponenteExibido.shift()
             listaComponenteOcultado.shift()
             listaComponenteExibido.push(listaComponente[1])
+            removerEstilizacaoDasInputsInvalidas()
             exibirCardEndereco()
             renderizar("158%", "Novo Pedido")
             return

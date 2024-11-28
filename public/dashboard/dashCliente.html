@@ -163,7 +163,20 @@
             if (!data.ok) {
             throw new Error('Erro ' + data.statusText, data.message);
             }
-            const FormatedData = await data.json()  
+
+
+           
+        const FormatedData = await data.json()
+
+        if(FormatedData.length == 0){
+          clientesRegistradosKPI()
+           const contentCliente = document.querySelector("#clientes")
+              contentCliente.innerHTML = `
+              <span class="mx-4">
+              Sem dados registrados para esse período</span>
+              `
+           return 
+        }
         // var FormatedData = [
         //     {
         //         "nome": "John",
