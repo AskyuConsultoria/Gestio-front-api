@@ -1,0 +1,111 @@
+body {
+    width: 393px;
+    height: 1653px;
+    background-color: white;
+    margin: 0;
+    font-family: Inter;
+}
+
+header {
+    box-shadow: 5px 5px 10px rgba(0, 0, 14, 0.163);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+.noimg-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+
+.detalhes-pedido-container {
+    margin: 1% auto 0 auto;
+    max-width: 90%;
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; 
+    height: 10vh;
+    color: #012171;
+    font-family: sans-serif;
+}
+
+.titulo{
+    font-weight: bold;
+}
+
+.box-titulo .titulo {
+color: #012171;
+}
+
+.tabela-medidas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    margin-top: 4%;
+}
+
+.table {
+    width: 80vw;
+    max-width: 400px;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd; 
+    color: #012171; 
+}
+
+.table th {
+    background-color: #e0e7ff; 
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f1f5ff; 
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; 
+}
+
+.table th:first-child, .table td:first-child {
+    border-right: 1px solid #a2a9bb; 
+}
+
+.table th {
+    border-bottom: 2px solid #012171; 
+}
+
+.table td {
+    font-size: 16px;
+}
+
+.button-container{
+    height: 4vh;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+button.botao-pedido,
+button.botao-visualizar {
+    outline: none;
+    font-size: 16px;
+    border-style: none;
+    background: linear-gradient(45deg, #012171, #023FD7)
+}

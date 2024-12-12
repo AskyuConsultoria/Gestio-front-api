@@ -9,20 +9,20 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/home.css">
   <script defer src="js/peca_editar.js"></script>
   <link rel="stylesheet" href=".//css/calendar.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
-<body>
+<body class="mt-3">
   <!-- Ínicio do Modal -->
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen" role="document">
-      <div class="modal-content">
+      <div class="modal-content pt-3">
         <div class="modal-header justify-content-right">
           <h5 class="modal-title" id="exampleModalLabel"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -106,7 +106,7 @@
             Agendamentos nesse dia:
           </div>
           <div class="pb-3" id="pedidos-conteudo-semana">
-            <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+            <!-- <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
               <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
                 <div class="d-flex h-100 w-15 rounded rounded-end-0" style="width: 2rem; background-color: #F4D176;"></div>
           
@@ -142,8 +142,8 @@
                 </div>
       
               </div>
-             </div>
-             </div>
+             </div> -->
+            </div>
         </div>
         <div class="modal-footer pw-0 py-0">
         </div>
@@ -159,17 +159,15 @@
 
       <div class="d-flex col-2 align-items-left justify-content-left">
         <div class="avatar-usuario rounded-circle">
-          <img src="assets/homem-bem-vestido.jpg" class="h-100 w-100 rounded-circle" alt="">
+          <img src="assets/gestioSemBG.svg" class="h-110 w-100 rounded-circle" alt="">
         </div>
       </div>
 
-      <div class="d-flex col-8 align-items-center justify-content-left">
-        <span id="nome-usuario">
-          Usuário indefinido
-        </span>
+      <div class="d-flex col-8 align-items-center justify-content-left" style="font-size: 1.25rem;">
+        Bem vindo de volta <span id="nome-usuario" class="ms-2" style="font-weight: bold;"> Usuário indefinido</span>
       </div>
 
-      <div class="d-flex col-2 align-items-end justify-content-end">
+      <!-- <div class="d-flex col-2 align-items-end justify-content-end">
         <div class="icone-notificacao d-flex rounded shadow-sm align-items-center justify-content-center bg-body">
           <?xml version="1.0" ?><svg class="" height="32" viewBox="0 0 32 32" width="32"
             xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +178,7 @@
                 id="bell_ring_notification_alarm" />
             </g>
           </svg>
-        </div>
+        </div> -->
 
       </div>
 
@@ -190,7 +188,7 @@
   <!-- Fim da Header -->
 
   <!-- Ínicio da Input -->
-  <div class="d-flex container px-3 flex-row input-group">
+  <div class="d-flex container px-3 pb-2 flex-row input-group">
     <button class="input-group-text  w-auto h-auto bg-body">
       <?xml version="1.0" ?><svg class="icone-lupa" enable-background="new 0 0 32 32" id="Editable-line" version="1.1"
         viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +199,7 @@
           stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
       </svg>
     </button>
-    <input type="text" class="w-75 h-auto form-control" type="search" placeholder="Pesquisar por Pedidos">
+    <input type="text" class="w-75 h-auto form-control" type="search" id="input-search" oninput="realizarPesquisa(this)" placeholder="Pesquisar por Pedidos">
       <button class="input-group-text w-auto h-auto bg-body" id="search" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
           viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -225,36 +223,30 @@
         </svg>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Nome do Cliente</a></li>
-        <li><a class="dropdown-item" href="#">Email do cliente</a></li>
-        <li><a class="dropdown-item" href="#">Peça</a></li>
-        <li><a class="dropdown-item" href="#">Tecido</a></li>
+        <li><button class="dropdown-item" id="clienteNome" onclick="ativarFiltro(this)">Nome do Cliente</button></li>
+        <li><button class="dropdown-item" id="clienteEmail" onclick="ativarFiltro(this)">Email do cliente</button></li>
+        <li><button class="dropdown-item" id="peca" onclick="ativarFiltro(this)">Peça</button></li>
+        <li><button class="dropdown-item" id="tecido" onclick="ativarFiltro(this)">Tecido</button></li>
       </ul>
     
   </div>
   <!-- Fim da Input -->
 
   <!-- Ínicio das Âncoras -->
-  <div class="d-flex container px-3 my-3 flex-row">
+  <div class="d-flex container px-3 my-3 flex-row componente">
 
-    <div class="d-flex col-4" type="button" id="evento" data-bs-toggle="modal" 
-    data-bs-target="#modal">
+    <div class="d-flex col-4" type="button" onclick="irPara('dashboard/dashHome.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
-          <?xml version="1.0" ?><svg fill="#FFFFFF" class="icone-ancora" height="48" viewBox="0 0 48 48" width="48"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h48v48H0z" fill="none" />
-            <path
-              d="M36 4H12C9.79 4 8 5.79 8 8v32c0 2.21 1.79 4 4 4h24c2.21 0 4-1.79 4-4V8c0-2.21-1.79-4-4-4zM12 8h10v16l-5-3-5 3V8z" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" fill="#FFFFFF"><path d="M80-120v-80h800v80H80Zm40-120v-280h120v280H120Zm200 0v-480h120v480H320Zm200 0v-360h120v360H520Zm200 0v-600h120v600H720Z"/></svg>
         </div>
         <div class="d-flex align-items-center justify-content-center pt-1 pb-3">
-          <span class="text-white">Ver pedidos</span>
+          <span class="text-white">Ver Relatórios</span>
         </div>
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center">
+    <div class="d-flex col-4 justify-content-center" onclick="irPara('Contato.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -274,7 +266,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end">
+    <div class="d-flex col-4 justify-content-end" onclick="irPara('fichas/Lista_fichas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?>
@@ -305,9 +297,9 @@
 
   </div>
 
-  <div class="d-flex container px-3 my-3 flex-row">
+  <div class="d-flex container px-3 my-3 flex-row componente">
 
-    <div class="d-flex col-4">
+    <div class="d-flex col-4" onclick="irPara('Lista-peca.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <?xml version="1.0" ?><svg class="icone-ancora" fill="#FFFFFF" viewBox="0 0 512 512"
@@ -330,7 +322,7 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-center">
+    <div class="d-flex col-4 justify-content-center" onclick="irPara('Lista-tecido.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
           <svg class="icone-ancora" width="51" height="51" viewBox="0 0 51 51" fill="#FFFFFF"
@@ -350,33 +342,13 @@
       </div>
     </div>
 
-    <div class="d-flex col-4 justify-content-end">
+    <div class="d-flex col-4 justify-content-end" onclick="irPara('Etapas.html')">
       <div class="border flex-column rounded h-100" style="background-color: #012171; width: 92%;">
         <div class="d-flex align-items-center justify-content-center pt-2">
-          <?xml version="1.0" ?>
-          <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg
-            class="icone-ancora" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" width="512px" height="512px"
-            style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-            viewBox="0 0 512 512">
-            <defs>
-              <style type="text/css">
-              </style>
-            </defs>
-            <g id="Layer_x0020_1">
-              <g id="_283926144">
-                <path id="_283925736" class="fil0"
-                  d="M247.301 375.4l-241.3 0c-3.30001,0 -6.00002,-2.70001 -6.00002,-6.00002l0 -129.998c0,-69.7998 56.8006,-126.6 126.6,-126.6l0 0c69.7998,0 126.6,56.8006 126.6,126.6l0 129.998c0.0992129,3.30001 -2.6008,6.00002 -5.90081,6.00002zm-33.7005 -23.3009c-8.89963,0 -16.2,-7.30042 -16.2,-16.2 0,-8.89963 7.30042,-16.2 16.2,-16.2 8.89963,0 16.2,7.30042 16.2,16.2 0,8.90081 -7.20002,16.2 -16.2,16.2zm0 -20.4993c-2.29961,0 -4.20001,1.9004 -4.20001,4.20001 0,2.29961 1.9004,4.20001 4.20001,4.20001 2.29961,0 4.20001,-1.9004 4.20001,-4.20001 0,-2.30079 -1.89922,-4.20001 -4.20001,-4.20001zm-86.9991 -50.8998c-20.2005,0 -36.6001,-16.3997 -36.6001,-36.5989 0,-20.2005 16.3997,-36.6001 36.6001,-36.6001 20.2005,0 36.6001,16.3997 36.6001,36.6001 0.0992129,20.1981 -16.4008,36.5989 -36.6001,36.5989zm0 -61.199c-13.6004,0 -24.6001,11.1 -24.6001,24.6001 0,13.5993 11.1,24.5989 24.6001,24.5989 13.6004,0 24.6001,-10.9996 24.6001,-24.5989 0.0992129,-13.6004 -11.0008,-24.6001 -24.6001,-24.6001zm0 101.198c-42.1997,0 -76.5994,-34.3997 -76.5994,-76.5983 0,-42.1997 34.3997,-76.5994 76.5994,-76.5994 42.1997,0 76.5994,34.3997 76.5994,76.5994 0,42.1986 -34.2993,76.5983 -76.5994,76.5983zm0 -141.199c-35.5997,0 -64.5994,28.9997 -64.5994,64.5994 0,35.5985 28.9997,64.5982 64.5994,64.5982 35.5997,0 64.5994,-28.9997 64.5994,-64.5982 0,-35.5997 -28.8993,-64.5994 -64.5994,-64.5994z" />
-                <path id="_283925592" class="fil0"
-                  d="M506 375.4l-16.9276 0 0 -35.7001c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 35.7001 -26.4001 0 0 -23.2997c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 23.2997 -26.4001 0 0 -35.7001c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 35.7001 -26.4993 0 0 -23.2997c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 23.2997 -26.4001 0 0 -35.7001c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 35.7001 -26.4001 0 0 -23.2997c0,-3.30001 -2.70001,-6.00002 -6.00002,-6.00002 -3.30001,0 -6.00002,2.70001 -6.00002,6.00002l0 23.2997 -22.9264 0c0.744097,-1.85434 1.15512,-3.88111 1.15512,-6.00002l0 -88.0999 242.799 0c3.30001,0 6.00002,2.70001 6.00002,6.00002l0 82.0999c0,3.30001 -2.70001,6.00002 -6.00002,6.00002z" />
-                <path id="_283926264" class="fil0"
-                  d="M506 399.2c-3.30001,0 -6.00002,-2.70001 -6.00002,-6.00002l0 -23.8005c0,-3.30001 2.70001,-6.00002 6.00002,-6.00002 3.30001,0 6.00002,2.70001 6.00002,6.00002l0 23.8005c0,3.30001 -2.70001,6.00002 -6.00002,6.00002z" />
-              </g>
-            </g>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" height="45px" viewBox="0 -960 960 960" width="45px" fill="#FFFFFF"><path d="M480-406.67 40.67-643.33 480-880l440 236.67-440 236.66Zm0 163.34L64.33-467l70-38L480-319l346.33-186 70 38L480-243.33ZM480-80 64.33-303.67l70-38 345.67 186 346.33-186 70 38L480-80Z"/></svg>
         </div>
         <div class="d-flex align-items-center justify-content-center pt-1 pb-3">
-          <span class="text-white">Criar ficha</span>
+          <span class="text-white">Ver etapas</span>
         </div>
       </div>
     </div>
@@ -385,7 +357,7 @@
   <!-- Fim das Âncoras -->
 
   <!-- Ínicio do Calendário -->
-  <div class="px-3">
+  <div class="px-3 componente">
     <div class="col-md-12">
       <div class="calendar calendar-first" id="calendar_first">
         <div class="calendar_header">
@@ -410,7 +382,7 @@
   <!-- Fim do Calendário -->
 
   <!-- Ínicio da Label de Pedidos -->
-   <div class="d-flex col-12 px-3 justify-content-center">
+   <div class="d-flex col-12 px-3 justify-content-center componente">
     <div class="d-flex ps-2 py-4 text-secondary">
       <span>Pedidos mais próximos</span>  
     </div>  
@@ -419,7 +391,7 @@
 
   <!-- Ínicio dos Pedidos -->
    <div class="pb-3" id="pedidos-conteudo">
-    <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+    <!-- <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
       <div class="d-flex flex-row w-100 bg-body rounded">
         <div class="d-flex bg-warning h-100 w-15 rounded rounded-end-0" style="width: 2rem;"></div>
   
@@ -436,9 +408,9 @@
         </div>
   
       </div>
-     </div>
+     </div> -->
 
-     <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
+     <!-- <div class="d-flex container px-3 col-12 py-2 flex-row w-100">
       <div class="d-flex flex-row w-100 bg-body rounded">
         <div class="d-flex bg-warning h-100 w-15 rounded rounded-end-0" style="width: 2rem;"></div>
   
@@ -474,8 +446,8 @@
         </div>
   
       </div>
-     </div>
-   </div>
+     </div> -->
+   </div> 
   
 
 
@@ -673,5 +645,4 @@ function renderizarModal(){
 }
   
 if(exibicaoModal) renderizarModal()
-
 </script>

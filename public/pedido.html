@@ -20,14 +20,15 @@
     <script src="./js/modules/pedido/formulario.js" type="module"></script>
     <script src="./js/modules/pedido/motorGrafico.js" type="module"></script>
     <script src="./js/modules/pedido/pedido.js" type="module"></script>
+    <script type="module" src="../js/navegar.js"></script>
 </head>
 
-<body onload="escolherRenderizacao()" id="body">
+<body onload="escolherRenderizacao(); buscarEtapas()" id="body" class="mt-3">
 
     <!-- Ínicio do Modal -->
     <div class="modal fade" id="modal-multivalorado" tabindex="-1" aria-labelledby="modal-multivadorado-label" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
+            <div class="modal-content pt-3">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="modal-multivadorado-label">Endereço do Cliente</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -105,14 +106,14 @@
 
     <!-- inicio página de pedido completa-->
     <div class="d-flex flex-row justify-content-center pt-2 mb-3">
-        <div>
+        <div class="mt-3">
             <span class="text-white" id="label-pedido">
-                Novo Pedido
+                Novo Agendamento
             </span>
         </div>
-        <div class="position-relative position-absolute top-0 end-0 pe-3 pt-2">
+        <div class="position-relative position-absolute top-0 end-0 pe-3 pt-4 mt-2">
             <button class="botao-confirmacao" id="closeButton" onclick="fecharJanela(this.id)">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                <svg xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 -960 960 960" width="2rem"
                     fill="#FFFF">
                     <path
                         d="m336-280 144-144 144 144 56-56-144-144 144-144-56-56-144 144-144-144-56 56 144 144-144 144 56 56ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
@@ -122,10 +123,13 @@
     </div>
 
     <!-- Botão de assosiar cliente -->
-    <div class="d-flex px-3 pt-3 mb-3 componente">
-        <div class="d-flex rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
+    <div class="d-flex px-3 pt-3 mb-3 componente" id="associacao-cliente">
+        <div class="d-flex flex-column rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
             <button class="botao-pedido rounded-pill text-white w-75" onclick="escolherRenderizacao(true)"
                 style="height: 40px;">Cliente Responsável</button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-cliente">
+                    Por favor associe o cliente ao agendamento
+                </div>
         </div>
     </div>
 
@@ -194,11 +198,14 @@
          </div>
     
 
-            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
+            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 flex-column align-items-center">
                 <button class="botao-associar rounded-pill text-white w-75" onclick="buscarTelefonePorClienteId('telefone')"
                     id="botao-pedido" style="height: 40px;">
                     Selecionar telefone do Cliente
                 </button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-telefone">
+                    Por favor associe o telefone do cliente
+                </div>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
@@ -224,7 +231,7 @@
 
             <div class="d-flex ps-3 mb-2 w-100">
                 <label for="input-data-inicio" class="text-secondary fw-light">Data e Horário do começo do
-                    pedido</label>
+                    agendamento</label>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-data-inicio">
@@ -237,7 +244,7 @@
             </div>
 
             <div class="d-flex ps-3 mb-2 w-100">
-                <label for="input-data-fim" class="text-secondary fw-light">Data e Horário do fim do pedido</label>
+                <label for="input-data-fim" class="text-secondary fw-light">Data e Horário do fim do agendamento</label>
             </div>
 
             <div class="d-flex ps-3 pe-3 mb-3 w-100 input-group" id="content-data-fim">
@@ -260,14 +267,14 @@
                     id="input-etapa" required>
                     <option value="">
                     </option>
-                    <select>
+                </select>
                         <div class="invalid-feedback">
                             Por favor selecione corretamente a etapa.
                         </div>
             </div>
 
 
-            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
+            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center" id="conteudo-item-pedido">
                 <button class="botao-pedido rounded-pill text-white w-75" style="height: 40px;" onclick="location.href = `http://localhost:3333/associar-ficha.html`">
                     Ver fichas do
                     Pedido
@@ -295,11 +302,14 @@
                 <span>Endereço do Pedido</span>
             </div>
 
-            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 justify-content-center">
+            <div class="d-flex ps-3 pe-3 mb-2 pb-2 w-100 flex-column align-items-center">
                 <button class="botao-associar rounded-pill text-white w-75" onclick="buscarEnderecoPorClienteId('endereco')"
                     id="botao-pedido" style="height: 40px;">
                     Selecionar endereço do Cliente
                 </button>
+                <div class="invalid-feedback justify-content-center" id="validacao-associacao-endereco">
+                    Por favor associe o endereço do cliente
+                </div>
             </div>
             </div>
             <div id="conteudo-endereco">
@@ -318,7 +328,7 @@
                     <input class="w-75 form-control endereco" placeholder="00000-000" type="text"
                         onchange="verificarDadosEExibirBotaoDeConfirmacao(this.id, inputAntigoCep)" id="input-cep"
                         required>
-                    <div class="invalid-feedback">
+                    <div class="invalid-feedback" id="div-invalid-cep">
                         Por favor insira corretamente o CEP.
                     </div>
                 </div>
@@ -401,6 +411,12 @@
             </div>
         </div>
 
+        <div class="d-flex pt-3 mb-3" id="content-btn-cancelar">
+            <div class="d-flex rounded bg-body justify-content-center align-items-center w-100" style="height: 70px;">
+                <button class="botao-salvar rounded-pill text-white w-75 d-block" id="botao-cancelar" onclick="construirModalGenerico(this.id, 'Você tem certeza que quer cancelar o agendamento?')" style="height: 40px;">Cancelar Agendamento</button>
+            </div>
+        </div>
+
     </div>
     <!-- Fim página de pedido completa-->
     <div class="d-flex px-3 pt-3 flex-row justify-content-center mb-3 componente">
@@ -409,9 +425,7 @@
 
     <!-- Ínicio da página de associação de clientes -->
     <div class="d-flex container px-3 flex-row input-group mb-3 componente">
-        <button class="input-group-text  w-auto h-auto bg-body" onclick="buscarClientesPorNome(
-            document.querySelector('#input-cliente').value
-        )">
+        <button class="input-group-text  w-auto h-auto bg-body" onclick="validarEventoKeyboard()">
             <?xml version="1.0" ?><svg class="icone-lupa" enable-background="new 0 0 32 32" id="Editable-line"
                 version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -421,8 +435,7 @@
                     stroke-miterlimit="10" stroke-width="2" x1="27" x2="20.366" y1="27" y2="20.366" />
             </svg>
         </button>
-        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes" id="input-cliente"
-            onkeydown="validarEventoKeyboard(event)">
+        <input type="text" class="w-75 h-auto form-control" placeholder="Pesquisar por clientes" id="input-cliente" oninput="validarEventoKeyboard(event)">
         <span class="input-group-text w-auto h-auto b g-body">
             <?xml version="1.0" ?><svg class="icone-filtro" style="enable-background:new 0 0 24 24;" version="1.1"
                 viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
@@ -450,7 +463,7 @@
     <div class="d-flex flex-column box-cliente h-100 componente" style="background-color: #EEEEEE;">
         <div class="pb-3" id="conteudo-cliente">
             <div class="d-flex container px-3 col-12 py-2 flex-row w-100" style="height: 76px;">
-                <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
+                <!-- <div class="d-flex flex-row w-100 bg-body rounded shadow-sm">
                     <div class="d-flex h-100 w-15 rounded rounded-end-0"
                         style="width: 2rem; background-color: #012171;"></div>
 
@@ -483,7 +496,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
     <!-- Fim da página de associação de clientes -->

@@ -58,7 +58,7 @@ header {
 }
 
 .medidas {
-    margin-left: 20%;
+    margin-left: 0%;
     font-size: 20px;
     font-weight: 400;
 }
@@ -68,6 +68,16 @@ header {
     max-width: 90%;
     max-height: 9rem;
     box-shadow: 4px 4px 8px var(--sombra);
+    background-color: var(--azul);
+    color: white;
+
+    small {
+        color: white;
+    }
+
+    .peca-nome {
+        color: white;
+    }
 }
 
 .card {
@@ -78,7 +88,7 @@ header {
 
 .peca-card:active {
     background-color: var(--azul);
-    color: white;
+    color: #012171;
 
     small {
         color: white;
