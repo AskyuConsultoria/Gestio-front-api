@@ -124,7 +124,7 @@
 
     async function getTecido(tecido) {
         var idUsuario = sessionStorage.getItem("id")
-        var data = await fetch(`http://localhost:8080/tecidos/${idUsuario}/${tecido}`);
+        var data = await fetch(`http://localhost:8080/askyu/askyu/tecidos/${idUsuario}/${tecido}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -140,7 +140,7 @@
     async function getmedidasPeca() {
         var idUsuario = sessionStorage.getItem("id")
         var peca = sessionStorage.getItem("PECA-ID")
-        var data = await fetch(`http://localhost:8080/nomes-medidas/${idUsuario}/${peca}`);
+        var data = await fetch(`http://localhost:8080/askyu/askyu/nomes-medidas/${idUsuario}/${peca}`);
         if (!data.ok) {
             throw new Error('Erro ' + data.statusText);
         }
@@ -188,7 +188,7 @@
                 "id": idPeca
             }
         }
-        itemPedido = await fetch(`http://localhost:8080/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
+        itemPedido = await fetch(`http://localhost:8080/askyu/askyu/itens-pedidos/${idUsuario}/${idCliente}/${idPeca}`, {
             method: "POST",
             body: JSON.stringify(itemPedidoBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -253,7 +253,7 @@
         const usuarioId = sessionStorage.getItem("id")
 
         try{
-            const response = await fetch(`http://localhost:8080/colecoes-tecidos/${usuarioId}/${itemPedidoId}/${tecidoId}`, {
+            const response = await fetch(`http://localhost:8080/askyu/askyu/colecoes-tecidos/${usuarioId}/${itemPedidoId}/${tecidoId}`, {
                 method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -293,7 +293,7 @@
             "usuario": { "id": idUsuario },
             "peca": { "id": idPeca }
         }
-        var valorMedida = await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
+        var valorMedida = await fetch(`http://localhost:8080/askyu/askyu/valores-medidas/${idUsuario}/${idCliente}/${idPeca}/${idMedida}/${idItemPedido}`, {
             method: "POST",
             body: JSON.stringify(medidaBody),
             headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -313,7 +313,7 @@
     
 
         try{
-          const response =  await fetch(`http://localhost:8080/valores-medidas/${idUsuario}/${idFicha}`, {
+          const response =  await fetch(`http://localhost:8080/askyu/askyu/valores-medidas/${idUsuario}/${idFicha}`, {
             method: "GET"
           })
 
@@ -341,7 +341,7 @@
         var fichaId = sessionStorage.getItem("FICHA-ID")
 
         try{
-            const response = await fetch(`http://localhost:8080/colecoes-tecidos/${usuarioId}/${fichaId}`, {
+            const response = await fetch(`http://localhost:8080/askyu/askyu/colecoes-tecidos/${usuarioId}/${fichaId}`, {
                 method: "GET"
             })
 
@@ -408,7 +408,7 @@ async function atualizarValorMedida(valorMedidaId, valor) {
     const usuarioId = sessionStorage.getItem('id')
 
     try{
-        var response = await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
+        var response = await fetch(`http://localhost:8080/askyu/askyu/valores-medidas/${usuarioId}/${valorMedidaId}?valorMedidaAtualizado=${valor}`, {
             method: "PUT"
         })
 
@@ -428,7 +428,7 @@ async function atualizarObservacoes(){
     const valorObservacao = document.querySelector("#observacoesInput").value 
 
     try{
-        const response = await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${fichaId}?observacao=${valorObservacao}`, {
+        const response = await fetch(`http://localhost:8080/askyu/askyu/itens-pedidos/${usuarioId}/${fichaId}?observacao=${valorObservacao}`, {
             method: "PATCH"
         })
 
@@ -451,7 +451,7 @@ async function criarPedido(){
     const agendamentoConsultado = await buscarAgendamento()
 
     try{
-        const response = await fetch("http://localhost:8080/pedido", {
+        const response = await fetch("http://localhost:8080/askyu/askyu/pedido", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -482,7 +482,7 @@ async function buscarItemPedido(){
     const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
 
     try{
-        const response =  await fetch(`http://localhost:8080/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        const response =  await fetch(`http://localhost:8080/askyu/askyu/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 
@@ -501,7 +501,7 @@ async function buscarPedido(){
     const pedidoId = sessionStorage.getItem("PEDIDO-ID")
 
     try{
-        const response =  await fetch(`http://localhost:8080/pedido/${usuarioId}/${pedidoId}`, {
+        const response =  await fetch(`http://localhost:8080/askyu/askyu/pedido/${usuarioId}/${pedidoId}`, {
             method: "GET"
         })
 
@@ -522,7 +522,7 @@ var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
 var usuarioId = sessionStorage.getItem("id")
 
 try {
-    const response = await fetch(`http://localhost:8080/agendamento/${usuarioId}/${agendamentoId}`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
         method: "GET"
     });
 
@@ -572,7 +572,7 @@ async function buscarValoresMedidas(){
     const itemPedidoId = sessionStorage.getItem("FICHA-ID")
 
     try{
-        const response =  await fetch(`http://localhost:8080/valores-medidas/${usuarioId}/${itemPedidoId}`, {
+        const response =  await fetch(`http://localhost:8080/askyu/askyu/valores-medidas/${usuarioId}/${itemPedidoId}`, {
             method: "GET"
         })
 

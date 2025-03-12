@@ -3,7 +3,7 @@
 async function buscarUltimos7Pedidos(idUsuario) {
 
   try {
-    const response = await fetch(`http://localhost:8080/agendamento/${idUsuario}/ultimos`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/agendamento/${idUsuario}/ultimos`, {
       method: "GET"
     });
 
@@ -25,7 +25,7 @@ async function buscarUltimos7Pedidos(idUsuario) {
 async function buscarAgendamentoPorClienteNome(nomeCliente){
   const usuarioId = sessionStorage.getItem('id')
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=true`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=true`, {
       method: "GET"
     });
 
@@ -43,7 +43,7 @@ async function buscarAgendamentoPorClienteEmail(email){
   const usuarioId = sessionStorage.getItem('id')
 
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-email/${usuarioId}?email=${email}`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/agendamento/filtro-cliente-email/${usuarioId}?email=${email}`, {
       method: "GET"
     });
 
@@ -61,7 +61,7 @@ async function buscarAgendamentoPorPeca(nome){
   const usuarioId = sessionStorage.getItem('id')
 
   try{
-    const response = await fetch(`http://localhost:8080/pedido-view-agendamento/por-peca/${usuarioId}?nome=${nome}`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/pedido-view-agendamento/por-peca/${usuarioId}?nome=${nome}`, {
       method: "GET"
     });
 
@@ -79,7 +79,7 @@ async function buscarAgendamentoPorTecido(nome){
   const usuarioId = sessionStorage.getItem('id')
 
   try{
-    const response = await fetch(`http://localhost:8080/pedido-view-agendamento/por-tecido/${usuarioId}?nome=${nome}`, {
+    const response = await fetch(`http://localhost:8080/askyu/askyu/pedido-view-agendamento/por-tecido/${usuarioId}?nome=${nome}`, {
       method: "GET"
     });
 

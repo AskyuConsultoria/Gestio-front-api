@@ -1,6 +1,6 @@
 async function listarPecas() {
     const usuario = sessionStorage.getItem("id");
-    const resposta = await fetch(`http://localhost:8080/pecas/${usuario}`);
+    const resposta = await fetch(`http://localhost:8080/askyu/askyu/pecas/${usuario}`);
     
     if (resposta.ok) {
         const pecas = await resposta.json();
@@ -51,7 +51,7 @@ async function cadastrarPeca() {
 
     console.log(dadosPeca)
 
-    const respostaCadastro = await fetch(`http://localhost:8080/pecas/${usuario}`, {
+    const respostaCadastro = await fetch(`http://localhost:8080/askyu/askyu/pecas/${usuario}`, {
         method: "POST",
         body: JSON.stringify(dadosPeca),
         headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -68,7 +68,7 @@ async function cadastrarPeca() {
 
 async function deletarPeca(id) {
     const usuario = sessionStorage.getItem("id");
-    const resposta = await fetch(`http://localhost:8080/pecas/${usuario}/${id}`, {
+    const resposta = await fetch(`http://localhost:8080/askyu/askyu/pecas/${usuario}/${id}`, {
         method: "DELETE"
     });
 
