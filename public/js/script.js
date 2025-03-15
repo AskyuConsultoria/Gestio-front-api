@@ -10,7 +10,7 @@
     var user = document.getElementById("usuario").value;
     var senha = document.getElementById("senha").value;
     
-    const data = await fetch(`http://localhost:8080/usuarios/login?usuario=${user}&senha=${senha}`);
+    const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/usuarios/login?usuario=${user}&senha=${senha}`);
       if (!data.ok) {
         if (data.status === 404) {
           construirModalGenerico("statusButton", null, null, "Usuário ou senha estão errados")
@@ -18,7 +18,7 @@
           construirModalGenerico("statusButton", null, null, "Algum dado inserido incorretamente!")
         } 
         else if (data.status === 409){
-          await fetch(`http://localhost:8080/usuarios/login/deslogar?usuario=${user}`, {
+          await fetch(`http://10.0.1.226:8080/askyu/askyu/usuarios/login/deslogar?usuario=${user}`, {
             method: "POST" ,
             headers: {"Content-type": "application/json; charset=UTF-8"},
           })

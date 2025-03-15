@@ -3,7 +3,7 @@ var lista= []
 
 async function buscarAtivo(usuarioId, etapaId) {
   try {
-    const response = await fetch(`http://localhost:8080/agendamento/etapa-ativo/${usuarioId}/${etapaId}`, {
+    const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/etapa-ativo/${usuarioId}/${etapaId}`, {
       method: "GET"
     });
     const data = await response.json();
@@ -20,7 +20,7 @@ async function buscarAtivo(usuarioId, etapaId) {
 
 async function buscarInativo(usuarioId, etapaId) {
   try {
-    const response = await fetch(` http://localhost:8080/agendamento/etapa-inativo/${usuarioId}/${etapaId}`, {
+    const response = await fetch(` http://10.0.1.226:8080/askyu/askyu/agendamento/etapa-inativo/${usuarioId}/${etapaId}`, {
       method: "GET"
     }
     );
@@ -268,7 +268,7 @@ function formatarHorario(data) {
 
 async function buscarTotalEtapa() {
   const usuarioId = sessionStorage.getItem("id")
-  const response = await fetch(`http://localhost:8080/agendamento-view-total-etapa/${usuarioId}`, {
+  const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento-view-total-etapa/${usuarioId}`, {
     method: "GET"
   });
   const totalEtapa = await response.json()
@@ -280,7 +280,7 @@ async function listarEtapas() {
   const cardAgendamento = document.querySelector('.etapas')
 
   try {
-    const response = await fetch(`http://localhost:8080/etapas/${usuarioId}`, {
+    const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/etapas/${usuarioId}`, {
       method: "GET"
     });
     const data = await response.json();
@@ -363,7 +363,7 @@ async function buscaAvancada(input){
   const usuarioId = sessionStorage.getItem('id')
 
   try{
-    const response = await fetch(`http://localhost:8080/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
+    const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/filtro-cliente-nome/${usuarioId}?nome=${nomeCliente}&ativo=${valorSwitch}`, {
       method: "GET"
     });
 

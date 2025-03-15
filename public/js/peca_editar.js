@@ -1,7 +1,7 @@
 async function listarPecas(){
     const id = sessionStorage.getItem("id")
 
-    const data = await fetch(`http://localhost:8080/pecas/${id}`);
+    const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/${id}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -60,7 +60,7 @@ async function listarMedidas() {
     const usuario = sessionStorage.getItem("id");
     const idPeca = sessionStorage.getItem("idPeca");
 
-    const data1 = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`);
+    const data1 = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/${usuario}/${idPeca}`);
     if (!data1.ok) {
         throw new Error('Erro ' + data1.statusText);
     }
@@ -71,7 +71,7 @@ async function listarMedidas() {
     document.getElementById("peca_bread_road").innerHTML = (FormatedData1.nome).toUpperCase();
     document.getElementById("titulo").innerHTML = (FormatedData1.nome).toUpperCase();
 
-    const data = await fetch(`http://localhost:8080/nomes-medidas/${usuario}/${idPeca}`);
+    const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/nomes-medidas/${usuario}/${idPeca}`);
     if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -118,7 +118,7 @@ async function descEditar(){
     const usuario = sessionStorage.getItem("id")
     const idPeca = sessionStorage.getItem("idPeca")
 
-    const data = await fetch(`http://localhost:8080/pecas/${usuario}/${id}`);
+    const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/${usuario}/${id}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -146,7 +146,7 @@ async function editarPeca(){
         "usuario": usuario 
     }
 
-    const respostaCadastro = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`, {
+    const respostaCadastro = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/${usuario}/${idPeca}`, {
     method: "PUT" ,
     body: JSON.stringify(dados),
     headers: {"Content-type": "application/json; charset=UTF-8"},
@@ -171,7 +171,7 @@ async function deletarPeca(){
     const usuario = sessionStorage.getItem("id")
 
 
-    const respostaCadastro = await fetch(`http://localhost:8080/pecas/${usuario}/${idPeca}`, {
+    const respostaCadastro = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/${usuario}/${idPeca}`, {
     method: "DELETE"
 })
 
@@ -189,7 +189,7 @@ async function deletarMedida(idMedida){
     const usuario = sessionStorage.getItem("id")
 
 
-    const respostaMedida = await fetch(`http://localhost:8080/nomes-medidas/${usuario}/${idPeca}/${idMedida}`, {
+    const respostaMedida = await fetch(`http://10.0.1.226:8080/askyu/askyu/nomes-medidas/${usuario}/${idPeca}/${idMedida}`, {
     method: "DELETE",
     headers: {"Content-type": "application/json; charset=UTF-8"}
 })

@@ -1,6 +1,6 @@
 async function buscarViewPedido(usuarioId){
     try {
-        const resposta = await fetch(`http://localhost:8080/pedido-view/${usuarioId}`, {
+        const resposta = await fetch(`http://10.0.1.226:8080/askyu/askyu/pedido-view/${usuarioId}`, {
             method: "GET"
         });
 
@@ -20,7 +20,7 @@ async function buscarViewPedido(usuarioId){
 
 async function buscarViewTecido(usuarioId){
     try {
-        const resposta = await fetch(`http://localhost:8080/tecido-view/${usuarioId}`, {
+        const resposta = await fetch(`http://10.0.1.226:8080/askyu/askyu/tecido-view/${usuarioId}`, {
             method: "GET"
         });
 
