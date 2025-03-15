@@ -10,7 +10,7 @@ async function cadastrarTecido(){
         "usuario": usuario
     }
     console.log(dados)
-    const respostaCadastro = await fetch(`http://10.0.1.226:8080/askyu/askyu/tecidos/${usuario}/${codigo}`, {
+    const respostaCadastro = await fetch(`http://10.0.1.226:8080/askyu/tecidos/${usuario}/${codigo}`, {
     method: "POST" ,
     body: JSON.stringify(dados),
     headers: {"Content-type": "application/json; charset=UTF-8"},

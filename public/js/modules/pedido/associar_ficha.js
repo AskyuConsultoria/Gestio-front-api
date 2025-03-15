@@ -3,7 +3,7 @@ async function buscarPedidosPorAgendamentoId(){
     const agendamentoId = sessionStorage.getItem('AGENDAMENTO-ID')
 
     try{
-        const reponse = await fetch(`http://10.0.1.226:8080/askyu/askyu/pedido/buscar-por-agendamento/${usuarioId}/${agendamentoId}`, {
+        const reponse = await fetch(`http://10.0.1.226:8080/askyu/pedido/buscar-por-agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET",
         });
 
@@ -48,7 +48,7 @@ function preencherCardsPedido(listaPedido){
 async function excluirPedidoPorId(evento, pedidoId){
     const usuarioId = sessionStorage.getItem("id")
     try{
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/pedido/${usuarioId}/${pedidoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/pedido/${usuarioId}/${pedidoId}`, {
             method: "DELETE"
         })
 

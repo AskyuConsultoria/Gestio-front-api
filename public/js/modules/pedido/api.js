@@ -19,7 +19,7 @@ async function buscarAgendamento() {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 
@@ -46,7 +46,7 @@ async function buscarAgendamento() {
 
 async function buscarClienteView(clienteId) {
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/cliente-view/${clienteId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/cliente-view/${clienteId}`, {
             method: "GET"
         });
 
@@ -70,7 +70,7 @@ async function buscarClientePorId(novoClienteId) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/${novoClienteId}/buscarUm`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${novoClienteId}/buscarUm`, {
             method: "GET"
         });
 
@@ -99,7 +99,7 @@ async function buscarEnderecoPorId() {
     if(sessionStorage.getItem("ENDERECO-MODAL-ID") != null) enderecoId = sessionStorage.getItem("ENDERECO-MODAL-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/buscar-um/${usuarioId}/${enderecoId}`, {
             method: "GET"
         });
 
@@ -127,7 +127,7 @@ async function buscarTelefonePorId() {
     if(sessionStorage.getItem("TELEFONE-MODAL-ID") != null) telefoneId = sessionStorage.getItem("TELEFONE-MODAL-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
             method: "GET"
         });
 
@@ -155,7 +155,7 @@ async function buscarTelefonePorIdEtapa() {
     var telefoneId = parseInt(sessionStorage.getItem("TELEFONE-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone/buscar-um/${usuarioId}/${telefoneId}`, {
             method: "GET"
         });
 
@@ -190,7 +190,7 @@ async function buscarEnderecoPorClienteId(nomeModal) {
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/${usuarioId}/${clienteId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/${usuarioId}/${clienteId}`, {
             method: "GET"
         });
 
@@ -224,7 +224,7 @@ async function buscarTelefonePorClienteId(nomeModal) {
 
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/${usuarioId}/${clienteId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone/${usuarioId}/${clienteId}`, {
             method: "GET"
         });
 
@@ -256,7 +256,7 @@ async function buscarClientesPorResponsavelId(nomeModal) {
        
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/por-responsavel/${usuarioId}/${responsavelId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/por-responsavel/${usuarioId}/${responsavelId}`, {
             method: "GET"
         });
 
@@ -285,7 +285,7 @@ async function buscarClientesPorNome(clienteNome) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
             method: "GET"
         });
 
@@ -315,7 +315,7 @@ async function atualizarDadosCliente(clienteId) {
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/${clienteId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${clienteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -347,7 +347,7 @@ async function atualizarDadosPedido(agendamentoId) {
 
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -391,7 +391,7 @@ async function atualizarEnderecoAgendamento(enderecoId) {
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/atualizar-endereco/${usuarioId}/${agendamentoId}/${enderecoId}`, {
             method: "PATCH"
         });
 
@@ -414,7 +414,7 @@ async function atualizarTelefoneAgendamento(telefoneId) {
     var agendamentoId = parseInt(sessionStorage.getItem("AGENDAMENTO-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/atualizar-telefone/${usuarioId}/${agendamentoId}/${telefoneId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/atualizar-telefone/${usuarioId}/${agendamentoId}/${telefoneId}`, {
             method: "PATCH"
         });
 
@@ -437,7 +437,7 @@ async function atualizarEndereco(){
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/${usuarioId}/${enderecoId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -478,7 +478,7 @@ async function atualizarTelefone(){
     var numero = document.querySelector("#input-numero-celular").value
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
             method: "PATCH",
         });
 
@@ -500,7 +500,7 @@ async function atualizarEnderecoModal(){
     var enderecoId = parseInt(sessionStorage.getItem("ENDERECO-MODAL-ID"))
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/${usuarioId}/${enderecoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/${usuarioId}/${enderecoId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -541,7 +541,7 @@ async function atualizarTelefoneModal(){
     var numero = document.querySelector("#input-modal-numero-celular").value
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone/${usuarioId}/${telefoneId}?numero=${numero}`, {
             method: "PATCH",
         });
 
@@ -563,7 +563,7 @@ async function atualizarClienteModal() {
     const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/${clienteId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${clienteId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -596,7 +596,7 @@ async function cadastrarClienteModal() {
     const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -629,7 +629,7 @@ async function criarPedido() {
     
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -697,7 +697,7 @@ async function cadastrarEnderecoModal(){
     var clienteId = parseInt(sessionStorage.getItem("CLIENTE-ID"))
     
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/${usuarioId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/${usuarioId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -735,7 +735,7 @@ async function cadastrarTelefoneModal() {
     const clienteId = sessionStorage.getItem("CLIENTE-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -773,7 +773,7 @@ async function buscarEtapas() {
     try {
         const usuarioId = parseInt(sessionStorage.getItem('id'))
 
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/etapas/${usuarioId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/etapas/${usuarioId}`, {
             method: "GET"
         });
 
@@ -800,7 +800,7 @@ async function buscarStatusAgendamento(){
         const usuarioId = parseInt(sessionStorage.getItem('id'))
         const agendamentoId = parseInt(sessionStorage.getItem('AGENDAMENTO-ID'))
     
-        const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento-log/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento-log/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 
@@ -829,7 +829,7 @@ async function desativarPedidosPorAgendamento(){
     const agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
 
     try{
-        var response = await fetch(`http://10.0.1.226:8080/askyu/askyu/pedido/excluir-por-agendamento/${usuarioId}/${agendamentoId}`,{
+        var response = await fetch(`http://10.0.1.226:8080/askyu/pedido/excluir-por-agendamento/${usuarioId}/${agendamentoId}`,{
             method: "DELETE"
         })
 
@@ -850,7 +850,7 @@ async function desativarAgendamento() {
     var agendamentoId = sessionStorage.getItem("AGENDAMENTO-ID")
 
     try{
-        var response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
+        var response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/${usuarioId}/${agendamentoId}`, {
             method: "DELETE"
         })
 
@@ -868,7 +868,7 @@ async function desativarTelefone(){
     var telefoneId = sessionStorage.getItem("TELEFONE-DELETE-ID")
 
     try{
-        var response = await fetch(`http://10.0.1.226:8080/askyu/askyu/telefone/${usuarioId}/${telefoneId}`, {
+        var response = await fetch(`http://10.0.1.226:8080/askyu/telefone/${usuarioId}/${telefoneId}`, {
             method: "DELETE"
         })
 
@@ -885,7 +885,7 @@ async function desativarEndereco(){
     var enderecoId = sessionStorage.getItem("ENDERECO-DELETE-ID")
 
     try{
-        var response = await fetch(`http://10.0.1.226:8080/askyu/askyu/enderecos/${usuarioId}/${enderecoId}`, {
+        var response = await fetch(`http://10.0.1.226:8080/askyu/enderecos/${usuarioId}/${enderecoId}`, {
             method: "DELETE"
         })
 
@@ -904,7 +904,7 @@ async function desativarCliente() {
     var clienteId = sessionStorage.getItem("CLIENTE-DELETE-ID")
 
     try{
-        var response = await fetch(`http://10.0.1.226:8080/askyu/askyu/clientes/${usuarioId}/${clienteId}`, {
+        var response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${usuarioId}/${clienteId}`, {
             method: "PATCH"
         })
 

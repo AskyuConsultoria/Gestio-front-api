@@ -1,7 +1,7 @@
 async function listarTecidos(){
     const usuario = sessionStorage.getItem("id")
 
-    const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/tecidos/${usuario}`);
+    const data = await fetch(`http://10.0.1.226:8080/askyu/tecidos/${usuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -40,7 +40,7 @@ async function deletarTecido(idTecido){
     const usuario = sessionStorage.getItem("id")
 
 
-    const respostaTecido = await fetch(`http://10.0.1.226:8080/askyu/askyu/tecidos/${usuario}/${idTecido}`, {
+    const respostaTecido = await fetch(`http://10.0.1.226:8080/askyu/tecidos/${usuario}/${idTecido}`, {
     method: "DELETE",
     headers: {"Content-type": "application/json; charset=UTF-8"}
 })

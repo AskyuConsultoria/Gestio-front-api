@@ -110,7 +110,7 @@
   async function obterData(){
 
     const idUsuario = sessionStorage.getItem('id')
-     const dados = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/view/${idUsuario}?ano=${currentYear}`);
+     const dados = await fetch(`http://10.0.1.226:8080/askyu/pecas/view/${idUsuario}?ano=${currentYear}`);
          if (!dados.ok) {
          throw new Error('Erro ' + dados.statusText, dados.message);
          }
@@ -199,7 +199,7 @@
     var dataInicio = obterDataISO()
 
     const idUsuario = sessionStorage.getItem('id')
-     const data = await fetch(`http://10.0.1.226:8080/askyu/askyu/tecido-view/${id}?dataInicio=${dataInicio}`);
+     const data = await fetch(`http://10.0.1.226:8080/askyu/tecido-view/${id}?dataInicio=${dataInicio}`);
          if (!data.ok) {
          throw new Error('Erro ' + data.statusText, data.message);
          }
@@ -244,7 +244,7 @@
   async function atualizarDados() {
         const idUsuario = sessionStorage.getItem('id')
         var year = document.getElementById("select_ano").value
-        const dados = await fetch(`http://10.0.1.226:8080/askyu/askyu/pecas/view/${idUsuario}?ano=${year}`);
+        const dados = await fetch(`http://10.0.1.226:8080/askyu/pecas/view/${idUsuario}?ano=${year}`);
             if (!dados.ok) {
             throw new Error('Erro ' + dados.statusText, dados.message);
             }

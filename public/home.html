@@ -548,7 +548,7 @@ async function buscarPedidosComBaseNoDia(dataDiaSelecionado){
   var idUsuario = 1   
 
   try {
-    const response = await fetch(`http://10.0.1.226:8080/askyu/askyu/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
+    const response = await fetch(`http://10.0.1.226:8080/askyu/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${inicioDoDia}&dataFim=${fimDoDia}`, {
       method: "GET"
     });
 
