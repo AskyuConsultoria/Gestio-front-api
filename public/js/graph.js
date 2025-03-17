@@ -1,6 +1,6 @@
 async function buscarViewPedido(usuarioId){
     try {
-        const resposta = await fetch(`/askyupedido-view/${usuarioId}`, {
+        const resposta = await fetch(`/askyu/pedido-view/${usuarioId}`, {
             method: "GET"
         });
 
@@ -20,7 +20,7 @@ async function buscarViewPedido(usuarioId){
 
 async function buscarViewTecido(usuarioId){
     try {
-        const resposta = await fetch(`/askyutecido-view/${usuarioId}`, {
+        const resposta = await fetch(`/askyu/tecido-view/${usuarioId}`, {
             method: "GET"
         });
 

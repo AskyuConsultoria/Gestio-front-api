@@ -1,6 +1,6 @@
 async function buscarRelatorioCliente(usuarioId) {
     try {
-        const resposta = await fetch(`/askyuclientes/${usuarioId}/relatorio-kpi`, {
+        const resposta = await fetch(`/askyu/clientes/${usuarioId}/relatorio-kpi`, {
             method: "GET"
         });
 
@@ -46,7 +46,7 @@ function adicionarSvgSetaCliente(qtdClienteAtual, qtdClientePassado){
 
 async function buscarRelatorioPedido(usuarioId) {
     try {
-        const resposta = await fetch(`/askyupedido/${usuarioId}/relatorio-kpi`, {
+        const resposta = await fetch(`/askyu/pedido/${usuarioId}/relatorio-kpi`, {
             method: "GET"
         });
 
