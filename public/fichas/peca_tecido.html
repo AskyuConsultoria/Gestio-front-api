@@ -102,7 +102,7 @@
 
     async function listarPeca(){
         const idUsuario = sessionStorage.getItem('id')
-        const data = await fetch(`askyu/pecas/${idUsuario}`);
+        const data = await fetch(`/askyupecas/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -117,7 +117,7 @@
 
     async function listarTecido(){
         const idUsuario = sessionStorage.getItem('id')
-        const data = await fetch(`askyu/tecidos/${idUsuario}`);
+        const data = await fetch(`/askyutecidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }

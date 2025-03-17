@@ -21,7 +21,7 @@ async function deletarFicha(evento, fichaId){
     evento.stopPropagation();
 
     try{
-        var response = await fetch(`askyu/itens-pedidos/${usuarioId}/${fichaId}`, {
+        var response = await fetch(`/askyuitens-pedidos/${usuarioId}/${fichaId}`, {
             method: "DELETE"
         })
 
@@ -59,7 +59,7 @@ function botaoTecido() {
 //Integrar com o backend
 async function listarBotaoPeca() {
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`askyu/pecas/${idUsuario}`);
+    const data = await fetch(`/askyupecas/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -103,7 +103,7 @@ function mudarTecido(texto2) {
 // Conectar com o backEnd
 async function listarFichas(){
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`askyu/itens-pedidos/${idUsuario}`);
+    const data = await fetch(`/askyuitens-pedidos/${idUsuario}`);
         if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
         }
@@ -142,7 +142,7 @@ async function criarPedido(){
     const agendamentoConsultado = await buscarAgendamento()
 
     try{
-        const response = await fetch("askyu/pedido", {
+        const response = await fetch("/askyupedido", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -180,7 +180,7 @@ async function buscarItemPedido(){
     const itemPedidoId = sessionStorage.getItem("ITEM-PEDIDO-ID")
 
     try{
-        const response =  await fetch(`askyu/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        const response =  await fetch(`/askyuitens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 
@@ -202,7 +202,7 @@ async function buscarAgendamento() {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`askyu/agendamento/${usuarioId}/${agendamentoId}`, {
+        const response = await fetch(`/askyuagendamento/${usuarioId}/${agendamentoId}`, {
             method: "GET"
         });
 
@@ -309,7 +309,7 @@ function buscaAvançadaCliente(texto){
 async function listarClientes(){
     
     const idUsuario = sessionStorage.getItem('id')
-    const data = await fetch(`askyu/clientes/${idUsuario}`, {
+    const data = await fetch(`/askyuclientes/${idUsuario}`, {
         method: 'GET'
     });
         if (!data.ok) {
@@ -371,7 +371,7 @@ function irParaFinal(peca, tecido){
 async function buscarDadosCliente(){
     var idCliente = sessionStorage.getItem("CLIENTE-ID")
 
-    const data = await fetch( `askyu/clientes/${idCliente}/buscarUm`);
+    const data = await fetch( `/askyuclientes/${idCliente}/buscarUm`);
     if (!data.ok) {
         throw new Error('Erro ' + data.statusText);
     }
@@ -397,7 +397,7 @@ async function buscarDadosFicha(itemPedidoId){
     const usuarioId = sessionStorage.getItem('id')
 
     try{
-        var response = await fetch(`askyu/itens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
+        var response = await fetch(`/askyuitens-pedidos/${usuarioId}/${itemPedidoId}/buscar-um`, {
             method: "GET"
         })
 

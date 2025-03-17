@@ -40,7 +40,7 @@ const diasSemana = [
 async function buscarPedidosEmIntervaloDeTempo(idUsuario, dataInicio, dataFim){
     
     try{
-        const resposta = await fetch(`askyu/agendamento/${idUsuario}/intervalo-tempo?dataInicio=${dataInicio}&dataFim=${dataFim}`)
+        const resposta = await fetch(`/askyuagendamento/${idUsuario}/intervalo-tempo?dataInicio=${dataInicio}&dataFim=${dataFim}`)
         if(resposta.status == 204){
             return []
         }

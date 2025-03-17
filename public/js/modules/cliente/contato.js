@@ -209,7 +209,7 @@ function limparCache() {
 async function desativarCliente(evento, clienteId){
   var usuarioId = sessionStorage.getItem("id")
   try{
-    const response = await fetch(`askyu/clientes/${usuarioId}/${clienteId}`, {
+    const response = await fetch(`/askyuclientes/${usuarioId}/${clienteId}`, {
       method: "DELETE"
     })
 
