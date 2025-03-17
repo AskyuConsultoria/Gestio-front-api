@@ -161,7 +161,7 @@ async function criarPedido(){
         const dados = await response.json()
         sessionStorage.setItem("PECA-ID", dados.itemPedido.peca.id)
         construirModalGenerico("statusButton", "modalGenerico.hide()", null, "Pedido criado com sucesso.")
-        setTimeout(() => location.assign("http://localhost:3333/associar-ficha.html"), 800)
+        setTimeout(() => location.assign("/askyu/associar-ficha.html"), 800)
 
         console.log(dados)
         return dados
@@ -240,7 +240,7 @@ async function IrVisualizarFicha(elFicha){
     } else {
         sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
         await associarValoresFicha(elFicha.id)
-        location.assign("http://localhost:3333/fichas/vincular_medidas.html")
+        location.assign("/askyu/fichas/vincular_medidas.html")
     }
     
 }

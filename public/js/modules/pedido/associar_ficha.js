@@ -77,7 +77,7 @@ function salvarDadosETransferirParaOutraPagina(fichaId, pecaId){
     sessionStorage.setItem("E-VISUALIZACAO-FICHA", true)
     sessionStorage.setItem("FICHA-ID", fichaId)
     sessionStorage.setItem("PECA-ID", pecaId)
-    window.location.assign("http://localhost:3333/fichas/vincular_medidas.html")
+    window.location.assign("/askyu/fichas/vincular_medidas.html")
 }
 
 

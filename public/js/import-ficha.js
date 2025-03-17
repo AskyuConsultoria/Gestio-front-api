@@ -45,5 +45,5 @@ function construirModalGenerico(elementoId, primeiraFuncao, segundaFuncao, texto
 
 
 function fecharJanela(){
-  window.location.replace("http://localhost:3333/fichas/vincular_medidas.html")
+  window.location.replace("/askyu/fichas/vincular_medidas.html")
 }
