@@ -6,7 +6,7 @@ async function cadastrarContato() {
     const responsavelId = sessionStorage.getItem("RESPONSAVEL-ID")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes`, {
+        const response = await fetch(`askyu/clientes`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -40,7 +40,7 @@ async function cadastrarTelefone(tipoTelefone) {
     const clienteId = sessionStorage.getItem('CLIENTE-ID')
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/telefone`, {
+        const response = await fetch(`askyu/telefone`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -75,7 +75,7 @@ async function buscarClientePorId(novoClienteId) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${novoClienteId}/buscarUm`, {
+        const response = await fetch(`askyu/clientes/${novoClienteId}/buscarUm`, {
             method: "GET"
         });
 
@@ -106,7 +106,7 @@ async function buscarClientesPorNome(clienteNome) {
     var usuarioId = sessionStorage.getItem("id")
 
     try {
-        const response = await fetch(`http://10.0.1.226:8080/askyu/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
+        const response = await fetch(`askyu/clientes/${usuarioId}/filtro-nome?nome=${clienteNome}`, {
             method: "GET"
         });
 
